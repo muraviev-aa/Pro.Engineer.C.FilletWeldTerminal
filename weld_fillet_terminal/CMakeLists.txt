@@ -12,6 +12,6 @@ set(CMAKE_C_STANDARD 11)
 
 add_executable(weld_fillet_terminal main.c
         temp_function.h
-        temp_function..c)
+        temp_function.c)
 
 target_link_libraries( weld_fillet_terminal ${CURSES_LIBRARIES} )
