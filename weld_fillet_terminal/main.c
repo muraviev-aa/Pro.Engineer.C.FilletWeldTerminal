@@ -33,7 +33,9 @@ int main(void)
     }
     wbkgd(a, COLOR_PAIR(2));
 
-    draw_table_lines(sub1);
+    draw_table_lines(sub1);   // рисуем таблицу
+    table_header_text(sub1);  // заполняем шапку таблицы
+    fill_table_text(sub1);    // заполняем таблицу
 
     wrefresh(sub1);
     refresh();
