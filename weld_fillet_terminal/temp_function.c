@@ -226,12 +226,14 @@ void data_entry_dialog(WINDOW *sub1, WINDOW *a)
     do
     {
         wclear(a);
+        wbkgd(a, COLOR_PAIR(3));
         wmove(a, 0, 2);
         waddstr(a, "1.Enter the thickness of the first part (mm): ");
         wgetnstr(a, info_thick_first_part, 2);
         thick_first_part = atoi(info_thick_first_part);
         wmove(a, 1, 4);
-        wprintw(a, "Thickness of the first part is %d mm. If the information is correct then press 'y', if incorrect press 'n' ",
+        wprintw(a,
+                "Thickness of the first part is %d mm. If the information is correct then press 'y', if incorrect press 'n' ",
                 thick_first_part);
         ch = (char) wgetch(a);
         if (ch == 'n')
@@ -245,12 +247,14 @@ void data_entry_dialog(WINDOW *sub1, WINDOW *a)
     do
     {
         wclear(a);
+        wbkgd(a, COLOR_PAIR(4));
         wmove(a, 0, 2);
         waddstr(a, "2.Enter the thickness of the second part (mm): ");
         wgetnstr(a, info_thick_second_part, 2);
         thick_second_part = atoi(info_thick_second_part);
         wmove(a, 1, 4);
-        wprintw(a, "Thickness of the second part is %d mm. If the information is correct then press 'y', if incorrect press 'n' ",
+        wprintw(a,
+                "Thickness of the second part is %d mm. If the information is correct then press 'y', if incorrect press 'n' ",
                 thick_second_part);
         ch = (char) wgetch(a);
         if (ch == 'n')
@@ -260,11 +264,37 @@ void data_entry_dialog(WINDOW *sub1, WINDOW *a)
     wmove(sub1, 0, 45);
     wprintw(sub1, " second part is %d mm", thick_second_part);
     wrefresh(sub1);
-    // Вывод результата определения катета сварного шва
-    wmove(sub1, 8, 100);
-    wprintw(sub1, "TEST_1");
-    wmove(sub1, 9, 100);
-    wprintw(sub1, "TEST_2");
+    if (thick_first_part > thick_second_part && (0.6 * thick_first_part) > thick_second_part)
+    {
+        wbkgd(sub1, COLOR_PAIR(5));
+        wmove(sub1, 8, 96);
+        wprintw(sub1, "by calculation,");
+        wmove(sub1, 10, 96);
+        wprintw(sub1, "but no more %.1f", 1.2 * thick_second_part);
+        wmove(sub1, 18, 96);
+        wprintw(sub1, "by calculation,");
+        wmove(sub1, 20, 96);
+        wprintw(sub1, "but no more %.1f", 1.2 * thick_second_part);
+        wrefresh(sub1);
+    } else if (thick_first_part < thick_second_part && thick_first_part < (0.6 * thick_second_part))
+    {
+        wbkgd(sub1, COLOR_PAIR(5));
+        wmove(sub1, 8, 96);
+        wprintw(sub1, "by calculation,");
+        wmove(sub1, 10, 96);
+        wprintw(sub1, "but no more %.1f", 1.2 * thick_first_part);
+        wmove(sub1, 18, 96);
+        wprintw(sub1, "by calculation,");
+        wmove(sub1, 20, 96);
+        wprintw(sub1, "but no more %.1f", 1.2 * thick_first_part);
+        wrefresh(sub1);
+    } else
+    {
+        wmove(sub1, 8, 100);
+        wprintw(sub1, "TEST_1");
+        wmove(sub1, 9, 100);
+        wprintw(sub1, "TEST_2");
+    }
 }
 
 void delete_char(WINDOW *w, int row, int column, int count_ch)
