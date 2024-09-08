@@ -33,11 +33,13 @@ int main(void)
     }
     wbkgd(a, COLOR_PAIR(2));
 
-    draw_table_lines(sub1);   // рисуем таблицу
-    table_header_text(sub1);  // заполняем шапку таблицы
-    fill_table_text(sub1);    // заполняем таблицу
+    draw_table_lines(sub1);       // рисуем таблицу
+    table_header_text(sub1);      // заполняем шапку таблицы
+    fill_table_text(sub1);        // заполняем таблицу постоянными значениями
+    data_entry_dialog(sub1, a);   // работа с окном ввода данных
 
     wrefresh(sub1);
+    wrefresh(a);
     refresh();
 
     getch();

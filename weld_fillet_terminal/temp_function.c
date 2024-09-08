@@ -45,11 +45,16 @@ void draw_table_lines(WINDOW *sub1)
         waddch(sub1, ACS_HLINE); // горизонтальная линия
     }
 
-    // Третья горизонтальная линия
+    // Третья горизонтальная линия (разделители 1 и 3 столбцов)
+    for (int i = 1; i < 60; i++)
+    {
+        wmove(sub1, 14, i);
+        waddch(sub1, ACS_HLINE); // горизонтальная линия (1 столбец)
+    }
     for (int i = 91; i < 116; i++)
     {
         wmove(sub1, 14, i);
-        waddch(sub1, ACS_HLINE); // горизонтальная линия
+        waddch(sub1, ACS_HLINE); // горизонтальная линия (3 столбец)
     }
 
     // Левая вертикальная линия
@@ -60,7 +65,14 @@ void draw_table_lines(WINDOW *sub1)
     }
     wmove(sub1, 4, 1);
     waddch(sub1, ACS_LTEE); // левый разделитель
-    for (int i = 7; i < 25; i++)
+    for (int i = 7; i < 14; i++)
+    {
+        wmove(sub1, i, 1);
+        waddch(sub1, ACS_VLINE); // вертикальная линия
+    }
+    wmove(sub1, 14, 1);
+    waddch(sub1, ACS_LTEE);  // разделитель 1 столбца
+    for (int i = 15; i < 25; i++)
     {
         wmove(sub1, i, 1);
         waddch(sub1, ACS_VLINE); // вертикальная линия
@@ -116,7 +128,14 @@ void draw_table_lines(WINDOW *sub1)
         wmove(sub1, i, 60);
         waddch(sub1, ACS_VLINE); // вертикальная линия
     }
-    for (int i = 5; i < 25; i++)
+    for (int i = 5; i < 14; i++)
+    {
+        wmove(sub1, i, 60);
+        waddch(sub1, ACS_VLINE); // вертикальная линия
+    }
+    wmove(sub1, 14, 60);
+    waddch(sub1, ACS_RTEE);  // разделитель 1 столбца
+    for (int i = 15; i < 25; i++)
     {
         wmove(sub1, i, 60);
         waddch(sub1, ACS_VLINE); // вертикальная линия
@@ -194,4 +213,66 @@ void fill_table_text(WINDOW *sub1)
     wmove(sub1, 15, 71);
     wprintw(sub1, "mechanized");
     wrefresh(sub1);
+}
+
+void data_entry_dialog(WINDOW *sub1, WINDOW *a)
+{
+    int thick_first_part;
+    int thick_second_part;
+    char info_thick_first_part[3];
+    char info_thick_second_part[3];
+    char ch;
+    // Ввод толщины первой детали
+    do
+    {
+        wclear(a);
+        wmove(a, 0, 2);
+        waddstr(a, "1.Enter the thickness of the first part (mm): ");
+        wgetnstr(a, info_thick_first_part, 2);
+        thick_first_part = atoi(info_thick_first_part);
+        wmove(a, 1, 4);
+        wprintw(a, "Thickness of the first part is %d mm. If the information is correct then press 'y', if incorrect press 'n' ",
+                thick_first_part);
+        ch = (char) wgetch(a);
+        if (ch == 'n')
+            delete_char(a, 1, 1, 95);
+    } while (ch != 'y');
+    // Вывод результата ввода толщины первого элемента
+    wmove(sub1, 0, 2);
+    wprintw(sub1, "Data: thickness of the first part is %d mm,", thick_first_part);
+    wrefresh(sub1);
+    // Ввод толщины второй детали
+    do
+    {
+        wclear(a);
+        wmove(a, 0, 2);
+        waddstr(a, "2.Enter the thickness of the second part (mm): ");
+        wgetnstr(a, info_thick_second_part, 2);
+        thick_second_part = atoi(info_thick_second_part);
+        wmove(a, 1, 4);
+        wprintw(a, "Thickness of the second part is %d mm. If the information is correct then press 'y', if incorrect press 'n' ",
+                thick_second_part);
+        ch = (char) wgetch(a);
+        if (ch == 'n')
+            delete_char(a, 1, 1, 95);
+    } while (ch != 'y');
+    // Вывод результата ввода толщины второго элемента
+    wmove(sub1, 0, 45);
+    wprintw(sub1, " second part is %d mm", thick_second_part);
+    wrefresh(sub1);
+    // Вывод результата определения катета сварного шва
+    wmove(sub1, 8, 100);
+    wprintw(sub1, "TEST_1");
+    wmove(sub1, 9, 100);
+    wprintw(sub1, "TEST_2");
+}
+
+void delete_char(WINDOW *w, int row, int column, int count_ch)
+{
+    for (int i = 0; i < count_ch; i++)
+    {
+        wmove(w, row, column++);
+        waddrawch(w, ' ');
+        wrefresh(w);
+    }
 }
