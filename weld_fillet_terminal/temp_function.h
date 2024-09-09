@@ -18,4 +18,7 @@ void data_entry_dialog(WINDOW *sub1, WINDOW *a);
 // Удаление строки
 void delete_char(WINDOW *w, int row, int column, int count_ch);
 
+// Вывод результата
+void output_result(WINDOW *sub1, int thick_first_part, int thick_second_part);
+
 #endif //WELD_FILLET_TERMINAL_TEMP_FUNCTION_H
