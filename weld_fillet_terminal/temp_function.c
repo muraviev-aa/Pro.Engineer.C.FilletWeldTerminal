@@ -271,7 +271,7 @@ void data_entry_dialog(WINDOW *sub1, WINDOW *a)
 
 void output_result(WINDOW *sub1, int thick_first_part, int thick_second_part)
 {
-    if (thick_first_part > thick_second_part && (0.6 * thick_first_part) > thick_second_part)
+    if (thick_first_part > thick_second_part && (0.6 * thick_first_part) > thick_second_part) // "по расчету"
     {
         wbkgd(sub1, COLOR_PAIR(5));
         wmove(sub1, 8, 96);
@@ -283,7 +283,7 @@ void output_result(WINDOW *sub1, int thick_first_part, int thick_second_part)
         wmove(sub1, 20, 96);
         wprintw(sub1, "but no more %.1f", 1.2 * thick_second_part);
         wrefresh(sub1);
-    } else if (thick_first_part < thick_second_part && thick_first_part < (0.6 * thick_second_part))
+    } else if (thick_first_part < thick_second_part && thick_first_part < (0.6 * thick_second_part)) // "по расчету"
     {
         wbkgd(sub1, COLOR_PAIR(5));
         wmove(sub1, 8, 96);
@@ -298,32 +298,36 @@ void output_result(WINDOW *sub1, int thick_first_part, int thick_second_part)
     } else
     {
         // Вывод значения катета в 1 строку 3 столбца
-        if (thick_first_part > thick_second_part && thick_first_part < 4)
+        if (thick_first_part > thick_second_part && thick_first_part < 4) // не рассмотренные значения в табл.
         {
             wmove(sub1, 9, 97);
             wprintw(sub1, "not provided");
             wmove(sub1, 19, 97);
             wprintw(sub1, "not provided");
-        } else if (thick_first_part < thick_second_part && thick_second_part < 4)
+        } else if (thick_first_part < thick_second_part && thick_second_part < 4) // не рассмотренные значения в табл.
         {
             wmove(sub1, 9, 97);
             wprintw(sub1, "not provided");
             wmove(sub1, 19, 97);
             wprintw(sub1, "not provided");
         }
-        if (thick_first_part > thick_second_part && thick_first_part == 4 || thick_first_part == 5)
+        // катет 4-5
+        if (thick_first_part > thick_second_part && thick_first_part == 4 ||
+            thick_first_part == 5)
         {
             wmove(sub1, 9, 103);
             wprintw(sub1, "3");
             wmove(sub1, 19, 103);
             wprintw(sub1, "3");
-        } else if (thick_first_part < thick_second_part && thick_second_part == 4 || thick_second_part == 5)
+        } else if (thick_first_part < thick_second_part && thick_second_part == 4 ||
+                   thick_second_part == 5)
         {
             wmove(sub1, 9, 103);
             wprintw(sub1, "3");
             wmove(sub1, 19, 103);
             wprintw(sub1, "3");
         }
+        // катет 6-10
         if (thick_first_part > thick_second_part && thick_first_part == 6 || thick_first_part == 7 ||
             thick_first_part == 8 || thick_first_part == 9 || thick_first_part == 10)
         {
@@ -338,6 +342,62 @@ void output_result(WINDOW *sub1, int thick_first_part, int thick_second_part)
             wprintw(sub1, "4");
             wmove(sub1, 19, 103);
             wprintw(sub1, "5");
+        }
+        // катет 11-16
+        if (thick_first_part > thick_second_part && thick_first_part == 11 || thick_first_part == 12 ||
+            thick_first_part == 13 || thick_first_part == 14 || thick_first_part == 15 ||
+            thick_first_part == 16)
+        {
+            wmove(sub1, 9, 103);
+            wprintw(sub1, "6");
+            wmove(sub1, 19, 103);
+            wprintw(sub1, "8");
+        } else if (thick_first_part < thick_second_part && thick_second_part == 11 || thick_second_part == 12 ||
+                   thick_second_part == 13 || thick_second_part == 14 || thick_second_part == 15 ||
+                   thick_second_part == 16)
+        {
+            wmove(sub1, 9, 103);
+            wprintw(sub1, "6");
+            wmove(sub1, 19, 103);
+            wprintw(sub1, "8");
+        }
+        // катет 17-22
+        if (thick_first_part > thick_second_part && thick_first_part == 17 || thick_first_part == 18 ||
+            thick_first_part == 19 || thick_first_part == 20 || thick_first_part == 21 ||
+            thick_first_part == 22)
+        {
+            wmove(sub1, 9, 103);
+            wprintw(sub1, "10");
+            wmove(sub1, 19, 103);
+            wprintw(sub1, "12");
+        } else if (thick_first_part < thick_second_part && thick_second_part == 17 || thick_second_part == 18 ||
+                   thick_second_part == 19 || thick_second_part == 20 || thick_second_part == 21 ||
+                   thick_second_part == 22)
+        {
+            wmove(sub1, 9, 103);
+            wprintw(sub1, "10");
+            wmove(sub1, 19, 103);
+            wprintw(sub1, "12");
+        }
+        // катет 23-32
+        if (thick_first_part > thick_second_part && thick_first_part == 23 || thick_first_part == 24 ||
+            thick_first_part == 25 || thick_first_part == 26 || thick_first_part == 27 ||
+            thick_first_part == 28 || thick_first_part == 29 || thick_first_part == 30 ||
+            thick_first_part == 31 || thick_first_part == 32)
+        {
+            wmove(sub1, 9, 103);
+            wprintw(sub1, "12");
+            wmove(sub1, 19, 103);
+            wprintw(sub1, "16");
+        } else if (thick_first_part < thick_second_part && thick_second_part == 23 || thick_second_part == 24 ||
+                   thick_second_part == 25 || thick_second_part == 26 || thick_second_part == 27 ||
+                   thick_second_part == 28 || thick_second_part == 29 || thick_second_part == 30 ||
+                   thick_second_part == 31 || thick_second_part == 32)
+        {
+            wmove(sub1, 9, 103);
+            wprintw(sub1, "12");
+            wmove(sub1, 19, 103);
+            wprintw(sub1, "16");
         }
     }
 }
