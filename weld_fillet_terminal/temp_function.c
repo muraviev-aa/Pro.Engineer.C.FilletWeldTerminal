@@ -399,6 +399,24 @@ void output_result(WINDOW *sub1, int thick_first_part, int thick_second_part)
             wmove(sub1, 19, 103);
             wprintw(sub1, "16");
         }
+        // катет 33-40
+        if (thick_first_part > thick_second_part && thick_first_part == 33 || thick_first_part == 34 ||
+            thick_first_part == 35 || thick_first_part == 36 || thick_first_part == 37 ||
+            thick_first_part == 38 || thick_first_part == 39 || thick_first_part == 40)
+        {
+            wmove(sub1, 9, 103);
+            wprintw(sub1, "16");
+            wmove(sub1, 19, 103);
+            wprintw(sub1, "22");
+        } else if (thick_first_part < thick_second_part && thick_second_part == 33 || thick_second_part == 34 ||
+                   thick_second_part == 35 || thick_second_part == 36 || thick_second_part == 37 ||
+                   thick_second_part == 38 || thick_second_part == 39 || thick_second_part == 40)
+        {
+            wmove(sub1, 9, 103);
+            wprintw(sub1, "16");
+            wmove(sub1, 19, 103);
+            wprintw(sub1, "22");
+        }
     }
 }
 
