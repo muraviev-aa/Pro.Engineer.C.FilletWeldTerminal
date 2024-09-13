@@ -1,12 +1,6 @@
 #include "temp_function.h"
 #include <stdlib.h>
 
-void output_result(WINDOW *sub1, int thick_first_part, int thick_second_part);
-
-void not_intend_values(WINDOW *sub1, int thick_first_part, int thick_second_part);
-
-void from_thick_4_to_5(WINDOW *sub1, int thick_first_part, int thick_second_part);
-
 void draw_table_lines(WINDOW *sub1)
 {
     // Верхняя горизонтальная линия
@@ -427,6 +421,12 @@ void not_intend_values(WINDOW *sub1, int thick_first_part, int thick_second_part
         wmove(sub1, 19, 97);
         wprintw(sub1, "not provided");
     } else if (thick_first_part < thick_second_part && thick_second_part < 4) // не рассмотренные значения в табл.
+    {
+        wmove(sub1, 9, 97);
+        wprintw(sub1, "not provided");
+        wmove(sub1, 19, 97);
+        wprintw(sub1, "not provided");
+    } else if (thick_first_part < 4 && thick_second_part < 4) // не рассмотренные значения в табл.
     {
         wmove(sub1, 9, 97);
         wprintw(sub1, "not provided");
