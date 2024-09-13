@@ -3,6 +3,10 @@
 
 void output_result(WINDOW *sub1, int thick_first_part, int thick_second_part);
 
+void not_intend_values(WINDOW *sub1, int thick_first_part, int thick_second_part);
+
+void from_thick_4_to_5(WINDOW *sub1, int thick_first_part, int thick_second_part);
+
 void draw_table_lines(WINDOW *sub1)
 {
     // Верхняя горизонтальная линия
@@ -297,36 +301,11 @@ void output_result(WINDOW *sub1, int thick_first_part, int thick_second_part)
         wrefresh(sub1);
     } else
     {
-        // Вывод значения катета в 1 строку 3 столбца
-        if (thick_first_part > thick_second_part && thick_first_part < 4) // не рассмотренные значения в табл.
-        {
-            wmove(sub1, 9, 97);
-            wprintw(sub1, "not provided");
-            wmove(sub1, 19, 97);
-            wprintw(sub1, "not provided");
-        } else if (thick_first_part < thick_second_part && thick_second_part < 4) // не рассмотренные значения в табл.
-        {
-            wmove(sub1, 9, 97);
-            wprintw(sub1, "not provided");
-            wmove(sub1, 19, 97);
-            wprintw(sub1, "not provided");
-        }
-        // катет 4-5
-        if (thick_first_part > thick_second_part && thick_first_part == 4 ||
-            thick_first_part == 5)
-        {
-            wmove(sub1, 9, 103);
-            wprintw(sub1, "3");
-            wmove(sub1, 19, 103);
-            wprintw(sub1, "3");
-        } else if (thick_first_part < thick_second_part && thick_second_part == 4 ||
-                   thick_second_part == 5)
-        {
-            wmove(sub1, 9, 103);
-            wprintw(sub1, "3");
-            wmove(sub1, 19, 103);
-            wprintw(sub1, "3");
-        }
+        // Вывод значения катета в 1 и 2 строки 3 столбца
+        // Не предусмотренные в табл. значения
+        not_intend_values(sub1, thick_first_part, thick_second_part);
+        // подбор катета для толщин 4-5
+        from_thick_4_to_5(sub1, thick_first_part, thick_second_part);
         // катет 6-10
         if (thick_first_part > thick_second_part && thick_first_part == 6 || thick_first_part == 7 ||
             thick_first_part == 8 || thick_first_part == 9 || thick_first_part == 10)
@@ -417,6 +396,42 @@ void output_result(WINDOW *sub1, int thick_first_part, int thick_second_part)
             wmove(sub1, 19, 103);
             wprintw(sub1, "22");
         }
+    }
+}
+
+void from_thick_4_to_5(WINDOW *sub1, int thick_first_part, int thick_second_part)
+{
+    if (thick_first_part > thick_second_part && thick_first_part == 4 ||
+        thick_first_part == 5)
+    {
+        wmove(sub1, 9, 103);
+        wprintw(sub1, "3");
+        wmove(sub1, 19, 103);
+        wprintw(sub1, "3");
+    } else if (thick_first_part < thick_second_part && thick_second_part == 4 ||
+               thick_second_part == 5)
+    {
+        wmove(sub1, 9, 103);
+        wprintw(sub1, "3");
+        wmove(sub1, 19, 103);
+        wprintw(sub1, "3");
+    }
+}
+
+void not_intend_values(WINDOW *sub1, int thick_first_part, int thick_second_part)
+{
+    if (thick_first_part > thick_second_part && thick_first_part < 4) // не рассмотренные значения в табл.
+    {
+        wmove(sub1, 9, 97);
+        wprintw(sub1, "not provided");
+        wmove(sub1, 19, 97);
+        wprintw(sub1, "not provided");
+    } else if (thick_first_part < thick_second_part && thick_second_part < 4) // не рассмотренные значения в табл.
+    {
+        wmove(sub1, 9, 97);
+        wprintw(sub1, "not provided");
+        wmove(sub1, 19, 97);
+        wprintw(sub1, "not provided");
     }
 }
 
