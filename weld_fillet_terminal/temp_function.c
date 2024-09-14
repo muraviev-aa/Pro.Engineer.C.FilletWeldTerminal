@@ -300,40 +300,10 @@ void output_result(WINDOW *sub1, int thick_first_part, int thick_second_part)
         not_intend_values(sub1, thick_first_part, thick_second_part);
         // подбор катета для толщин 4-5
         from_thick_4_to_5(sub1, thick_first_part, thick_second_part);
-        // катет 6-10
-        if (thick_first_part > thick_second_part && thick_first_part == 6 || thick_first_part == 7 ||
-            thick_first_part == 8 || thick_first_part == 9 || thick_first_part == 10)
-        {
-            wmove(sub1, 9, 103);
-            wprintw(sub1, "4");
-            wmove(sub1, 19, 103);
-            wprintw(sub1, "5");
-        } else if (thick_first_part < thick_second_part && thick_second_part == 6 || thick_second_part == 7 ||
-                   thick_second_part == 8 || thick_second_part == 9 || thick_second_part == 10)
-        {
-            wmove(sub1, 9, 103);
-            wprintw(sub1, "4");
-            wmove(sub1, 19, 103);
-            wprintw(sub1, "5");
-        }
-        // катет 11-16
-        if (thick_first_part > thick_second_part && thick_first_part == 11 || thick_first_part == 12 ||
-            thick_first_part == 13 || thick_first_part == 14 || thick_first_part == 15 ||
-            thick_first_part == 16)
-        {
-            wmove(sub1, 9, 103);
-            wprintw(sub1, "6");
-            wmove(sub1, 19, 103);
-            wprintw(sub1, "8");
-        } else if (thick_first_part < thick_second_part && thick_second_part == 11 || thick_second_part == 12 ||
-                   thick_second_part == 13 || thick_second_part == 14 || thick_second_part == 15 ||
-                   thick_second_part == 16)
-        {
-            wmove(sub1, 9, 103);
-            wprintw(sub1, "6");
-            wmove(sub1, 19, 103);
-            wprintw(sub1, "8");
-        }
+        // подбор катета для толщин 6-10
+        from_thick_6_to_10(sub1, thick_first_part, thick_second_part);
+        // подбор катета для толщин 11-16
+        from_thick_11_to_16(sub1, thick_first_part, thick_second_part);
         // катет 17-22
         if (thick_first_part > thick_second_part && thick_first_part == 17 || thick_first_part == 18 ||
             thick_first_part == 19 || thick_first_part == 20 || thick_first_part == 21 ||
@@ -390,6 +360,46 @@ void output_result(WINDOW *sub1, int thick_first_part, int thick_second_part)
             wmove(sub1, 19, 103);
             wprintw(sub1, "22");
         }
+    }
+}
+
+void from_thick_11_to_16(WINDOW *sub1, int thick_first_part, int thick_second_part)
+{
+    if (thick_first_part > thick_second_part && thick_first_part == 11 || thick_first_part == 12 ||
+        thick_first_part == 13 || thick_first_part == 14 || thick_first_part == 15 ||
+        thick_first_part == 16)
+    {
+        wmove(sub1, 9, 103);
+        wprintw(sub1, "6");
+        wmove(sub1, 19, 103);
+        wprintw(sub1, "8");
+    } else if (thick_first_part < thick_second_part && thick_second_part == 11 || thick_second_part == 12 ||
+               thick_second_part == 13 || thick_second_part == 14 || thick_second_part == 15 ||
+               thick_second_part == 16)
+    {
+        wmove(sub1, 9, 103);
+        wprintw(sub1, "6");
+        wmove(sub1, 19, 103);
+        wprintw(sub1, "8");
+    }
+}
+
+void from_thick_6_to_10(WINDOW *sub1, int thick_first_part, int thick_second_part)
+{
+    if (thick_first_part > thick_second_part && thick_first_part == 6 || thick_first_part == 7 ||
+        thick_first_part == 8 || thick_first_part == 9 || thick_first_part == 10)
+    {
+        wmove(sub1, 9, 103);
+        wprintw(sub1, "4");
+        wmove(sub1, 19, 103);
+        wprintw(sub1, "5");
+    } else if (thick_first_part < thick_second_part && thick_second_part == 6 || thick_second_part == 7 ||
+               thick_second_part == 8 || thick_second_part == 9 || thick_second_part == 10)
+    {
+        wmove(sub1, 9, 103);
+        wprintw(sub1, "4");
+        wmove(sub1, 19, 103);
+        wprintw(sub1, "5");
     }
 }
 
