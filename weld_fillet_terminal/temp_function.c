@@ -304,44 +304,10 @@ void output_result(WINDOW *sub1, int thick_first_part, int thick_second_part)
         from_thick_6_to_10(sub1, thick_first_part, thick_second_part);
         // подбор катета для толщин 11-16
         from_thick_11_to_16(sub1, thick_first_part, thick_second_part);
-        // катет 17-22
-        if (thick_first_part > thick_second_part && thick_first_part == 17 || thick_first_part == 18 ||
-            thick_first_part == 19 || thick_first_part == 20 || thick_first_part == 21 ||
-            thick_first_part == 22)
-        {
-            wmove(sub1, 9, 103);
-            wprintw(sub1, "10");
-            wmove(sub1, 19, 103);
-            wprintw(sub1, "12");
-        } else if (thick_first_part < thick_second_part && thick_second_part == 17 || thick_second_part == 18 ||
-                   thick_second_part == 19 || thick_second_part == 20 || thick_second_part == 21 ||
-                   thick_second_part == 22)
-        {
-            wmove(sub1, 9, 103);
-            wprintw(sub1, "10");
-            wmove(sub1, 19, 103);
-            wprintw(sub1, "12");
-        }
-        // катет 23-32
-        if (thick_first_part > thick_second_part && thick_first_part == 23 || thick_first_part == 24 ||
-            thick_first_part == 25 || thick_first_part == 26 || thick_first_part == 27 ||
-            thick_first_part == 28 || thick_first_part == 29 || thick_first_part == 30 ||
-            thick_first_part == 31 || thick_first_part == 32)
-        {
-            wmove(sub1, 9, 103);
-            wprintw(sub1, "12");
-            wmove(sub1, 19, 103);
-            wprintw(sub1, "16");
-        } else if (thick_first_part < thick_second_part && thick_second_part == 23 || thick_second_part == 24 ||
-                   thick_second_part == 25 || thick_second_part == 26 || thick_second_part == 27 ||
-                   thick_second_part == 28 || thick_second_part == 29 || thick_second_part == 30 ||
-                   thick_second_part == 31 || thick_second_part == 32)
-        {
-            wmove(sub1, 9, 103);
-            wprintw(sub1, "12");
-            wmove(sub1, 19, 103);
-            wprintw(sub1, "16");
-        }
+        // подбор катета для толщин 17-22
+        from_thick_17_to_22(sub1, thick_first_part, thick_second_part);
+        // подбор катета для толщин 23-32
+        from_thick_23_to_32(sub1, thick_first_part, thick_second_part);
         // катет 33-40
         if (thick_first_part > thick_second_part && thick_first_part == 33 || thick_first_part == 34 ||
             thick_first_part == 35 || thick_first_part == 36 || thick_first_part == 37 ||
@@ -360,6 +326,50 @@ void output_result(WINDOW *sub1, int thick_first_part, int thick_second_part)
             wmove(sub1, 19, 103);
             wprintw(sub1, "22");
         }
+    }
+}
+
+void from_thick_23_to_32(WINDOW *sub1, int thick_first_part, int thick_second_part)
+{
+    if (thick_first_part > thick_second_part && thick_first_part == 23 || thick_first_part == 24 ||
+        thick_first_part == 25 || thick_first_part == 26 || thick_first_part == 27 ||
+        thick_first_part == 28 || thick_first_part == 29 || thick_first_part == 30 ||
+        thick_first_part == 31 || thick_first_part == 32)
+    {
+        wmove(sub1, 9, 103);
+        wprintw(sub1, "12");
+        wmove(sub1, 19, 103);
+        wprintw(sub1, "16");
+    } else if (thick_first_part < thick_second_part && thick_second_part == 23 || thick_second_part == 24 ||
+               thick_second_part == 25 || thick_second_part == 26 || thick_second_part == 27 ||
+               thick_second_part == 28 || thick_second_part == 29 || thick_second_part == 30 ||
+               thick_second_part == 31 || thick_second_part == 32)
+    {
+        wmove(sub1, 9, 103);
+        wprintw(sub1, "12");
+        wmove(sub1, 19, 103);
+        wprintw(sub1, "16");
+    }
+}
+
+void from_thick_17_to_22(WINDOW *sub1, int thick_first_part, int thick_second_part)
+{
+    if (thick_first_part > thick_second_part && thick_first_part == 17 || thick_first_part == 18 ||
+        thick_first_part == 19 || thick_first_part == 20 || thick_first_part == 21 ||
+        thick_first_part == 22)
+    {
+        wmove(sub1, 9, 103);
+        wprintw(sub1, "10");
+        wmove(sub1, 19, 103);
+        wprintw(sub1, "12");
+    } else if (thick_first_part < thick_second_part && thick_second_part == 17 || thick_second_part == 18 ||
+               thick_second_part == 19 || thick_second_part == 20 || thick_second_part == 21 ||
+               thick_second_part == 22)
+    {
+        wmove(sub1, 9, 103);
+        wprintw(sub1, "10");
+        wmove(sub1, 19, 103);
+        wprintw(sub1, "12");
     }
 }
 

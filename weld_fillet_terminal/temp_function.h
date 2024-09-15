@@ -33,4 +33,10 @@ void from_thick_6_to_10(WINDOW *sub1, int thick_first_part, int thick_second_par
 // Подбор катета для толщин 11-16
 void from_thick_11_to_16(WINDOW *sub1, int thick_first_part, int thick_second_part);
 
+// Подбор катета для толщин 17-22
+void from_thick_17_to_22(WINDOW *sub1, int thick_first_part, int thick_second_part);
+
+// Подбор катета для толщин 23-32
+void from_thick_23_to_32(WINDOW *sub1, int thick_first_part, int thick_second_part);
+
 #endif //WELD_FILLET_TERMINAL_TEMP_FUNCTION_H
