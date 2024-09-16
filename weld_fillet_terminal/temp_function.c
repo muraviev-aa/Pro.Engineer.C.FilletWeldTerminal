@@ -271,28 +271,10 @@ void output_result(WINDOW *sub1, int thick_first_part, int thick_second_part)
 {
     if (thick_first_part > thick_second_part && (0.6 * thick_first_part) > thick_second_part) // "по расчету"
     {
-        wbkgd(sub1, COLOR_PAIR(5));
-        wmove(sub1, 8, 96);
-        wprintw(sub1, "by calculation,");
-        wmove(sub1, 10, 96);
-        wprintw(sub1, "but no more %.1f", 1.2 * thick_second_part);
-        wmove(sub1, 18, 96);
-        wprintw(sub1, "by calculation,");
-        wmove(sub1, 20, 96);
-        wprintw(sub1, "but no more %.1f", 1.2 * thick_second_part);
-        wrefresh(sub1);
+        weld_leg_accord_to_calc(sub1, thick_second_part);
     } else if (thick_first_part < thick_second_part && thick_first_part < (0.6 * thick_second_part)) // "по расчету"
     {
-        wbkgd(sub1, COLOR_PAIR(5));
-        wmove(sub1, 8, 96);
-        wprintw(sub1, "by calculation,");
-        wmove(sub1, 10, 96);
-        wprintw(sub1, "but no more %.1f", 1.2 * thick_first_part);
-        wmove(sub1, 18, 96);
-        wprintw(sub1, "by calculation,");
-        wmove(sub1, 20, 96);
-        wprintw(sub1, "but no more %.1f", 1.2 * thick_first_part);
-        wrefresh(sub1);
+        weld_leg_accord_to_calc(sub1, thick_first_part);
     } else
     {
         // Вывод значения катета в 1 и 2 строки 3 столбца
@@ -308,24 +290,43 @@ void output_result(WINDOW *sub1, int thick_first_part, int thick_second_part)
         from_thick_17_to_22(sub1, thick_first_part, thick_second_part);
         // подбор катета для толщин 23-32
         from_thick_23_to_32(sub1, thick_first_part, thick_second_part);
-        // катет 33-40
-        if (thick_first_part > thick_second_part && thick_first_part == 33 || thick_first_part == 34 ||
-            thick_first_part == 35 || thick_first_part == 36 || thick_first_part == 37 ||
-            thick_first_part == 38 || thick_first_part == 39 || thick_first_part == 40)
-        {
-            wmove(sub1, 9, 103);
-            wprintw(sub1, "16");
-            wmove(sub1, 19, 103);
-            wprintw(sub1, "22");
-        } else if (thick_first_part < thick_second_part && thick_second_part == 33 || thick_second_part == 34 ||
-                   thick_second_part == 35 || thick_second_part == 36 || thick_second_part == 37 ||
-                   thick_second_part == 38 || thick_second_part == 39 || thick_second_part == 40)
-        {
-            wmove(sub1, 9, 103);
-            wprintw(sub1, "16");
-            wmove(sub1, 19, 103);
-            wprintw(sub1, "22");
-        }
+        // подбор катета для толщин 33-40
+        from_thick_33_to_40(sub1, thick_first_part, thick_second_part);
+    }
+}
+
+void weld_leg_accord_to_calc(WINDOW *sub1, int thick_part)
+{
+    wbkgd(sub1, COLOR_PAIR(5));
+    wmove(sub1, 8, 96);
+    wprintw(sub1, "by calculation,");
+    wmove(sub1, 10, 96);
+    wprintw(sub1, "but no more %.1f", 1.2 * thick_part);
+    wmove(sub1, 18, 96);
+    wprintw(sub1, "by calculation,");
+    wmove(sub1, 20, 96);
+    wprintw(sub1, "but no more %.1f", 1.2 * thick_part);
+    wrefresh(sub1);
+}
+
+void from_thick_33_to_40(WINDOW *sub1, int thick_first_part, int thick_second_part)
+{
+    if (thick_first_part > thick_second_part && thick_first_part == 33 || thick_first_part == 34 ||
+        thick_first_part == 35 || thick_first_part == 36 || thick_first_part == 37 ||
+        thick_first_part == 38 || thick_first_part == 39 || thick_first_part == 40)
+    {
+        wmove(sub1, 9, 103);
+        wprintw(sub1, "16");
+        wmove(sub1, 19, 103);
+        wprintw(sub1, "22");
+    } else if (thick_first_part < thick_second_part && thick_second_part == 33 || thick_second_part == 34 ||
+               thick_second_part == 35 || thick_second_part == 36 || thick_second_part == 37 ||
+               thick_second_part == 38 || thick_second_part == 39 || thick_second_part == 40)
+    {
+        wmove(sub1, 9, 103);
+        wprintw(sub1, "16");
+        wmove(sub1, 19, 103);
+        wprintw(sub1, "22");
     }
 }
 

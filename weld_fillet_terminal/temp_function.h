@@ -39,4 +39,10 @@ void from_thick_17_to_22(WINDOW *sub1, int thick_first_part, int thick_second_pa
 // Подбор катета для толщин 23-32
 void from_thick_23_to_32(WINDOW *sub1, int thick_first_part, int thick_second_part);
 
+// Подбор катета для толщин 33-40
+void from_thick_33_to_40(WINDOW *sub1, int thick_first_part, int thick_second_part);
+
+// Катет сварного шва по расчету
+void weld_leg_accord_to_calc(WINDOW *sub1, int thick_part);
+
 #endif //WELD_FILLET_TERMINAL_TEMP_FUNCTION_H
