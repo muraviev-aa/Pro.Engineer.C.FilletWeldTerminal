@@ -3,6 +3,9 @@
 ![C](https://img.shields.io/badge/c-%2300599C.svg?style=for-the-badge&logo=c&logoColor=white)
 ![CLion](https://img.shields.io/badge/CLion-black?style=for-the-badge&logo=clion&logoColor=white)
 ![CMake](https://img.shields.io/badge/CMake-%23008FBA.svg?style=for-the-badge&logo=cmake&logoColor=white)
+<p align="left">
+<img src="images/gtk.png" alt="drawing" width="50"/>
+</p>
 
 # Многомодульная программа 
 ### Консольное приложение "Минимальные катеты сварных швов стальных конструкций"
@@ -28,6 +31,3 @@
 
 <strong> &#128194; weld_fillet_gui </strong> 
 
-<p align="center">
-<img src="images/gtk.png" alt="drawing" width="100"/>
-</p>
