@@ -31,3 +31,5 @@
 
 <strong> &#128194; weld_fillet_gui </strong> 
 
+ Приложение разработано  с использованием Glade и GTK+ 3.
+
