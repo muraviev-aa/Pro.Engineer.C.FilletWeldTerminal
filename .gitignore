@@ -52,3 +52,6 @@ Mkfile.old
 dkms.conf
 /weld_fillet_terminal/.idea
 /weld_fillet_terminal/cmake-build-debug
+weld_fillet_gui/.idea/misc.xml
+/weld_fillet_gui/cmake-build-debug
+/weld_fillet_gui/.idea
