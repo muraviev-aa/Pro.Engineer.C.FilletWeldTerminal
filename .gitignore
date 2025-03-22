@@ -55,3 +55,4 @@ dkms.conf
 weld_fillet_gui/.idea/misc.xml
 /weld_fillet_gui/cmake-build-debug
 /weld_fillet_gui/.idea
+weld_fillet_gui/weld.glade~

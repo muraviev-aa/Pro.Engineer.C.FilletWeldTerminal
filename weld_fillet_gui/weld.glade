@@ -260,7 +260,7 @@
                       <object class="GtkLabel">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="label" translatable="yes">Минимальные катет шва, мм</property>
+                        <property name="label" translatable="yes">Минимальный катет шва, мм</property>
                       </object>
                       <packing>
                         <property name="x">498</property>
