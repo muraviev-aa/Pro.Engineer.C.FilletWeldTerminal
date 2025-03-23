@@ -31,6 +31,8 @@
                       <object class="GtkEntry" id="entry_t1">
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
+                        <property name="max-length">4</property>
+                        <signal name="changed" handler="on_entry_t1_changed" swapped="no"/>
                       </object>
                       <packing>
                         <property name="x">255</property>
@@ -41,6 +43,8 @@
                       <object class="GtkEntry" id="entry_t2">
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
+                        <property name="max-length">4</property>
+                        <signal name="changed" handler="on_entry_t2_changed" swapped="no"/>
                       </object>
                       <packing>
                         <property name="x">255</property>
@@ -51,10 +55,10 @@
                       <object class="GtkLabel" id="label_t1">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="label" translatable="yes">Толщина первого элемента</property>
+                        <property name="label" translatable="yes">Введите толщину первого элемента, мм</property>
                       </object>
                       <packing>
-                        <property name="x">90</property>
+                        <property name="x">9</property>
                         <property name="y">11</property>
                       </packing>
                     </child>
@@ -62,10 +66,10 @@
                       <object class="GtkLabel" id="label_t2">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="label" translatable="yes">Толщина второго элемента</property>
+                        <property name="label" translatable="yes">Введите толщину второго элемента, мм </property>
                       </object>
                       <packing>
-                        <property name="x">90</property>
+                        <property name="x">9</property>
                         <property name="y">49</property>
                       </packing>
                     </child>
@@ -76,10 +80,25 @@
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                         <property name="receives-default">True</property>
+                        <signal name="clicked" handler="on_button_calc_clicked" swapped="no"/>
                       </object>
                       <packing>
                         <property name="x">480</property>
-                        <property name="y">22</property>
+                        <property name="y">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="button_new">
+                        <property name="label" translatable="yes">Новые данные</property>
+                        <property name="width-request">150</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">True</property>
+                        <signal name="clicked" handler="on_button_new_clicked" swapped="no"/>
+                      </object>
+                      <packing>
+                        <property name="x">480</property>
+                        <property name="y">41</property>
                       </packing>
                     </child>
                   </object>
@@ -309,11 +328,12 @@
                       <object class="GtkLabel" id="katet_tabl1">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="label" translatable="yes">Катет</property>
+                        <property name="label" translatable="yes">Введите исходные
+          данные</property>
                       </object>
                       <packing>
-                        <property name="x">562</property>
-                        <property name="y">78</property>
+                        <property name="x">529</property>
+                        <property name="y">69</property>
                       </packing>
                     </child>
                     <child>
@@ -345,11 +365,12 @@
                       <object class="GtkLabel" id="katet_tabl2">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="label" translatable="yes">Катет</property>
+                        <property name="label" translatable="yes">Введите исходные
+          данные</property>
                       </object>
                       <packing>
-                        <property name="x">562</property>
-                        <property name="y">173</property>
+                        <property name="x">529</property>
+                        <property name="y">166</property>
                       </packing>
                     </child>
                   </object>
@@ -362,8 +383,7 @@
                 <property name="height-request">0</property>
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="tooltip-text" translatable="yes">Изм. №2, 3 </property>
-                <property name="label" translatable="yes">Таблица 38 СП 16.13330.2017</property>
+                <property name="label" translatable="yes">Таблица 38 СП 16.13330.2017 изм. №2, 3 </property>
                 <attributes>
                   <attribute name="weight" value="bold"/>
                 </attributes>
@@ -394,11 +414,12 @@
                     <property name="can-focus">False</property>
                     <child>
                       <object class="GtkButton" id="button_new_data">
-                        <property name="label" translatable="yes">Новые данные</property>
+                        <property name="label" translatable="yes">Запомнить данные</property>
                         <property name="width-request">150</property>
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                         <property name="receives-default">True</property>
+                        <signal name="clicked" handler="on_button_new_data_clicked" swapped="no"/>
                       </object>
                       <packing>
                         <property name="x">39</property>
