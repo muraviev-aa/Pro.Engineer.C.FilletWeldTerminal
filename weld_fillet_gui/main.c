@@ -12,7 +12,9 @@ GtkWidget *label_t2;
 GtkWidget *button_calc;
 GtkWidget *fixed_tabl;
 GtkWidget *katet_tabl1;
+GtkWidget *label_result1;
 GtkWidget *katet_tabl2;
+GtkWidget *label_result2;
 GtkWidget *fixed_file;
 GtkWidget *frame_thick;
 GtkWidget *frame_tabl;
@@ -48,13 +50,17 @@ int main(int argc, char **argv)
     fixed_all = GTK_WIDGET(gtk_builder_get_object(builder, "fixed_all"));
     fixed_thick = GTK_WIDGET(gtk_builder_get_object(builder, "fixed_thick"));
     entry_t1 = GTK_WIDGET(gtk_builder_get_object(builder, "entry_t1"));
+    gtk_entry_set_alignment((GtkEntry *) entry_t1, 1);
     entry_t2 = GTK_WIDGET(gtk_builder_get_object(builder, "entry_t2"));
+    gtk_entry_set_alignment((GtkEntry *) entry_t2, 1);
     label_t1 = GTK_WIDGET(gtk_builder_get_object(builder, "label_t1"));
     label_t2 = GTK_WIDGET(gtk_builder_get_object(builder, "label_t2"));
     button_calc = GTK_WIDGET(gtk_builder_get_object(builder, "button_calc"));
     fixed_tabl = GTK_WIDGET(gtk_builder_get_object(builder, "fixed_tabl"));
     katet_tabl1 = GTK_WIDGET(gtk_builder_get_object(builder, "katet_tabl1"));
+    label_result1 = GTK_WIDGET(gtk_builder_get_object(builder, "label_result1"));
     katet_tabl2 = GTK_WIDGET(gtk_builder_get_object(builder, "katet_tabl2"));
+    label_result2 = GTK_WIDGET(gtk_builder_get_object(builder, "label_result2"));
     fixed_file = GTK_WIDGET(gtk_builder_get_object(builder, "fixed_file"));
     button_new = GTK_WIDGET(gtk_builder_get_object(builder, "button_new"));
     button_new_data = GTK_WIDGET(gtk_builder_get_object(builder, "button_new_data"));
@@ -76,25 +82,51 @@ void on_button_calc_clicked(GtkButton *b)
     printf("%d\n", t1);
     printf("%d\n", t2);
 
-    if (t1 < t2 && t1 < 0.6 * t2)
+    if (t1 < t2 && t1 < 0.6 * t2 || 0.6 * t1 > t2 && t1 > t2)
     {
-        gdouble kat_max = 1.2 * t1;
+        gdouble kat_max;
+        if (t1 < t2)
+            kat_max = 1.2 * t1;
+        else
+            kat_max = 1.2 * t2;
         sprintf(str_calc2, "%.1f", kat_max);
         str_calc3 = g_strjoin(" ", str_calc1, str_calc2, NULL);
         gtk_label_set_text(GTK_LABEL(katet_tabl1), str_calc3);
         gtk_label_set_text(GTK_LABEL(katet_tabl2), str_calc3);
         printf("Calculate 1\n");
-    } else if (0.6 *t1 > t2 && t1 > t2)
+    } else
     {
-        gdouble kat_max = 1.2 * t2;
-        sprintf(str_calc2, "%.1f", kat_max);
-        str_calc3 = g_strjoin(" ", str_calc1, str_calc2, NULL);
-        gtk_label_set_text(GTK_LABEL(katet_tabl1), str_calc3);
-        gtk_label_set_text(GTK_LABEL(katet_tabl2), str_calc3);
-        printf("Calculate 2\n");
+        gtk_widget_hide(katet_tabl1);
+        gtk_widget_show(label_result1);
+        gtk_widget_hide(katet_tabl2);
+        gtk_widget_show(label_result2);
+        if (t1 > t2 && t1 <= 5 && t1 >= 4 || t1 < t2 && t2 <= 5 && t2 >= 4)
+        {
+            gtk_label_set_text(GTK_LABEL(label_result1), "3");
+            gtk_label_set_text(GTK_LABEL(label_result2), "3");
+        } else if (t1 > t2 && t1 <= 10 && t1 >= 6 || t1 < t2 && t2 <= 10 && t2 >= 6)
+        {
+            gtk_label_set_text(GTK_LABEL(label_result1), "4");
+            gtk_label_set_text(GTK_LABEL(label_result2), "5");
+        } else if (t1 > t2 && t1 <= 16 && t1 >= 11 || t1 < t2 && t2 <= 16 && t2 >= 11)
+        {
+            gtk_label_set_text(GTK_LABEL(label_result1), "6");
+            gtk_label_set_text(GTK_LABEL(label_result2), "8");
+        } else if (t1 > t2 && t1 <= 22 && t1 >= 17 || t1 < t2 && t2 <= 22 && t2 >= 17)
+        {
+            gtk_label_set_text(GTK_LABEL(label_result1), "10");
+            gtk_label_set_text(GTK_LABEL(label_result2), "12");
+        } else if (t1 > t2 && t1 <= 32 && t1 >= 23 || t1 < t2 && t2 <= 32 && t2 >= 23)
+        {
+            gtk_label_set_text(GTK_LABEL(label_result1), "12");
+            gtk_label_set_text(GTK_LABEL(label_result2), "16");
+        } else if (t1 > t2 && t1 <= 40 && t1 >= 33 || t1 < t2 && t2 <= 40 && t2 >= 33)
+        {
+            gtk_label_set_text(GTK_LABEL(label_result1), "16");
+            gtk_label_set_text(GTK_LABEL(label_result2), "22");
+        }
+        printf("Calculate 3, 4\n");
     }
-
-
 }
 
 void on_entry_t1_changed(GtkEntry *e)
@@ -128,4 +160,8 @@ void on_button_new_clicked(GtkButton *b)
     gtk_label_set_text(GTK_LABEL(label_t2), "Введите толщину второго элемента, мм");
     gtk_label_set_text(GTK_LABEL(katet_tabl1), "Введите исходные\n          данные");
     gtk_label_set_text(GTK_LABEL(katet_tabl2), "Введите исходные\n          данные");
+    gtk_widget_show(katet_tabl1);
+    gtk_widget_hide(label_result1);
+    gtk_widget_show(katet_tabl2);
+    gtk_widget_hide(label_result2);
 }
