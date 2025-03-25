@@ -28,6 +28,7 @@ GtkBuilder *builder;
 
 gint t1 = 0; // толщина первой свариваемой детали
 gint t2 = 0; // толщина второй свариваемой детали
+gint button_click_count = 0;
 gchar *str_calc1 = "   по расчету,\nно не более";
 gchar str_calc2[4];
 gchar *str_calc3;
@@ -157,7 +158,9 @@ void on_entry_t2_changed(GtkEntry *e)
 
 void on_button_new_data_clicked(GtkButton *b)
 {
-    gtk_label_set_text(GTK_LABEL(label_count), "1");
+    button_click_count ++;
+    gchar *count_click = g_strdup_printf("%i", button_click_count);
+    gtk_label_set_text(GTK_LABEL(label_count), count_click);
 }
 
 void on_button_new_clicked(GtkButton *b)

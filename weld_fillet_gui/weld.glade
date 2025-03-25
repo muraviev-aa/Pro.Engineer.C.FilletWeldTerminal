@@ -435,15 +435,16 @@
                     <property name="can-focus">False</property>
                     <child>
                       <object class="GtkButton" id="button_new_data">
-                        <property name="label" translatable="yes">Запомнить данные</property>
+                        <property name="label" translatable="yes">Записать</property>
                         <property name="width-request">150</property>
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                         <property name="receives-default">True</property>
+                        <property name="relief">half</property>
                         <signal name="clicked" handler="on_button_new_data_clicked" swapped="no"/>
                       </object>
                       <packing>
-                        <property name="x">14</property>
+                        <property name="x">17</property>
                         <property name="y">33</property>
                       </packing>
                     </child>
@@ -468,7 +469,7 @@
                         <property name="text" translatable="yes">        Введите имя файла</property>
                       </object>
                       <packing>
-                        <property name="x">243</property>
+                        <property name="x">238</property>
                         <property name="y">33</property>
                       </packing>
                     </child>
@@ -478,7 +479,7 @@
                         <property name="can-focus">False</property>
                       </object>
                       <packing>
-                        <property name="x">181</property>
+                        <property name="x">183</property>
                         <property name="y">42</property>
                       </packing>
                     </child>
