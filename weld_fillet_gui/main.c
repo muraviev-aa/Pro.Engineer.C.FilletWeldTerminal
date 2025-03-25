@@ -21,6 +21,7 @@ GtkWidget *frame_tabl;
 GtkWidget *frame_file;
 GtkWidget *button_new;
 GtkWidget *button_new_data;
+GtkWidget *label_count;
 GtkWidget *button_file;
 GtkWidget *entry_name;
 GtkBuilder *builder;
@@ -37,13 +38,25 @@ G_MODULE_EXPORT void on_button_calc_clicked(GtkButton *b);
 G_MODULE_EXPORT void on_button_new_data_clicked(GtkButton *b);
 G_MODULE_EXPORT void on_button_new_clicked(GtkButton *b);
 
+void work_widgets();
+void det_size_weld();
 
 int main(int argc, char **argv)
 {
     gtk_init(&argc, &argv);
     builder = gtk_builder_new_from_file("weld.glade");
+    work_widgets();
+    gtk_widget_show(window_main);
+    gtk_main();
+    return 0;
+}
+
+// Работаем с виджетами
+void work_widgets()
+{
     window_main = GTK_WIDGET(gtk_builder_get_object(builder, "window_main"));
     gtk_window_set_title(GTK_WINDOW(window_main), "Минимальный катет шва 1.0");
+    gtk_window_set_icon_from_file(GTK_WINDOW(window_main), "resources/ant.gif", NULL);
     gtk_window_set_resizable(GTK_WINDOW(window_main), FALSE);
     g_signal_connect(window_main, "destroy", G_CALLBACK(gtk_main_quit), NULL);
     gtk_builder_connect_signals(builder, NULL);
@@ -64,24 +77,21 @@ int main(int argc, char **argv)
     fixed_file = GTK_WIDGET(gtk_builder_get_object(builder, "fixed_file"));
     button_new = GTK_WIDGET(gtk_builder_get_object(builder, "button_new"));
     button_new_data = GTK_WIDGET(gtk_builder_get_object(builder, "button_new_data"));
+    label_count = GTK_WIDGET(gtk_builder_get_object(builder, "label_count"));
     button_file = GTK_WIDGET(gtk_builder_get_object(builder, "button_file"));
     entry_name = GTK_WIDGET(gtk_builder_get_object(builder, "entry_name"));
     frame_thick = GTK_WIDGET(gtk_builder_get_object(builder, "frame_thick"));
     frame_tabl = GTK_WIDGET(gtk_builder_get_object(builder, "frame_tabl"));
     frame_file = GTK_WIDGET(gtk_builder_get_object(builder, "frame_file"));
-
-    gtk_window_set_icon_from_file(GTK_WINDOW(window_main), "resources/ant.gif", NULL);
-    gtk_widget_show(window_main);
-
-    gtk_main();
-    return 0;
 }
 
 void on_button_calc_clicked(GtkButton *b)
 {
-    printf("%d\n", t1);
-    printf("%d\n", t2);
+    det_size_weld();
+}
 
+void det_size_weld()
+{
     if (t1 < t2 && t1 < 0.6 * t2 || 0.6 * t1 > t2 && t1 > t2)
     {
         gdouble kat_max;
@@ -93,7 +103,6 @@ void on_button_calc_clicked(GtkButton *b)
         str_calc3 = g_strjoin(" ", str_calc1, str_calc2, NULL);
         gtk_label_set_text(GTK_LABEL(katet_tabl1), str_calc3);
         gtk_label_set_text(GTK_LABEL(katet_tabl2), str_calc3);
-        printf("Calculate 1\n");
     } else
     {
         gtk_widget_hide(katet_tabl1);
@@ -125,7 +134,6 @@ void on_button_calc_clicked(GtkButton *b)
             gtk_label_set_text(GTK_LABEL(label_result1), "16");
             gtk_label_set_text(GTK_LABEL(label_result2), "22");
         }
-        printf("Calculate 3, 4\n");
     }
 }
 
@@ -149,7 +157,7 @@ void on_entry_t2_changed(GtkEntry *e)
 
 void on_button_new_data_clicked(GtkButton *b)
 {
-
+    gtk_label_set_text(GTK_LABEL(label_count), "1");
 }
 
 void on_button_new_clicked(GtkButton *b)
