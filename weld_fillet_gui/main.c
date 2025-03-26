@@ -1,3 +1,19 @@
+/**
+  ******************************************************************************
+  * @file           : main.c
+  * @brief          : Main program body
+  ******************************************************************************
+  * @attention
+  *
+  * @version 1.0
+  * @author Aleksei Muraviev
+  * @contact muraviev_aa@yandex.ru
+  *
+  *  Program for determining the minimum legs of corner welds
+  *
+  ******************************************************************************
+  */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <gtk/gtk.h>
