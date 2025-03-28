@@ -105,14 +105,14 @@ void work_widgets()
     frame_tabl = GTK_WIDGET(gtk_builder_get_object(builder, "frame_tabl"));
     frame_file = GTK_WIDGET(gtk_builder_get_object(builder, "frame_file"));
     // Управление активностью кнопок
-    gtk_widget_set_sensitive( GTK_WIDGET(button_calc), FALSE);
-    gtk_widget_set_sensitive( GTK_WIDGET(button_new), FALSE);
+    gtk_widget_set_sensitive(GTK_WIDGET(button_calc), FALSE);
+    gtk_widget_set_sensitive(GTK_WIDGET(button_new), FALSE);
 }
 
 void on_button_calc_clicked(GtkButton *b)
 {
     det_size_weld();
-    gtk_widget_set_sensitive( GTK_WIDGET(button_new), TRUE);
+    gtk_widget_set_sensitive(GTK_WIDGET(button_new), TRUE);
 }
 
 void det_size_weld()
@@ -131,8 +131,7 @@ void det_size_weld()
     {
         gtk_label_set_text(GTK_LABEL(katet_tabl1), str_calc4);
         gtk_label_set_text(GTK_LABEL(katet_tabl2), str_calc4);
-    }
-    else
+    } else
     {
         if (t1 < t2 && t1 < 0.6 * t2 || 0.6 * t1 > t2 && t1 > t2)
         {
@@ -151,27 +150,33 @@ void det_size_weld()
             gtk_widget_show(label_result1);
             gtk_widget_hide(katet_tabl2);
             gtk_widget_show(label_result2);
-            if (t1 > t2 && t1 <= 5 && t1 >= 4 || t1 < t2 && t2 <= 5 && t2 >= 4)
+            if (t1 > t2 && t1 <= 5 && t1 >= 4 || t1 < t2 && t2 <= 5 && t2 >= 4
+                || t1 == t2 && t2 <= 5 && t2 >= 4)
             {
                 gtk_label_set_text(GTK_LABEL(label_result1), "3");
                 gtk_label_set_text(GTK_LABEL(label_result2), "3");
-            } else if (t1 > t2 && t1 <= 10 && t1 >= 6 || t1 < t2 && t2 <= 10 && t2 >= 6)
+            } else if (t1 > t2 && t1 <= 10 && t1 >= 6 || t1 < t2 && t2 <= 10 && t2 >= 6
+                       || t1 == t2 && t2 <= 10 && t2 >= 6)
             {
                 gtk_label_set_text(GTK_LABEL(label_result1), "4");
                 gtk_label_set_text(GTK_LABEL(label_result2), "5");
-            } else if (t1 > t2 && t1 <= 16 && t1 >= 11 || t1 < t2 && t2 <= 16 && t2 >= 11)
+            } else if (t1 > t2 && t1 <= 16 && t1 >= 11 || t1 < t2 && t2 <= 16 && t2 >= 11
+                       || t1 == t2 && t2 <= 16 && t2 >= 11)
             {
                 gtk_label_set_text(GTK_LABEL(label_result1), "6");
                 gtk_label_set_text(GTK_LABEL(label_result2), "8");
-            } else if (t1 > t2 && t1 <= 22 && t1 >= 17 || t1 < t2 && t2 <= 22 && t2 >= 17)
+            } else if (t1 > t2 && t1 <= 22 && t1 >= 17 || t1 < t2 && t2 <= 22 && t2 >= 17
+                       || t1 == t2 && t2 <= 22 && t2 >= 17)
             {
                 gtk_label_set_text(GTK_LABEL(label_result1), "10");
                 gtk_label_set_text(GTK_LABEL(label_result2), "12");
-            } else if (t1 > t2 && t1 <= 32 && t1 >= 23 || t1 < t2 && t2 <= 32 && t2 >= 23)
+            } else if (t1 > t2 && t1 <= 32 && t1 >= 23 || t1 < t2 && t2 <= 32 && t2 >= 23
+                       || t1 == t2 && t2 <= 32 && t2 >= 23)
             {
                 gtk_label_set_text(GTK_LABEL(label_result1), "12");
                 gtk_label_set_text(GTK_LABEL(label_result2), "16");
-            } else if (t1 > t2 && t1 <= 40 && t1 >= 33 || t1 < t2 && t2 <= 40 && t2 >= 33)
+            } else if (t1 > t2 && t1 <= 40 && t1 >= 33 || t1 < t2 && t2 <= 40 && t2 >= 33
+                       || t1 == t2 && t2 <= 40 && t2 >= 33)
             {
                 gtk_label_set_text(GTK_LABEL(label_result1), "16");
                 gtk_label_set_text(GTK_LABEL(label_result2), "22");
@@ -200,7 +205,7 @@ void on_entry_t2_changed(GtkEntry *e)
 
 void on_button_new_data_clicked(GtkButton *b)
 {
-    button_click_count ++;
+    button_click_count++;
     gchar *count_click = g_strdup_printf("%i", button_click_count);
     gtk_label_set_text(GTK_LABEL(label_count), count_click);
 }
@@ -218,14 +223,14 @@ void on_button_new_clicked(GtkButton *b)
     gtk_widget_show(katet_tabl2);
     gtk_widget_hide(label_result2);
     gtk_button_set_label(GTK_BUTTON(button_calc), "Вычислить");
-    gtk_widget_set_sensitive( GTK_WIDGET(button_calc), FALSE);
+    gtk_widget_set_sensitive(GTK_WIDGET(button_calc), FALSE);
 }
 
 void on_entry_t1_insert_text(GtkEntry *e)
 {
     if (gtk_entry_get_text_length(GTK_ENTRY(entry_t2)))
     {
-        gtk_widget_set_sensitive( GTK_WIDGET(button_calc), TRUE);
+        gtk_widget_set_sensitive(GTK_WIDGET(button_calc), TRUE);
     }
 }
 
@@ -233,7 +238,7 @@ void on_entry_t2_insert_text(GtkEntry *e)
 {
     if (gtk_entry_get_text_length(GTK_ENTRY(entry_t1)))
     {
-        gtk_widget_set_sensitive( GTK_WIDGET(button_calc), TRUE);
+        gtk_widget_set_sensitive(GTK_WIDGET(button_calc), TRUE);
     }
 
 }
