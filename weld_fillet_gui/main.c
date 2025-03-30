@@ -17,6 +17,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <gtk/gtk.h>
+#include <conio.h>
+#include <cairo-pdf.h>
 
 GtkWidget *window_main;
 GtkWidget *fixed_all;
@@ -39,6 +41,7 @@ GtkWidget *frame_file;
 GtkWidget *button_new_data;
 GtkWidget *label_count;
 GtkWidget *button_file;
+GtkWidget *label_create_file;
 GtkWidget *entry_name;
 GtkBuilder *builder;
 
@@ -54,13 +57,14 @@ G_MODULE_EXPORT void on_entry_t1_changed(GtkEntry *e);
 G_MODULE_EXPORT void on_entry_t2_changed(GtkEntry *e);
 G_MODULE_EXPORT void on_entry_t1_insert_text(GtkEntry *e);
 G_MODULE_EXPORT void on_entry_t2_insert_text(GtkEntry *e);
+G_MODULE_EXPORT void on_entry_name_focus_in_event(GtkEntry *e);
 G_MODULE_EXPORT void on_button_calc_clicked(GtkButton *b);
 G_MODULE_EXPORT void on_button_new_data_clicked(GtkButton *b);
 G_MODULE_EXPORT void on_button_new_clicked(GtkButton *b);
-
+G_MODULE_EXPORT void on_button_file_clicked(GtkButton *b);
 
 void work_widgets();
-void det_size_weld();
+void size_weld();
 
 int main(int argc, char **argv)
 {
@@ -69,6 +73,7 @@ int main(int argc, char **argv)
     work_widgets();
     gtk_widget_show(window_main);
     gtk_main();
+
     return 0;
 }
 
@@ -84,9 +89,9 @@ void work_widgets()
     fixed_all = GTK_WIDGET(gtk_builder_get_object(builder, "fixed_all"));
     fixed_thick = GTK_WIDGET(gtk_builder_get_object(builder, "fixed_thick"));
     entry_t1 = GTK_WIDGET(gtk_builder_get_object(builder, "entry_t1"));
-    gtk_entry_set_alignment((GtkEntry *) entry_t1, 1);
+    gtk_entry_set_alignment((GtkEntry *) entry_t1, 1); // ввод текста слева
     entry_t2 = GTK_WIDGET(gtk_builder_get_object(builder, "entry_t2"));
-    gtk_entry_set_alignment((GtkEntry *) entry_t2, 1);
+    gtk_entry_set_alignment((GtkEntry *) entry_t2, 1); // ввод текста слева
     label_t1 = GTK_WIDGET(gtk_builder_get_object(builder, "label_t1"));
     label_t2 = GTK_WIDGET(gtk_builder_get_object(builder, "label_t2"));
     button_calc = GTK_WIDGET(gtk_builder_get_object(builder, "button_calc"));
@@ -100,7 +105,9 @@ void work_widgets()
     button_new_data = GTK_WIDGET(gtk_builder_get_object(builder, "button_new_data"));
     label_count = GTK_WIDGET(gtk_builder_get_object(builder, "label_count"));
     button_file = GTK_WIDGET(gtk_builder_get_object(builder, "button_file"));
+    label_create_file = GTK_WIDGET(gtk_builder_get_object(builder, "label_create_file"));
     entry_name = GTK_WIDGET(gtk_builder_get_object(builder, "entry_name"));
+    gtk_entry_set_alignment((GtkEntry *) entry_name, 1);  // ввод текста слева
     frame_thick = GTK_WIDGET(gtk_builder_get_object(builder, "frame_thick"));
     frame_tabl = GTK_WIDGET(gtk_builder_get_object(builder, "frame_tabl"));
     frame_file = GTK_WIDGET(gtk_builder_get_object(builder, "frame_file"));
@@ -111,11 +118,11 @@ void work_widgets()
 
 void on_button_calc_clicked(GtkButton *b)
 {
-    det_size_weld();
+    size_weld();
     gtk_widget_set_sensitive(GTK_WIDGET(button_new), TRUE);
 }
 
-void det_size_weld()
+void size_weld()
 {
     if (t1 > t2 && t1 < 4)
     {
@@ -147,9 +154,7 @@ void det_size_weld()
         } else
         {
             gtk_widget_hide(katet_tabl1);
-            gtk_widget_show(label_result1);
             gtk_widget_hide(katet_tabl2);
-            gtk_widget_show(label_result2);
             if (t1 > t2 && t1 <= 5 && t1 >= 4 || t1 < t2 && t2 <= 5 && t2 >= 4
                 || t1 == t2 && t2 <= 5 && t2 >= 4)
             {
@@ -219,9 +224,9 @@ void on_button_new_clicked(GtkButton *b)
     gtk_label_set_text(GTK_LABEL(katet_tabl1), "Введите исходные\n          данные");
     gtk_label_set_text(GTK_LABEL(katet_tabl2), "Введите исходные\n          данные");
     gtk_widget_show(katet_tabl1);
-    gtk_widget_hide(label_result1);
+    gtk_label_set_text(GTK_LABEL(label_result1), " ");
     gtk_widget_show(katet_tabl2);
-    gtk_widget_hide(label_result2);
+    gtk_label_set_text(GTK_LABEL(label_result2), " ");
     gtk_button_set_label(GTK_BUTTON(button_calc), "Вычислить");
     gtk_widget_set_sensitive(GTK_WIDGET(button_calc), FALSE);
 }
@@ -241,4 +246,125 @@ void on_entry_t2_insert_text(GtkEntry *e)
         gtk_widget_set_sensitive(GTK_WIDGET(button_calc), TRUE);
     }
 
+}
+
+void on_button_file_clicked(GtkButton *b)
+{
+    gchar *file_name = NULL;
+    const gchar *first_size = gtk_label_get_text(GTK_LABEL(label_result1));
+    const gchar *second_size = gtk_label_get_text(GTK_LABEL(label_result2));
+    cairo_surface_t *surface;
+    cairo_t *cr;
+    const gchar *file_name_assigned = gtk_entry_get_text(GTK_ENTRY(entry_name));
+    // Имя файла задано или используется по умолчанию
+    if (g_str_equal(file_name_assigned, "        Введите имя файла"))
+        file_name = "text.pdf";
+    else
+        file_name = g_strjoin(".", file_name_assigned, "pdf", NULL);
+
+    surface = cairo_pdf_surface_create(file_name, 597.6, 842.4);
+    cr = cairo_create(surface);
+
+    // Проверяем создан ли файл
+    if (surface == NULL)
+    {
+        printf("cairo_pdf_surface_create %s file is BREAK\n", file_name);
+        gtk_label_set_text(GTK_LABEL(label_create_file), "Ошибка создания файла");
+        puts("Press any key to exit...");
+        getch(); // считывает символ из входного потока, но не выводит на экран
+        exit(1);
+    } else
+    {
+        gtk_label_set_text(GTK_LABEL(label_create_file), "Файл создан");
+        printf("cairo_pdf_surface_create %s file is DONE\n", file_name);
+    }
+
+    cairo_set_source_rgb(cr, 0, 0, 0);
+    cairo_select_font_face(cr, "Arial", CAIRO_FONT_SLANT_NORMAL,
+                           CAIRO_FONT_WEIGHT_NORMAL);
+
+    cairo_set_font_size(cr, 12.0);
+    cairo_move_to(cr, 160, 25);
+    cairo_show_text(cr, "Минимальные катеты сварных угловых швов ");
+
+    cairo_set_font_size(cr, 10.0);
+    cairo_move_to(cr, 70, 45);
+    cairo_show_text(cr, g_strjoin(" ", "Толщина первого свариваемого элемента",
+                                  g_strjoin(" ", gtk_entry_get_text(GTK_ENTRY(entry_t1)), "мм", NULL), NULL));
+    cairo_move_to(cr, 70, 60);
+    cairo_show_text(cr, g_strjoin(" ", "Толщина второго свариваемого элемента",
+                                  g_strjoin(" ", gtk_entry_get_text(GTK_ENTRY(entry_t2)), "мм", NULL), NULL));
+    cairo_move_to(cr, 60, 80);
+    cairo_show_text(cr, "Таблица 38 СП 16.13330.2017 изм. № 2, 3");
+
+    // толщина линии таблицы
+    cairo_set_line_width(cr, 0.4);
+    // наружная рамка таблицы
+    cairo_rectangle(cr, 60, 85, 510, 145);
+    // 1-й столбец
+    cairo_move_to(cr, 90, 110);
+    cairo_show_text(cr, "Тип соединения");
+    cairo_move_to(cr, 70, 145);
+    cairo_show_text(cr, "Тавровое с");
+    cairo_move_to(cr, 70, 155);
+    cairo_show_text(cr, "двусторонними угловыми");
+    cairo_move_to(cr, 70, 165);
+    cairo_show_text(cr, "швами; нахлесточное и");
+    cairo_move_to(cr, 70, 175);
+    cairo_show_text(cr, "угловое");
+    cairo_move_to(cr, 70, 200);
+    cairo_show_text(cr, "Угловое и тавровое с");
+    cairo_move_to(cr, 70, 210);
+    cairo_show_text(cr, "односторонними");
+    cairo_move_to(cr, 70, 220);
+    cairo_show_text(cr, "угловыми швами");
+    // 2-й столбец
+    cairo_move_to(cr, 235, 110);
+    cairo_show_text(cr, "Вид сварки");
+    cairo_move_to(cr, 225, 170);
+    cairo_show_text(cr, "Ручная дуговая,");
+    cairo_move_to(cr, 220, 180);
+    cairo_show_text(cr, "автоматическая и");
+    cairo_move_to(cr, 218, 190);
+    cairo_show_text(cr, "механизированная");
+    // 3-й столбец
+    cairo_move_to(cr, 340, 100);
+    cairo_show_text(cr, "Минимальный катет шва kf, мм, при толщине");
+    cairo_move_to(cr, 331, 110);
+    cairo_show_text(cr, "более толстого из свариваемых элементов Т, мм");
+    cairo_move_to(cr, 440, 120);
+    if (t1 > t2 || t1 == t2)
+        cairo_show_text(cr, gtk_entry_get_text(GTK_ENTRY(entry_t1)));
+    else
+        cairo_show_text(cr, gtk_entry_get_text(GTK_ENTRY(entry_t2)));
+    cairo_move_to(cr, 440, 160);
+    cairo_show_text(cr, first_size);
+    cairo_move_to(cr, 440, 210);
+    cairo_show_text(cr, second_size);
+    // Первая вертикальная линия
+    cairo_move_to(cr, 200.0, 85.0);
+    cairo_line_to(cr, 200.0, 230.0);
+    // Вторая вертикальная линия
+    cairo_move_to(cr, 320.0, 85.0);
+    cairo_line_to(cr, 320.0, 230.0);
+    // Первая горизонтальная линия
+    cairo_move_to(cr, 60.0, 130.0);
+    cairo_line_to(cr, 570.0, 130.0);
+    // Вторая горизонтальная линия
+    cairo_move_to(cr, 60.0, 185.0);
+    cairo_line_to(cr, 200.0, 185.0);
+    cairo_move_to(cr, 320, 185.0);
+    cairo_line_to(cr, 570.0, 185.0);
+
+    cairo_stroke(cr);
+    cairo_fill(cr);
+
+    cairo_destroy(cr);
+    cairo_surface_destroy(surface);
+}
+
+// Очищаем entry от существующего текста
+void on_entry_name_focus_in_event(GtkEntry *e)
+{
+    gtk_entry_set_text(GTK_ENTRY(entry_name), " ");
 }

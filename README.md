@@ -5,7 +5,7 @@
 ![CLion](https://img.shields.io/badge/CLion-black?style=for-the-badge&logo=clion&logoColor=white)
 ![CMake](https://img.shields.io/badge/CMake-%23008FBA.svg?style=for-the-badge&logo=cmake&logoColor=white)
 <p align="left">
-<img src="images/gtk.png" alt="drawing" width="280"/>
+<img src="images/gtk.png" alt="drawing" width="300"/>
 </p>
 
 # Многомодульная программа 
@@ -20,7 +20,18 @@
 
 <strong> &#128194; weld_fillet_gui </strong> - настольное приложение
 
- Приложение разработано  с использованием **Glade ,GTK+ 3, GLib, Cairo**. Предусмотрено создание pdf файла с результатами расчета катета.
+ Приложение разработано  с использованием **Glade ,GTK+ 3, GLib, Cairo**. 
+
+ <p align="center">
+<img src="images/weld_gui.png" alt="drawing" width="600"/>
+</p>
+
+
+ Предусмотрено создание pdf файла с результатами подбора катета.
+
+<p align="center">
+<img src="images/report.png" alt="drawing" width="590"/>
+</p>
 
  <strong> &#128194; weld_fillet_terminal </strong> - консольное приложение
 
@@ -29,7 +40,7 @@
 Приложение имеет текстовый интерфейс пользователя. Такая возможность, при разработке в Windows, предоставляется библиотекой управления терминалом **curses.h**.
 
 <p align="center">
-<img src="images/weld.png" alt="drawing" width="800"/>
+<img src="images/weld.png" alt="drawing" width="700"/>
 </p>
 
 <p align="right">(<a href="#readme-top">вверх</a>)</p>
