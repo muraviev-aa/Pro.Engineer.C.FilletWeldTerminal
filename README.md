@@ -23,24 +23,25 @@
  Приложение разработано  с использованием **Glade ,GTK+ 3, GLib, Cairo**. 
 
  <p align="center">
-<img src="images/weld_gui.png" alt="drawing" width="600"/>
+<img src="images/weld_gui.png" alt="drawing" width="700"/>
 </p>
 
 
- Предусмотрено создание pdf файла с результатами подбора катета.
+ Предусмотрено создание **pdf** файла с результатами подбора катета.
 
 <p align="center">
-<img src="images/report.png" alt="drawing" width="590"/>
+<img src="images/report.png" alt="drawing" width="690"/>
 </p>
+
+<p align="right">(<a href="#readme-top">вверх</a>)</p>
 
  <strong> &#128194; weld_fillet_terminal </strong> - консольное приложение
 
- <p align="right">(<a href="#readme-top">вверх</a>)</p>
 
 Приложение имеет текстовый интерфейс пользователя. Такая возможность, при разработке в Windows, предоставляется библиотекой управления терминалом **curses.h**.
 
 <p align="center">
-<img src="images/weld.png" alt="drawing" width="700"/>
+<img src="images/weld.png" alt="drawing" width="800"/>
 </p>
 
 <p align="right">(<a href="#readme-top">вверх</a>)</p>
