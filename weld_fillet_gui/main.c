@@ -19,6 +19,7 @@
 #include <gtk/gtk.h>
 #include <conio.h>
 #include <cairo-pdf.h>
+#include "temp_function.h"
 
 GtkWidget *window_main;
 GtkWidget *fixed_all;
@@ -68,6 +69,7 @@ void size_weld();
 
 int main(int argc, char **argv)
 {
+
     gtk_init(&argc, &argv);
     builder = gtk_builder_new_from_file("weld.glade");
     work_widgets();
@@ -210,9 +212,23 @@ void on_entry_t2_changed(GtkEntry *e)
 
 void on_button_new_data_clicked(GtkButton *b)
 {
+    GSList *list = NULL;
+    Weld_data *first = (Weld_data *) malloc(sizeof(Weld_data));
     button_click_count++;
     gchar *count_click = g_strdup_printf("%i", button_click_count);
     gtk_label_set_text(GTK_LABEL(label_count), count_click);
+    first->position = "1";
+    first->thick_t1 = t1;
+    first->thick_t2 = t2;
+    first->weld_leg_1 = gtk_label_get_text(GTK_LABEL(label_result1));
+    first->weld_leg_2 = gtk_label_get_text(GTK_LABEL(label_result2));
+    list = g_slist_append(list, first);
+
+    printf("number is %s\n", ((Weld_data *) list->data)->position);
+    printf("t1 = %d\n", ((Weld_data *) list->data)->thick_t1);
+    printf("t2 = %d\n", ((Weld_data *) list->data)->thick_t2);
+    printf("weld_leg1 = %s\n", ((Weld_data *) list->data)->weld_leg_1);
+    printf("weld_leg2 = %s\n", ((Weld_data *) list->data)->weld_leg_2);
 }
 
 void on_button_new_clicked(GtkButton *b)
