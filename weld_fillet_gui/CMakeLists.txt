@@ -12,4 +12,6 @@ link_directories(${GTK_LIBRARY_DIRS})
 link_libraries(${GTK_LIBRARIES})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
-add_executable(weld_fillet_gui main.c)
+add_executable(weld_fillet_gui main.c
+        temp_function.c
+        temp_function.h)
