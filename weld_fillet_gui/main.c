@@ -53,6 +53,7 @@ gchar *str_calc1 = "   по расчету,\nно не более";
 gchar str_calc2[4];
 gchar *str_calc3;
 gchar *str_calc4 = "   по расчету";
+GSList *list = NULL; // односвязный список
 
 G_MODULE_EXPORT void on_entry_t1_changed(GtkEntry *e);
 G_MODULE_EXPORT void on_entry_t2_changed(GtkEntry *e);
@@ -212,21 +213,23 @@ void on_entry_t2_changed(GtkEntry *e)
 
 void on_button_new_data_clicked(GtkButton *b)
 {
-    GSList *list = NULL;
-    Weld_data *first = (Weld_data *) malloc(sizeof(Weld_data));
     button_click_count++;
     gchar *count_click = g_strdup_printf("%i", button_click_count);
     gtk_label_set_text(GTK_LABEL(label_count), count_click);
-    first->position = "1";
-    first->thick_t1 = t1;
-    first->thick_t2 = t2;
+
+    Weld_data *first = (Weld_data *) malloc(sizeof(Weld_data));
+    first->position = button_click_count;
+    first->thick_t1 = gtk_entry_get_text(GTK_ENTRY(entry_t1));
+    first->thick_t2 = gtk_entry_get_text(GTK_ENTRY(entry_t2));
     first->weld_leg_1 = gtk_label_get_text(GTK_LABEL(label_result1));
     first->weld_leg_2 = gtk_label_get_text(GTK_LABEL(label_result2));
     list = g_slist_append(list, first);
 
-    printf("number is %s\n", ((Weld_data *) list->data)->position);
-    printf("t1 = %d\n", ((Weld_data *) list->data)->thick_t1);
-    printf("t2 = %d\n", ((Weld_data *) list->data)->thick_t2);
+
+
+    printf("number is %d\n", ((Weld_data *) list->data)->position);
+    printf("t1 = %s\n", ((Weld_data *) list->data)->thick_t1);
+    printf("t2 = %s\n", ((Weld_data *) list->data)->thick_t2);
     printf("weld_leg1 = %s\n", ((Weld_data *) list->data)->weld_leg_1);
     printf("weld_leg2 = %s\n", ((Weld_data *) list->data)->weld_leg_2);
 }
@@ -267,8 +270,8 @@ void on_entry_t2_insert_text(GtkEntry *e)
 void on_button_file_clicked(GtkButton *b)
 {
     gchar *file_name = NULL;
-    const gchar *first_size = gtk_label_get_text(GTK_LABEL(label_result1));
-    const gchar *second_size = gtk_label_get_text(GTK_LABEL(label_result2));
+    const gchar *first_size = ((Weld_data *) list->data)->weld_leg_1;
+    const gchar *second_size = ((Weld_data *) list->data)->weld_leg_2;
     cairo_surface_t *surface;
     cairo_t *cr;
     const gchar *file_name_assigned = gtk_entry_get_text(GTK_ENTRY(entry_name));
@@ -300,16 +303,18 @@ void on_button_file_clicked(GtkButton *b)
                            CAIRO_FONT_WEIGHT_NORMAL);
 
     cairo_set_font_size(cr, 12.0);
-    cairo_move_to(cr, 160, 25);
+    cairo_move_to(cr, 200, 25);
     cairo_show_text(cr, "Минимальные катеты сварных угловых швов ");
 
     cairo_set_font_size(cr, 10.0);
+    cairo_move_to(cr, 48, 45);
+    //cairo_show_text(cr, g_strjoin(((Weld_data *) list->data)->position, "№", ".", NULL));
     cairo_move_to(cr, 70, 45);
     cairo_show_text(cr, g_strjoin(" ", "Толщина первого свариваемого элемента",
-                                  g_strjoin(" ", gtk_entry_get_text(GTK_ENTRY(entry_t1)), "мм", NULL), NULL));
+                                  g_strjoin(" ", ((Weld_data *) list->data)->thick_t1, "мм", NULL), NULL));
     cairo_move_to(cr, 70, 60);
     cairo_show_text(cr, g_strjoin(" ", "Толщина второго свариваемого элемента",
-                                  g_strjoin(" ", gtk_entry_get_text(GTK_ENTRY(entry_t2)), "мм", NULL), NULL));
+                                  g_strjoin(" ", ((Weld_data *) list->data)->thick_t2, "мм", NULL), NULL));
     cairo_move_to(cr, 60, 80);
     cairo_show_text(cr, "Таблица 38 СП 16.13330.2017 изм. № 2, 3");
 
@@ -350,9 +355,9 @@ void on_button_file_clicked(GtkButton *b)
     cairo_show_text(cr, "более толстого из свариваемых элементов Т, мм");
     cairo_move_to(cr, 440, 120);
     if (t1 > t2 || t1 == t2)
-        cairo_show_text(cr, gtk_entry_get_text(GTK_ENTRY(entry_t1)));
+        cairo_show_text(cr, ((Weld_data *) list->data)->thick_t1);
     else
-        cairo_show_text(cr, gtk_entry_get_text(GTK_ENTRY(entry_t2)));
+        cairo_show_text(cr, ((Weld_data *) list->data)->thick_t2);
     cairo_move_to(cr, 440, 160);
     cairo_show_text(cr, first_size);
     cairo_move_to(cr, 440, 210);
@@ -377,6 +382,7 @@ void on_button_file_clicked(GtkButton *b)
 
     cairo_destroy(cr);
     cairo_surface_destroy(surface);
+    g_slist_free(list);
 }
 
 // Очищаем entry от существующего текста

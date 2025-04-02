@@ -7,9 +7,9 @@
 // Структура под данные подбора катета
 typedef struct
 {
-    char *position;
-    gint thick_t1;
-    gint thick_t2;
+    gint position;
+    const char *thick_t1;
+    const char *thick_t2;
     const char *weld_leg_1;
     const char *weld_leg_2;
 } Weld_data;
