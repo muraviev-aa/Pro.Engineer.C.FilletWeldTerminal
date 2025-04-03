@@ -54,6 +54,7 @@ gchar str_calc2[4];
 gchar *str_calc3;
 gchar *str_calc4 = "   по расчету";
 GSList *list = NULL; // односвязный список
+gint flag_result = 0;
 
 G_MODULE_EXPORT void on_entry_t1_changed(GtkEntry *e);
 G_MODULE_EXPORT void on_entry_t2_changed(GtkEntry *e);
@@ -70,7 +71,6 @@ void size_weld();
 
 int main(int argc, char **argv)
 {
-
     gtk_init(&argc, &argv);
     builder = gtk_builder_new_from_file("weld.glade");
     work_widgets();
@@ -117,12 +117,20 @@ void work_widgets()
     // Управление активностью кнопок
     gtk_widget_set_sensitive(GTK_WIDGET(button_calc), FALSE);
     gtk_widget_set_sensitive(GTK_WIDGET(button_new), FALSE);
+    gtk_widget_set_sensitive(GTK_WIDGET(button_file), FALSE);
+    gtk_widget_set_sensitive(GTK_WIDGET(entry_name), FALSE);
+    gtk_widget_set_sensitive(GTK_WIDGET(button_new_data), FALSE);
 }
 
 void on_button_calc_clicked(GtkButton *b)
 {
     size_weld();
     gtk_widget_set_sensitive(GTK_WIDGET(button_new), TRUE);
+    printf("flag is %d\n", flag_result);
+    if (flag_result != 4)
+        gtk_widget_set_sensitive(GTK_WIDGET(button_new_data), TRUE);
+    else
+        flag_result = 0;
 }
 
 void size_weld()
@@ -132,11 +140,15 @@ void size_weld()
         gtk_button_set_label(GTK_BUTTON(button_calc), "ОШИБКА В ДАННЫХ");
         gtk_entry_set_text(GTK_ENTRY(entry_t1), "????");
         gtk_label_set_text(GTK_LABEL(label_t1), "Толщина меньше 4 мм не предусмотрена");
+        flag_result = 4;
+        printf("flag is %d\n", flag_result);
     } else if (t1 < t2 && t2 < 4)
     {
         gtk_button_set_label(GTK_BUTTON(button_calc), "ОШИБКА В ДАННЫХ");
         gtk_entry_set_text(GTK_ENTRY(entry_t2), "????");
         gtk_label_set_text(GTK_LABEL(label_t2), "Толщина меньше 4 мм не предусмотрена");
+        flag_result = 4;
+        printf("flag is %d\n", flag_result);
     } else if (t1 < t2 && t2 > 40 || t1 > t2 && t1 > 40)
     {
         gtk_label_set_text(GTK_LABEL(katet_tabl1), str_calc4);
@@ -225,8 +237,6 @@ void on_button_new_data_clicked(GtkButton *b)
     first->weld_leg_2 = gtk_label_get_text(GTK_LABEL(label_result2));
     list = g_slist_append(list, first);
 
-
-
     printf("number is %d\n", ((Weld_data *) list->data)->position);
     printf("t1 = %s\n", ((Weld_data *) list->data)->thick_t1);
     printf("t2 = %s\n", ((Weld_data *) list->data)->thick_t2);
@@ -248,6 +258,7 @@ void on_button_new_clicked(GtkButton *b)
     gtk_label_set_text(GTK_LABEL(label_result2), " ");
     gtk_button_set_label(GTK_BUTTON(button_calc), "Вычислить");
     gtk_widget_set_sensitive(GTK_WIDGET(button_calc), FALSE);
+    gtk_widget_set_sensitive(GTK_WIDGET(button_new_data), FALSE);
 }
 
 void on_entry_t1_insert_text(GtkEntry *e)
@@ -270,8 +281,8 @@ void on_entry_t2_insert_text(GtkEntry *e)
 void on_button_file_clicked(GtkButton *b)
 {
     gchar *file_name = NULL;
-    const gchar *first_size = ((Weld_data *) list->data)->weld_leg_1;
-    const gchar *second_size = ((Weld_data *) list->data)->weld_leg_2;
+    const gchar *first_size = ((Weld_data *) list->data)->weld_leg_1;  // катет вар.1
+    const gchar *second_size = ((Weld_data *) list->data)->weld_leg_2; // катет вар.2
     cairo_surface_t *surface;
     cairo_t *cr;
     const gchar *file_name_assigned = gtk_entry_get_text(GTK_ENTRY(entry_name));
@@ -306,9 +317,13 @@ void on_button_file_clicked(GtkButton *b)
     cairo_move_to(cr, 200, 25);
     cairo_show_text(cr, "Минимальные катеты сварных угловых швов ");
 
+    char result[5];
+    sprintf(result, "%d", ((Weld_data *) list->data)->position); // порядковый номер
+    printf("%s", result);
     cairo_set_font_size(cr, 10.0);
     cairo_move_to(cr, 48, 45);
-    //cairo_show_text(cr, g_strjoin(((Weld_data *) list->data)->position, "№", ".", NULL));
+    cairo_show_text(cr, g_strjoin(result, "№", ".", NULL));
+
     cairo_move_to(cr, 70, 45);
     cairo_show_text(cr, g_strjoin(" ", "Толщина первого свариваемого элемента",
                                   g_strjoin(" ", ((Weld_data *) list->data)->thick_t1, "мм", NULL), NULL));
