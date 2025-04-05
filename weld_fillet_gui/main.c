@@ -69,11 +69,32 @@ G_MODULE_EXPORT void on_button_file_clicked(GtkButton *b);
 void work_widgets();
 void size_weld();
 
+void writing_data_s_list(gint count_result);
+
 int main(int argc, char **argv)
 {
     gtk_init(&argc, &argv);
     builder = gtk_builder_new_from_file("weld.glade");
     work_widgets();
+
+    // работа с *.css файлом
+    GtkCssProvider *provider;
+    GFile *file;
+    GdkScreen *screen;
+    screen = gdk_screen_get_default();
+    gchar *path;
+    path = g_build_filename("style.css", NULL);
+    file = g_file_new_for_path(path);
+
+    g_free(path);
+    provider = gtk_css_provider_new();
+    gtk_css_provider_load_from_file(provider, file, NULL);
+    gtk_style_context_add_provider_for_screen(screen,
+                                              GTK_STYLE_PROVIDER(provider), GTK_STYLE_PROVIDER_PRIORITY_USER);
+    gtk_style_context_reset_widgets(screen);
+    g_object_unref(provider);
+
+
     gtk_widget_show(window_main);
     gtk_main();
 
@@ -127,35 +148,36 @@ void on_button_calc_clicked(GtkButton *b)
     size_weld();
     gtk_widget_set_sensitive(GTK_WIDGET(button_new), TRUE);
     printf("flag is %d\n", flag_result);
-    if (flag_result != 4)
+    if (flag_result != 1)
         gtk_widget_set_sensitive(GTK_WIDGET(button_new_data), TRUE);
     else
+    {
         flag_result = 0;
+        printf("flag is %d\n", flag_result);
+    }
+
 }
 
 void size_weld()
 {
-    if (t1 > t2 && t1 < 4)
+    if (t1 > t2 && t1 < 4 || t1 < t2 && t2 < 4) // вариант, не предусмотренный СП 16.13330.2017
     {
         gtk_button_set_label(GTK_BUTTON(button_calc), "ОШИБКА В ДАННЫХ");
         gtk_entry_set_text(GTK_ENTRY(entry_t1), "????");
-        gtk_label_set_text(GTK_LABEL(label_t1), "Толщина меньше 4 мм не предусмотрена");
-        flag_result = 4;
-        printf("flag is %d\n", flag_result);
-    } else if (t1 < t2 && t2 < 4)
-    {
-        gtk_button_set_label(GTK_BUTTON(button_calc), "ОШИБКА В ДАННЫХ");
         gtk_entry_set_text(GTK_ENTRY(entry_t2), "????");
-        gtk_label_set_text(GTK_LABEL(label_t2), "Толщина меньше 4 мм не предусмотрена");
-        flag_result = 4;
+        gtk_label_set_text(GTK_LABEL(label_t1), " Толщина более толстого из свариваемых");
+        gtk_label_set_text(GTK_LABEL(label_t2), "элементов меньше 4 мм не предусмотрена");
+        flag_result = 1;
         printf("flag is %d\n", flag_result);
-    } else if (t1 < t2 && t2 > 40 || t1 > t2 && t1 > 40)
+    } else if (t1 < t2 && t2 > 40 || t1 > t2 && t1 > 40) // наиболее толстый элемент толщиной более 40 мм
     {
         gtk_label_set_text(GTK_LABEL(katet_tabl1), str_calc4);
         gtk_label_set_text(GTK_LABEL(katet_tabl2), str_calc4);
+        flag_result = 2;
+        printf("flag is %d\n", flag_result);
     } else
     {
-        if (t1 < t2 && t1 < 0.6 * t2 || 0.6 * t1 > t2 && t1 > t2)
+        if (t1 < t2 && t1 < 0.6 * t2 || 0.6 * t1 > t2 && t1 > t2) // условие t >= 0.6T не выполняется
         {
             gdouble kat_max;
             if (t1 < t2)
@@ -166,6 +188,8 @@ void size_weld()
             str_calc3 = g_strjoin(" ", str_calc1, str_calc2, NULL);
             gtk_label_set_text(GTK_LABEL(katet_tabl1), str_calc3);
             gtk_label_set_text(GTK_LABEL(katet_tabl2), str_calc3);
+            flag_result = 3;
+            printf("flag is %d\n", flag_result);
         } else
         {
             gtk_widget_hide(katet_tabl1);
@@ -201,6 +225,8 @@ void size_weld()
                 gtk_label_set_text(GTK_LABEL(label_result1), "16");
                 gtk_label_set_text(GTK_LABEL(label_result2), "22");
             }
+            flag_result = 4;
+            printf("flag is %d\n", flag_result);
         }
     }
 }
@@ -226,23 +252,91 @@ void on_entry_t2_changed(GtkEntry *e)
 void on_button_new_data_clicked(GtkButton *b)
 {
     button_click_count++;
+    printf("*******\n");
+    printf("button_click_count is %d\n", button_click_count);
     gchar *count_click = g_strdup_printf("%i", button_click_count);
     gtk_label_set_text(GTK_LABEL(label_count), count_click);
 
-    Weld_data *first = (Weld_data *) malloc(sizeof(Weld_data));
-    first->position = button_click_count;
-    first->thick_t1 = gtk_entry_get_text(GTK_ENTRY(entry_t1));
-    first->thick_t2 = gtk_entry_get_text(GTK_ENTRY(entry_t2));
-    first->weld_leg_1 = gtk_label_get_text(GTK_LABEL(label_result1));
-    first->weld_leg_2 = gtk_label_get_text(GTK_LABEL(label_result2));
-    list = g_slist_append(list, first);
+    // Заполнение односвязного списка
+    writing_data_s_list(button_click_count);
 
-    printf("number is %d\n", ((Weld_data *) list->data)->position);
-    printf("t1 = %s\n", ((Weld_data *) list->data)->thick_t1);
-    printf("t2 = %s\n", ((Weld_data *) list->data)->thick_t2);
-    printf("weld_leg1 = %s\n", ((Weld_data *) list->data)->weld_leg_1);
-    printf("weld_leg2 = %s\n", ((Weld_data *) list->data)->weld_leg_2);
+
 }
+
+void writing_data_s_list(gint count_result)
+{
+
+    if (count_result == 1) // 1 часть
+    {
+        Weld_data *first = (Weld_data *) malloc(sizeof(Weld_data));
+        first->position = button_click_count;
+        first->thick_t1 = gtk_entry_get_text(GTK_ENTRY(entry_t1));
+        first->thick_t2 = gtk_entry_get_text(GTK_ENTRY(entry_t2));
+        first->weld_leg_1 = gtk_label_get_text(GTK_LABEL(label_result1));
+        first->weld_leg_2 = gtk_label_get_text(GTK_LABEL(label_result2));
+        list = g_slist_append(list, first);
+        printf("- - - - - - - - - -\n");
+        printf("part_1\n");
+        printf("1 number is %d\n", ((Weld_data *) list->data)->position);
+        printf("t1 = %s\n", ((Weld_data *) list->data)->thick_t1);
+        printf("t2 = %s\n", ((Weld_data *) list->data)->thick_t2);
+        printf("weld_leg1 = %s\n", ((Weld_data *) list->data)->weld_leg_1);
+        printf("weld_leg2 = %s\n", ((Weld_data *) list->data)->weld_leg_2);
+    } else if (count_result == 2) // 2 часть
+    {
+        Weld_data *second = g_new(Weld_data, 1);
+        second->position = button_click_count;
+        second->thick_t1 = gtk_entry_get_text(GTK_ENTRY(entry_t1));
+        second->thick_t2 = gtk_entry_get_text(GTK_ENTRY(entry_t2));
+        second->weld_leg_1 = gtk_label_get_text(GTK_LABEL(label_result1));
+        second->weld_leg_2 = gtk_label_get_text(GTK_LABEL(label_result2));
+        list = g_slist_append(list, second);
+        printf("- - - - - - - - - -\n");
+        printf("part_2\n");
+        printf("2 number is %d\n", second->position);
+        printf("t1 = %s\n", second->thick_t1);
+        printf("t2 = %s\n", second->thick_t2);
+        printf("weld_leg1 = %s\n", second->weld_leg_1);
+        printf("weld_leg2 = %s\n", second->weld_leg_2);
+    } else if (count_result == 3) // 3 часть
+    {
+        Weld_data *third = g_new(Weld_data, 1);
+        third->position = button_click_count;
+        third->thick_t1 = gtk_entry_get_text(GTK_ENTRY(entry_t1));
+        third->thick_t2 = gtk_entry_get_text(GTK_ENTRY(entry_t2));
+        third->weld_leg_1 = gtk_label_get_text(GTK_LABEL(label_result1));
+        third->weld_leg_2 = gtk_label_get_text(GTK_LABEL(label_result2));
+        list = g_slist_append(list, third);
+        printf("- - - - - - - - - -\n");
+        printf("part_3\n");
+        printf("3 number is %d\n", third->position);
+        printf("t1 = %s\n", third->thick_t1);
+        printf("t2 = %s\n", third->thick_t2);
+        printf("weld_leg1 = %s\n", third->weld_leg_1);
+        printf("weld_leg2 = %s\n", third->weld_leg_2);
+    } else if (count_result == 4) // 4 часть, конец формирования списка
+    {
+        Weld_data *third = g_new(Weld_data, 1);
+        third->position = button_click_count;
+        third->thick_t1 = gtk_entry_get_text(GTK_ENTRY(entry_t1));
+        third->thick_t2 = gtk_entry_get_text(GTK_ENTRY(entry_t2));
+        third->weld_leg_1 = gtk_label_get_text(GTK_LABEL(label_result1));
+        third->weld_leg_2 = gtk_label_get_text(GTK_LABEL(label_result2));
+        list = g_slist_append(list, third);
+
+        gtk_button_set_label(GTK_BUTTON(button_new_data), "ОТЧЕТ СФОРМИРОВАН");
+        gtk_label_set_text(GTK_LABEL(label_count), "  --->>>");
+
+        printf("- - - - - - - - - -\n");
+        printf("part_4\n");
+        printf("4 number is %d\n", third->position);
+        printf("t1 = %s\n", third->thick_t1);
+        printf("t2 = %s\n", third->thick_t2);
+        printf("weld_leg1 = %s\n", third->weld_leg_1);
+        printf("weld_leg2 = %s\n", third->weld_leg_2);
+    }
+}
+
 
 void on_button_new_clicked(GtkButton *b)
 {

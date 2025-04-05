@@ -1,0 +1,31 @@
+.window {
+    background-color: #696969;
+    border-width: 0px;
+    border-color: rgba(224, 224, 224, 0);
+    color: #ffffff;
+}
+
+.button {
+    border-radius: 5px 5px 5px 5px;
+    border-color: #ffffff;
+    font-size: 12px;
+    color: #000000;
+    background: #cdcdcd;
+    border-width: 1.5px;
+}
+
+.entry {
+    color: rgb(14, 1, 1);
+    border-width: 1.5px;
+    border-radius: 5px 5px 5px 5px;
+    border-color: #f0f8ff;
+    caret-color: black;
+}
+
+.lineTabl {
+    background: #f0f8ff;
+}
+
+.frame {
+    color: #f0f8ff;
+}

@@ -17,7 +17,6 @@
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="label-xalign">0</property>
-            <property name="shadow-type">in</property>
             <child>
               <object class="GtkAlignment">
                 <property name="visible">True</property>
@@ -34,6 +33,9 @@
                         <property name="max-length">4</property>
                         <signal name="changed" handler="on_entry_t1_changed" swapped="no"/>
                         <signal name="insert-text" handler="on_entry_t1_insert_text" swapped="no"/>
+                        <style>
+                          <class name="entry"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="x">255</property>
@@ -47,6 +49,9 @@
                         <property name="max-length">4</property>
                         <signal name="changed" handler="on_entry_t2_changed" swapped="no"/>
                         <signal name="insert-text" handler="on_entry_t2_insert_text" swapped="no"/>
+                        <style>
+                          <class name="entry"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="x">255</property>
@@ -83,6 +88,9 @@
                         <property name="can-focus">True</property>
                         <property name="receives-default">True</property>
                         <signal name="clicked" handler="on_button_calc_clicked" swapped="no"/>
+                        <style>
+                          <class name="button"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="x">480</property>
@@ -97,6 +105,9 @@
                         <property name="can-focus">True</property>
                         <property name="receives-default">True</property>
                         <signal name="clicked" handler="on_button_new_clicked" swapped="no"/>
+                        <style>
+                          <class name="button"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="x">480</property>
@@ -113,7 +124,8 @@
                 <property name="can-focus">False</property>
                 <property name="label" translatable="yes">Толщины свариваемых элементов </property>
                 <attributes>
-                  <attribute name="weight" value="bold"/>
+                  <attribute name="font-desc" value="Calibri Bold 10"/>
+                  <attribute name="foreground" value="#ffffffffffff"/>
                 </attributes>
               </object>
             </child>
@@ -126,11 +138,13 @@
         <child>
           <object class="GtkFrame" id="frame_tabl">
             <property name="width-request">690</property>
-            <property name="height-request">260</property>
+            <property name="height-request">255</property>
             <property name="visible">True</property>
             <property name="can-focus">False</property>
+            <property name="margin-top">2</property>
             <property name="label-xalign">0</property>
-            <property name="shadow-type">in</property>
+            <property name="label-yalign">0</property>
+            <property name="shadow-type">none</property>
             <child>
               <object class="GtkAlignment">
                 <property name="visible">True</property>
@@ -142,23 +156,29 @@
                     <property name="can-focus">False</property>
                     <child>
                       <object class="GtkSeparator">
-                        <property name="width-request">660</property>
-                        <property name="height-request">3</property>
+                        <property name="width-request">661</property>
+                        <property name="height-request">2</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
+                        <style>
+                          <class name="lineTabl"/>
+                        </style>
                       </object>
                       <packing>
-                        <property name="x">3</property>
+                        <property name="x">2</property>
                         <property name="y">6</property>
                       </packing>
                     </child>
                     <child>
                       <object class="GtkSeparator">
-                        <property name="width-request">3</property>
-                        <property name="height-request">227</property>
+                        <property name="width-request">2</property>
+                        <property name="height-request">226</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="orientation">vertical</property>
+                        <style>
+                          <class name="lineTabl"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="y">6</property>
@@ -166,10 +186,13 @@
                     </child>
                     <child>
                       <object class="GtkSeparator">
-                        <property name="width-request">664</property>
-                        <property name="height-request">3</property>
+                        <property name="width-request">663</property>
+                        <property name="height-request">2</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
+                        <style>
+                          <class name="lineTabl"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="x">2</property>
@@ -178,11 +201,14 @@
                     </child>
                     <child>
                       <object class="GtkSeparator">
-                        <property name="width-request">3</property>
+                        <property name="width-request">2</property>
                         <property name="height-request">224</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="orientation">vertical</property>
+                        <style>
+                          <class name="lineTabl"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="x">663</property>
@@ -191,13 +217,16 @@
                     </child>
                     <child>
                       <object class="GtkSeparator">
-                        <property name="width-request">660</property>
-                        <property name="height-request">3</property>
+                        <property name="width-request">661</property>
+                        <property name="height-request">2</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
+                        <style>
+                          <class name="lineTabl"/>
+                        </style>
                       </object>
                       <packing>
-                        <property name="x">3</property>
+                        <property name="x">2</property>
                         <property name="y">37</property>
                       </packing>
                     </child>
@@ -252,28 +281,34 @@
                     </child>
                     <child>
                       <object class="GtkSeparator">
-                        <property name="width-request">3</property>
-                        <property name="height-request">190</property>
+                        <property name="width-request">2</property>
+                        <property name="height-request">191</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="orientation">vertical</property>
+                        <style>
+                          <class name="lineTabl"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="x">238</property>
-                        <property name="y">40</property>
+                        <property name="y">39</property>
                       </packing>
                     </child>
                     <child>
                       <object class="GtkSeparator">
-                        <property name="width-request">3</property>
-                        <property name="height-request">190</property>
+                        <property name="width-request">2</property>
+                        <property name="height-request">191</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="orientation">vertical</property>
+                        <style>
+                          <class name="lineTabl"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="x">485</property>
-                        <property name="y">40</property>
+                        <property name="y">39</property>
                       </packing>
                     </child>
                     <child>
@@ -283,32 +318,38 @@
                         <property name="label" translatable="yes">Минимальный катет шва, мм</property>
                       </object>
                       <packing>
-                        <property name="x">498</property>
+                        <property name="x">494</property>
                         <property name="y">14</property>
                       </packing>
                     </child>
                     <child>
                       <object class="GtkSeparator">
-                        <property name="width-request">3</property>
-                        <property name="height-request">29</property>
+                        <property name="width-request">2</property>
+                        <property name="height-request">30</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="orientation">vertical</property>
+                        <style>
+                          <class name="lineTabl"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="x">238</property>
-                        <property name="y">8</property>
+                        <property name="y">7</property>
                       </packing>
                     </child>
                     <child>
                       <object class="GtkSeparator">
-                        <property name="width-request">235</property>
-                        <property name="height-request">3</property>
+                        <property name="width-request">236</property>
+                        <property name="height-request">2</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
+                        <style>
+                          <class name="lineTabl"/>
+                        </style>
                       </object>
                       <packing>
-                        <property name="x">3</property>
+                        <property name="x">2</property>
                         <property name="y">134</property>
                       </packing>
                     </child>
@@ -341,27 +382,33 @@
                     </child>
                     <child>
                       <object class="GtkSeparator">
-                        <property name="width-request">175</property>
-                        <property name="height-request">3</property>
+                        <property name="width-request">176</property>
+                        <property name="height-request">2</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
+                        <style>
+                          <class name="lineTabl"/>
+                        </style>
                       </object>
                       <packing>
-                        <property name="x">488</property>
+                        <property name="x">487</property>
                         <property name="y">133</property>
                       </packing>
                     </child>
                     <child>
                       <object class="GtkSeparator">
-                        <property name="width-request">3</property>
-                        <property name="height-request">28</property>
+                        <property name="width-request">2</property>
+                        <property name="height-request">29</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="orientation">vertical</property>
+                        <style>
+                          <class name="lineTabl"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="x">485</property>
-                        <property name="y">9</property>
+                        <property name="y">8</property>
                       </packing>
                     </child>
                     <child>
@@ -406,16 +453,21 @@
                 <property name="height-request">0</property>
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="label" translatable="yes">Таблица 38 СП 16.13330.2017 изм. №2, 3. Конструкции из стали с пределом текучести до 590 Н/мм2</property>
+                <property name="label" translatable="yes">           Таблица 38 СП 16.13330.2017 изм. №2, 3. Конструкции из стали с пределом текучести до 590 Н/мм2</property>
+                <property name="justify">fill</property>
+                <property name="single-line-mode">True</property>
                 <attributes>
-                  <attribute name="weight" value="bold"/>
+                  <attribute name="font-desc" value="Calibri Bold 10"/>
                 </attributes>
               </object>
             </child>
+            <style>
+              <class name="frame"/>
+            </style>
           </object>
           <packing>
             <property name="x">5</property>
-            <property name="y">112</property>
+            <property name="y">116</property>
           </packing>
         </child>
         <child>
@@ -437,7 +489,7 @@
                     <property name="can-focus">False</property>
                     <child>
                       <object class="GtkButton" id="button_new_data">
-                        <property name="label" translatable="yes">Записать</property>
+                        <property name="label" translatable="yes">Запомнить</property>
                         <property name="width-request">150</property>
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
@@ -507,7 +559,7 @@
                 <property name="can-focus">False</property>
                 <property name="label" translatable="yes">Работа с файлом </property>
                 <attributes>
-                  <attribute name="weight" value="bold"/>
+                  <attribute name="font-desc" value="Calibri Bold 10"/>
                 </attributes>
               </object>
             </child>
@@ -519,5 +571,8 @@
         </child>
       </object>
     </child>
+    <style>
+      <class name="window"/>
+    </style>
   </object>
 </interface>
