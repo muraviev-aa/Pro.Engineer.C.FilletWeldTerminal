@@ -68,8 +68,8 @@ G_MODULE_EXPORT void on_button_file_clicked(GtkButton *b);
 
 void work_widgets();
 void size_weld();
-
 void writing_data_s_list(gint count_result);
+void working_css_file();
 
 int main(int argc, char **argv)
 {
@@ -78,6 +78,16 @@ int main(int argc, char **argv)
     work_widgets();
 
     // работа с *.css файлом
+    working_css_file();
+
+    gtk_widget_show(window_main);
+    gtk_main();
+
+    return 0;
+}
+
+void working_css_file()
+{
     GtkCssProvider *provider;
     GFile *file;
     GdkScreen *screen;
@@ -93,12 +103,6 @@ int main(int argc, char **argv)
                                               GTK_STYLE_PROVIDER(provider), GTK_STYLE_PROVIDER_PRIORITY_USER);
     gtk_style_context_reset_widgets(screen);
     g_object_unref(provider);
-
-
-    gtk_widget_show(window_main);
-    gtk_main();
-
-    return 0;
 }
 
 // Работаем с виджетами
@@ -155,7 +159,6 @@ void on_button_calc_clicked(GtkButton *b)
         flag_result = 0;
         printf("flag is %d\n", flag_result);
     }
-
 }
 
 void size_weld()
@@ -327,6 +330,10 @@ void writing_data_s_list(gint count_result)
         gtk_button_set_label(GTK_BUTTON(button_new_data), "ОТЧЕТ СФОРМИРОВАН");
         gtk_label_set_text(GTK_LABEL(label_count), "  --->>>");
 
+        // ввод имени и создание файла активно
+        gtk_widget_set_sensitive(GTK_WIDGET(button_file), TRUE);
+        gtk_widget_set_sensitive(GTK_WIDGET(entry_name), TRUE);
+
         printf("- - - - - - - - - -\n");
         printf("part_4\n");
         printf("4 number is %d\n", third->position);
@@ -412,7 +419,7 @@ void on_button_file_clicked(GtkButton *b)
     cairo_show_text(cr, "Минимальные катеты сварных угловых швов ");
 
     char result[5];
-    sprintf(result, "%d", ((Weld_data *) list->data)->position); // порядковый номер
+    sprintf(result, "%d", ((Weld_data *)list->data)->position); // порядковый номер
     printf("%s", result);
     cairo_set_font_size(cr, 10.0);
     cairo_move_to(cr, 48, 45);
@@ -485,6 +492,8 @@ void on_button_file_clicked(GtkButton *b)
     cairo_line_to(cr, 200.0, 185.0);
     cairo_move_to(cr, 320, 185.0);
     cairo_line_to(cr, 570.0, 185.0);
+
+    // 2-я таблица
 
     cairo_stroke(cr);
     cairo_fill(cr);
