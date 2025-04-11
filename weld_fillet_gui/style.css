@@ -1,5 +1,4 @@
 .window {
-    background-color: #696969;
     border-width: 0px;
     border-color: rgba(224, 224, 224, 0);
     color: #ffffff;
@@ -14,12 +13,23 @@
     border-width: 1.5px;
 }
 
-.entry {
-    color: rgb(14, 1, 1);
-    border-width: 1.5px;
-    border-radius: 5px 5px 5px 5px;
-    border-color: #f0f8ff;
-    caret-color: black;
+.button:hover {
+    text-shadow: 3px 3px 5px alpha(black, 0.75);
+    -gtk-icon-shadow: 3px 3px 5px alpha(black, 0.75);
+    box-shadow: 3px 3px 5px alpha(black, 0.5) inset;
+    border: solid 1px alpha(black, 0.75);
+}
+
+.button:active {
+    padding: 6px 4px 4px 6px;
+    text-shadow: 1px 1px 2.5px alpha(black, 0.6);
+    -gtk-icon-shadow: 1px 1px 2.5px alpha(black, 0.6);
+}
+
+.entry:active {
+    padding: 11px 9px 9px 11px;
+    text-shadow: 1px 1px 2.5px alpha(black, 0.6);
+    -gtk-icon-shadow: 1px 1px 2.5px alpha(black, 0.6);
 }
 
 .lineTabl {
@@ -28,4 +38,16 @@
 
 .frame {
     color: #f0f8ff;
+}
+
+.view {
+    background:
+    linear-gradient(27deg, #151515 5px, transparent 5px) 0 5px,
+    linear-gradient(207deg, #151515 5px, transparent 5px) 10px 0px,
+    linear-gradient(27deg, #222 5px, transparent 5px) 0px 10px,
+    linear-gradient(207deg, #222 5px, transparent 5px) 10px 5px,
+    linear-gradient(90deg, #1b1b1b 10px, transparent 10px),
+    linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
+    background-color: #131313;
+    background-size: 20px 20px;
 }

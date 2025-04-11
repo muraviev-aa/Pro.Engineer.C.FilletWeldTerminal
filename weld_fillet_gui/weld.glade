@@ -523,6 +523,9 @@
                         <property name="can-focus">True</property>
                         <property name="text" translatable="yes">        Введите имя файла</property>
                         <signal name="focus-in-event" handler="on_entry_name_focus_in_event" swapped="no"/>
+                        <style>
+                          <class name="entry"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="x">238</property>
@@ -573,6 +576,7 @@
     </child>
     <style>
       <class name="window"/>
+      <class name="view"/>
     </style>
   </object>
 </interface>

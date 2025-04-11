@@ -54,7 +54,12 @@ gchar str_calc2[4];
 gchar *str_calc3;
 gchar *str_calc4 = "   по расчету";
 GSList *list = NULL; // односвязный список
+Weld_data *first = NULL;
+Weld_data *second = NULL;
+Weld_data *third = NULL;
+Weld_data *fourth = NULL;
 gint flag_result = 0;
+
 
 G_MODULE_EXPORT void on_entry_t1_changed(GtkEntry *e);
 G_MODULE_EXPORT void on_entry_t2_changed(GtkEntry *e);
@@ -70,6 +75,8 @@ void work_widgets();
 void size_weld();
 void writing_data_s_list(gint count_result);
 void working_css_file();
+
+void create_table(cairo_t *cr, gint value);
 
 int main(int argc, char **argv)
 {
@@ -262,88 +269,49 @@ void on_button_new_data_clicked(GtkButton *b)
 
     // Заполнение односвязного списка
     writing_data_s_list(button_click_count);
-
-
 }
 
 void writing_data_s_list(gint count_result)
 {
-
     if (count_result == 1) // 1 часть
     {
-        Weld_data *first = (Weld_data *) malloc(sizeof(Weld_data));
+        first = (Weld_data *) malloc(sizeof(Weld_data));
         first->position = button_click_count;
-        first->thick_t1 = gtk_entry_get_text(GTK_ENTRY(entry_t1));
-        first->thick_t2 = gtk_entry_get_text(GTK_ENTRY(entry_t2));
-        first->weld_leg_1 = gtk_label_get_text(GTK_LABEL(label_result1));
-        first->weld_leg_2 = gtk_label_get_text(GTK_LABEL(label_result2));
+        first->thick_t1 = strtol(gtk_entry_get_text(GTK_ENTRY(entry_t1)), NULL, 0);
+        first->thick_t2 = strtol(gtk_entry_get_text(GTK_ENTRY(entry_t2)), NULL, 0);
+        first->weld_leg_1 = strtol(gtk_label_get_text(GTK_LABEL(label_result1)), NULL, 0);
+        first->weld_leg_2 = strtol(gtk_label_get_text(GTK_LABEL(label_result2)), NULL, 0);
         list = g_slist_append(list, first);
         printf("- - - - - - - - - -\n");
         printf("part_1\n");
-        printf("1 number is %d\n", ((Weld_data *) list->data)->position);
-        printf("t1 = %s\n", ((Weld_data *) list->data)->thick_t1);
-        printf("t2 = %s\n", ((Weld_data *) list->data)->thick_t2);
-        printf("weld_leg1 = %s\n", ((Weld_data *) list->data)->weld_leg_1);
-        printf("weld_leg2 = %s\n", ((Weld_data *) list->data)->weld_leg_2);
-    } else if (count_result == 2) // 2 часть
-    {
-        Weld_data *second = g_new(Weld_data, 1);
-        second->position = button_click_count;
-        second->thick_t1 = gtk_entry_get_text(GTK_ENTRY(entry_t1));
-        second->thick_t2 = gtk_entry_get_text(GTK_ENTRY(entry_t2));
-        second->weld_leg_1 = gtk_label_get_text(GTK_LABEL(label_result1));
-        second->weld_leg_2 = gtk_label_get_text(GTK_LABEL(label_result2));
-        list = g_slist_append(list, second);
-        printf("- - - - - - - - - -\n");
-        printf("part_2\n");
-        printf("2 number is %d\n", second->position);
-        printf("t1 = %s\n", second->thick_t1);
-        printf("t2 = %s\n", second->thick_t2);
-        printf("weld_leg1 = %s\n", second->weld_leg_1);
-        printf("weld_leg2 = %s\n", second->weld_leg_2);
-    } else if (count_result == 3) // 3 часть
-    {
-        Weld_data *third = g_new(Weld_data, 1);
-        third->position = button_click_count;
-        third->thick_t1 = gtk_entry_get_text(GTK_ENTRY(entry_t1));
-        third->thick_t2 = gtk_entry_get_text(GTK_ENTRY(entry_t2));
-        third->weld_leg_1 = gtk_label_get_text(GTK_LABEL(label_result1));
-        third->weld_leg_2 = gtk_label_get_text(GTK_LABEL(label_result2));
-        list = g_slist_append(list, third);
-        printf("- - - - - - - - - -\n");
-        printf("part_3\n");
-        printf("3 number is %d\n", third->position);
-        printf("t1 = %s\n", third->thick_t1);
-        printf("t2 = %s\n", third->thick_t2);
-        printf("weld_leg1 = %s\n", third->weld_leg_1);
-        printf("weld_leg2 = %s\n", third->weld_leg_2);
-    } else if (count_result == 4) // 4 часть, конец формирования списка
-    {
-        Weld_data *third = g_new(Weld_data, 1);
-        third->position = button_click_count;
-        third->thick_t1 = gtk_entry_get_text(GTK_ENTRY(entry_t1));
-        third->thick_t2 = gtk_entry_get_text(GTK_ENTRY(entry_t2));
-        third->weld_leg_1 = gtk_label_get_text(GTK_LABEL(label_result1));
-        third->weld_leg_2 = gtk_label_get_text(GTK_LABEL(label_result2));
-        list = g_slist_append(list, third);
+        printf("1 number is %d\n", ((Weld_data *) g_slist_nth(list, 0)->data)->position);
+        printf("t1 = %d\n", ((Weld_data *) g_slist_nth(list, 0)->data)->thick_t1);
+        printf("t2 = %d\n", ((Weld_data *) g_slist_nth(list, 0)->data)->thick_t2);
+        printf("weld_leg1 = %d\n", ((Weld_data *) g_slist_nth(list, 0)->data)->weld_leg_1);
+        printf("weld_leg2 = %d\n", ((Weld_data *) g_slist_nth(list, 0)->data)->weld_leg_2);
 
-        gtk_button_set_label(GTK_BUTTON(button_new_data), "ОТЧЕТ СФОРМИРОВАН");
-        gtk_label_set_text(GTK_LABEL(label_count), "  --->>>");
-
-        // ввод имени и создание файла активно
+        // поле ввода имени и кнопка создания файла активны
         gtk_widget_set_sensitive(GTK_WIDGET(button_file), TRUE);
         gtk_widget_set_sensitive(GTK_WIDGET(entry_name), TRUE);
 
+    } else if (count_result == 2) // 2 часть
+    {
+        second = g_new(Weld_data, 1);
+        second->position = button_click_count;
+        second->thick_t1 = strtol(gtk_entry_get_text(GTK_ENTRY(entry_t1)), NULL, 0);
+        second->thick_t2 = strtol(gtk_entry_get_text(GTK_ENTRY(entry_t2)), NULL, 0);
+        second->weld_leg_1 = strtol(gtk_label_get_text(GTK_LABEL(label_result1)), NULL, 0);
+        second->weld_leg_2 = strtol(gtk_label_get_text(GTK_LABEL(label_result2)), NULL, 0);
+        list = g_slist_append(list, second);
         printf("- - - - - - - - - -\n");
-        printf("part_4\n");
-        printf("4 number is %d\n", third->position);
-        printf("t1 = %s\n", third->thick_t1);
-        printf("t2 = %s\n", third->thick_t2);
-        printf("weld_leg1 = %s\n", third->weld_leg_1);
-        printf("weld_leg2 = %s\n", third->weld_leg_2);
+        printf("part_2\n");
+        printf("2 number is %d\n", ((Weld_data *) g_slist_nth(list, 1)->data)->position);
+        printf("t1 = %d\n", ((Weld_data *) g_slist_nth(list, 1)->data)->thick_t1);
+        printf("t2 = %d\n", ((Weld_data *) g_slist_nth(list, 1)->data)->thick_t2);
+        printf("weld_leg1 = %d\n", ((Weld_data *) g_slist_nth(list, 1)->data)->weld_leg_1);
+        printf("weld_leg2 = %d\n", ((Weld_data *) g_slist_nth(list, 1)->data)->weld_leg_2);
     }
 }
-
 
 void on_button_new_clicked(GtkButton *b)
 {
@@ -376,14 +344,11 @@ void on_entry_t2_insert_text(GtkEntry *e)
     {
         gtk_widget_set_sensitive(GTK_WIDGET(button_calc), TRUE);
     }
-
 }
 
 void on_button_file_clicked(GtkButton *b)
 {
     gchar *file_name = NULL;
-    const gchar *first_size = ((Weld_data *) list->data)->weld_leg_1;  // катет вар.1
-    const gchar *second_size = ((Weld_data *) list->data)->weld_leg_2; // катет вар.2
     cairo_surface_t *surface;
     cairo_t *cr;
     const gchar *file_name_assigned = gtk_entry_get_text(GTK_ENTRY(entry_name));
@@ -418,26 +383,32 @@ void on_button_file_clicked(GtkButton *b)
     cairo_move_to(cr, 200, 25);
     cairo_show_text(cr, "Минимальные катеты сварных угловых швов ");
 
-    char result[5];
-    sprintf(result, "%d", ((Weld_data *)list->data)->position); // порядковый номер
-    printf("%s", result);
+    // 1 таблица
+    char position_1[5];
+    // порядковый номер
+    sprintf(position_1, "%d", ((Weld_data *) g_slist_nth(list, 0)->data)->position);
     cairo_set_font_size(cr, 10.0);
     cairo_move_to(cr, 48, 45);
-    cairo_show_text(cr, g_strjoin(result, "№", ".", NULL));
+    cairo_show_text(cr, g_strjoin(position_1, "№", ".", NULL));
 
     cairo_move_to(cr, 70, 45);
-    cairo_show_text(cr, g_strjoin(" ", "Толщина первого свариваемого элемента",
-                                  g_strjoin(" ", ((Weld_data *) list->data)->thick_t1, "мм", NULL), NULL));
+    char tick_1[5];
+    sprintf(tick_1, "%d", ((Weld_data *) g_slist_nth(list, 0)->data)->thick_t1);
+    cairo_show_text(cr,
+                    g_strjoin(" ", "Толщина первого свариваемого элемента",
+                              g_strjoin(" ", tick_1, "мм", NULL), NULL));
     cairo_move_to(cr, 70, 60);
-    cairo_show_text(cr, g_strjoin(" ", "Толщина второго свариваемого элемента",
-                                  g_strjoin(" ", ((Weld_data *) list->data)->thick_t2, "мм", NULL), NULL));
+    char tick_2[5];
+    sprintf(tick_2, "%d", ((Weld_data *) g_slist_nth(list, 0)->data)->thick_t2);
+    cairo_show_text(cr,
+                    g_strjoin(" ", "Толщина второго свариваемого элемента",
+                              g_strjoin(" ", tick_2, "мм", NULL), NULL));
     cairo_move_to(cr, 60, 80);
     cairo_show_text(cr, "Таблица 38 СП 16.13330.2017 изм. № 2, 3");
 
     // толщина линии таблицы
-    cairo_set_line_width(cr, 0.4);
-    // наружная рамка таблицы
-    cairo_rectangle(cr, 60, 85, 510, 145);
+    cairo_set_line_width(cr, 0.6);
+
     // 1-й столбец
     cairo_move_to(cr, 90, 110);
     cairo_show_text(cr, "Тип соединения");
@@ -470,37 +441,76 @@ void on_button_file_clicked(GtkButton *b)
     cairo_move_to(cr, 331, 110);
     cairo_show_text(cr, "более толстого из свариваемых элементов Т, мм");
     cairo_move_to(cr, 440, 120);
-    if (t1 > t2 || t1 == t2)
-        cairo_show_text(cr, ((Weld_data *) list->data)->thick_t1);
-    else
-        cairo_show_text(cr, ((Weld_data *) list->data)->thick_t2);
-    cairo_move_to(cr, 440, 160);
-    cairo_show_text(cr, first_size);
-    cairo_move_to(cr, 440, 210);
-    cairo_show_text(cr, second_size);
-    // Первая вертикальная линия
-    cairo_move_to(cr, 200.0, 85.0);
-    cairo_line_to(cr, 200.0, 230.0);
-    // Вторая вертикальная линия
-    cairo_move_to(cr, 320.0, 85.0);
-    cairo_line_to(cr, 320.0, 230.0);
-    // Первая горизонтальная линия
-    cairo_move_to(cr, 60.0, 130.0);
-    cairo_line_to(cr, 570.0, 130.0);
-    // Вторая горизонтальная линия
-    cairo_move_to(cr, 60.0, 185.0);
-    cairo_line_to(cr, 200.0, 185.0);
-    cairo_move_to(cr, 320, 185.0);
-    cairo_line_to(cr, 570.0, 185.0);
 
-    // 2-я таблица
+    gchar thick_1_1[5];
+    sprintf(thick_1_1, "%d", ((Weld_data *) g_slist_nth(list, 0)->data)->thick_t1);
+    gchar thick_2_1[5];
+    sprintf(thick_2_1, "%d", ((Weld_data *) g_slist_nth(list, 0)->data)->thick_t2);
+    gchar leg_1_1[5];
+    sprintf(leg_1_1, "%d", ((Weld_data *) g_slist_nth(list, 0)->data)->weld_leg_1);
+    gchar leg_2_1[5];
+    sprintf(leg_2_1, "%d", ((Weld_data *) g_slist_nth(list, 0)->data)->weld_leg_2);
+
+    if (t1 > t2 || t1 == t2)
+        cairo_show_text(cr, thick_1_1);
+    else
+        cairo_show_text(cr, thick_2_1);
+    cairo_move_to(cr, 440, 160);
+    cairo_show_text(cr, leg_1_1);
+    cairo_move_to(cr, 440, 210);
+    cairo_show_text(cr, leg_2_1);
+
+    create_table(cr, 0);
+
+    // Рисуем результаты расчета №2
+    if (button_click_count == 2)
+    {
+        char position_2[5];
+        // порядковый номер расчета
+        sprintf(position_2, "%d", ((Weld_data *) g_slist_nth(list, 1)->data)->position);
+        cairo_set_font_size(cr, 10.0);
+        cairo_move_to(cr, 48, 250);
+        cairo_show_text(cr, g_strjoin(position_2, "№", ".", NULL));
+        create_table(cr, 205);
+    }
 
     cairo_stroke(cr);
     cairo_fill(cr);
 
     cairo_destroy(cr);
     cairo_surface_destroy(surface);
+
     g_slist_free(list);
+    g_free(first);
+    g_free(second);
+    /*g_free(third);
+    g_free(fourth);*/
+
+    printf("*******\n");
+    printf("Print result\n");
+    printf("first leg_1 is %d\n", ((Weld_data *) g_slist_nth(list, 0)->data)->weld_leg_1);
+    printf("first leg_2 is %d\n", ((Weld_data *) g_slist_nth(list, 0)->data)->weld_leg_2);
+    printf("----\n");
+}
+
+void create_table(cairo_t *cr, gint value)
+{
+    // наружная рамка таблицы
+    cairo_rectangle(cr, 60, 85 + value, 510, 145);
+    // Первая вертикальная линия
+    cairo_move_to(cr, 200.0, 85.0 + value);
+    cairo_line_to(cr, 200.0, 230.0 + value);
+    // Вторая вертикальная линия
+    cairo_move_to(cr, 320.0, 85.0 + value);
+    cairo_line_to(cr, 320.0, 230.0 + value);
+    // Первая горизонтальная линия
+    cairo_move_to(cr, 60.0, 130.0 + value);
+    cairo_line_to(cr, 570.0, 130.0 + value);
+    // Вторая горизонтальная линия (2 шт.)
+    cairo_move_to(cr, 60.0, 185.0 + value);
+    cairo_line_to(cr, 200.0, 185.0 + value);
+    cairo_move_to(cr, 320, 185.0 + value);
+    cairo_line_to(cr, 570.0, 185.0 + value);
 }
 
 // Очищаем entry от существующего текста

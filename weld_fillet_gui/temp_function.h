@@ -7,11 +7,11 @@
 // Структура под данные подбора катета
 typedef struct
 {
-    gint position;
-    const char *thick_t1;   // толщина первой свариваемой детали
-    const char *thick_t2;   // толщина второй свариваемой детали
-    const char *weld_leg_1; // катет вар.1
-    const char *weld_leg_2; // катет вар.2
+    gint position;     // порядковый номер расчета
+    gint thick_t1;     // толщина первой свариваемой детали
+    gint thick_t2;     // толщина второй свариваемой детали
+    gint weld_leg_1;   // катет вар.1
+    gint weld_leg_2;   // катет вар.2
 } Weld_data;
 
 #endif //WELD_FILLET_GUI_TEMP_FUNCTION_H
