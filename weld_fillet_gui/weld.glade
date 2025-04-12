@@ -496,6 +496,9 @@
                         <property name="receives-default">True</property>
                         <property name="relief">half</property>
                         <signal name="clicked" handler="on_button_new_data_clicked" swapped="no"/>
+                        <style>
+                          <class name="button"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="x">17</property>
@@ -510,6 +513,9 @@
                         <property name="can-focus">True</property>
                         <property name="receives-default">True</property>
                         <signal name="clicked" handler="on_button_file_clicked" swapped="no"/>
+                        <style>
+                          <class name="button"/>
+                        </style>
                       </object>
                       <packing>
                         <property name="x">467</property>
