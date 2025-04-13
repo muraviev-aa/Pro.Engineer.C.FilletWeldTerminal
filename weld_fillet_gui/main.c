@@ -81,7 +81,6 @@ void data_collection(cairo_t *cr, gint shift_value, gint serial_number);
 void create_table(cairo_t *cr, gint shift_value);
 
 
-
 int main(int argc, char **argv)
 {
     gtk_init(&argc, &argv);
@@ -283,6 +282,7 @@ void writing_data_s_list(gint count_result)
         first->position = button_click_count;
         first->thick_t1 = strtol(gtk_entry_get_text(GTK_ENTRY(entry_t1)), NULL, 0);
         first->thick_t2 = strtol(gtk_entry_get_text(GTK_ENTRY(entry_t2)), NULL, 0);
+        first->thick_max = MAX(first->thick_t1, first->thick_t2);
         first->weld_leg_1 = strtol(gtk_label_get_text(GTK_LABEL(label_result1)), NULL, 0);
         first->weld_leg_2 = strtol(gtk_label_get_text(GTK_LABEL(label_result2)), NULL, 0);
         list = g_slist_append(list, first);
@@ -304,6 +304,7 @@ void writing_data_s_list(gint count_result)
         second->position = button_click_count;
         second->thick_t1 = strtol(gtk_entry_get_text(GTK_ENTRY(entry_t1)), NULL, 0);
         second->thick_t2 = strtol(gtk_entry_get_text(GTK_ENTRY(entry_t2)), NULL, 0);
+        second->thick_max = MAX(second->thick_t1, second->thick_t2);
         second->weld_leg_1 = strtol(gtk_label_get_text(GTK_LABEL(label_result1)), NULL, 0);
         second->weld_leg_2 = strtol(gtk_label_get_text(GTK_LABEL(label_result2)), NULL, 0);
         list = g_slist_append(list, second);
@@ -320,9 +321,18 @@ void writing_data_s_list(gint count_result)
         third->position = button_click_count;
         third->thick_t1 = strtol(gtk_entry_get_text(GTK_ENTRY(entry_t1)), NULL, 0);
         third->thick_t2 = strtol(gtk_entry_get_text(GTK_ENTRY(entry_t2)), NULL, 0);
+        third->thick_max = MAX(third->thick_t1, third->thick_t2);
         third->weld_leg_1 = strtol(gtk_label_get_text(GTK_LABEL(label_result1)), NULL, 0);
         third->weld_leg_2 = strtol(gtk_label_get_text(GTK_LABEL(label_result2)), NULL, 0);
         list = g_slist_append(list, third);
+
+        // Окончание ввода данных
+        gtk_label_set_text(GTK_LABEL(label_count), "--->");
+        gtk_widget_set_sensitive(GTK_WIDGET(button_calc), FALSE);
+        gtk_widget_set_sensitive(GTK_WIDGET(button_new), FALSE);
+        gtk_widget_set_sensitive(GTK_WIDGET(entry_t1), FALSE);
+        gtk_widget_set_sensitive(GTK_WIDGET(entry_t2), FALSE);
+
         printf("- - - - - - - - - -\n");
         printf("part_3\n");
         printf("3 number is %d\n", ((Weld_data *) g_slist_nth(list, 2)->data)->position);
@@ -399,7 +409,7 @@ void on_button_file_clicked(GtkButton *b)
     cairo_set_source_rgb(cr, 0, 0, 0);
     cairo_select_font_face(cr, "Arial", CAIRO_FONT_SLANT_NORMAL,
                            CAIRO_FONT_WEIGHT_NORMAL);
-    cairo_set_font_size(cr, 12.0);
+    cairo_set_font_size(cr, 12.0);    // размер шрифта заголовка
     cairo_move_to(cr, 200, 25);
     cairo_show_text(cr, "Минимальные катеты сварных угловых швов ");
 
@@ -415,7 +425,6 @@ void on_button_file_clicked(GtkButton *b)
         data_collection(cr, 0, 0);
         // Рисуем таблицу с 1-ым результатом
         create_table(cr, 0);
-
         // Сбор данных для печати 2-го результата
         data_collection(cr, 215, 1);
         // Рисуем таблицу со 2-ым результатом
@@ -426,12 +435,10 @@ void on_button_file_clicked(GtkButton *b)
         data_collection(cr, 0, 0);
         // Рисуем таблицу с 1-ым результатом
         create_table(cr, 0);
-
         // Сбор данных для печати 2-го результата
         data_collection(cr, 215, 1);
         // Рисуем таблицу со 2-ым результатом
         create_table(cr, 215);
-
         // Сбор данных для печати 3-го результата
         data_collection(cr, 430, 2);
         // Рисуем таблицу со 2-ым результатом
@@ -452,26 +459,30 @@ void on_button_file_clicked(GtkButton *b)
 
 void data_collection(cairo_t *cr, gint shift_value, gint serial_number)
 {
-    // Данные в таблицу
-    char position_1[5];
-    // порядковый номер
+    char position_1[5];   // порядковый номер расчета
     sprintf(position_1, "%d", ((Weld_data *) g_slist_nth(list, serial_number)->data)->position);
-    cairo_set_font_size(cr, 10.0);
+    char tick_1[5];       // толщина первого элемента
+    sprintf(tick_1, "%d", ((Weld_data *) g_slist_nth(list, serial_number)->data)->thick_t1);
+    char tick_2[5];       // толщина второго элемента
+    sprintf(tick_2, "%d", ((Weld_data *) g_slist_nth(list, serial_number)->data)->thick_t2);
+    gchar thick_max[5];   // максимальная толщина элемента
+    sprintf(thick_max, "%d", ((Weld_data *) g_slist_nth(list, serial_number)->data)->thick_max);
+    gchar leg_1_1[5];     // катет 1
+    sprintf(leg_1_1, "%d", ((Weld_data *) g_slist_nth(list, serial_number)->data)->weld_leg_1);
+    gchar leg_2_1[5];     // катет 2
+    sprintf(leg_2_1, "%d", ((Weld_data *) g_slist_nth(list, serial_number)->data)->weld_leg_2);
+
+    cairo_set_font_size(cr, 10.0);   // размер шрифта pdf документа
     cairo_move_to(cr, 48, 45 + shift_value);
     cairo_show_text(cr, g_strjoin(position_1, "№", ".", NULL));
-
     cairo_move_to(cr, 70, 45 + shift_value);
-    char tick_1[5];
-    sprintf(tick_1, "%d", ((Weld_data *) g_slist_nth(list, serial_number)->data)->thick_t1);
     cairo_show_text(cr,
                     g_strjoin(" ", "Толщина первого свариваемого элемента",
-                              g_strjoin(" ", tick_1, "мм", NULL), NULL));
+                              g_strjoin(" ", tick_1, "мм", NULL), NULL));   // записываем толщину t1 в табл.
     cairo_move_to(cr, 70, 60 + shift_value);
-    char tick_2[5];
-    sprintf(tick_2, "%d", ((Weld_data *) g_slist_nth(list, serial_number)->data)->thick_t2);
     cairo_show_text(cr,
                     g_strjoin(" ", "Толщина второго свариваемого элемента",
-                              g_strjoin(" ", tick_2, "мм", NULL), NULL));
+                              g_strjoin(" ", tick_2, "мм", NULL), NULL));   // записываем толщину t2 в табл.
     cairo_move_to(cr, 60, 80 + shift_value);
     cairo_show_text(cr, "Таблица 38 СП 16.13330.2017 изм. № 2, 3");
 
@@ -511,23 +522,11 @@ void data_collection(cairo_t *cr, gint shift_value, gint serial_number)
     cairo_show_text(cr, "более толстого из свариваемых элементов Т, мм");
     cairo_move_to(cr, 440, 120 + shift_value);
 
-    gchar thick_1_1[5];
-    sprintf(thick_1_1, "%d", ((Weld_data *) g_slist_nth(list, serial_number)->data)->thick_t1);
-    gchar thick_2_1[5];
-    sprintf(thick_2_1, "%d", ((Weld_data *) g_slist_nth(list, serial_number)->data)->thick_t2);
-    gchar leg_1_1[5];
-    sprintf(leg_1_1, "%d", ((Weld_data *) g_slist_nth(list, serial_number)->data)->weld_leg_1);
-    gchar leg_2_1[5];
-    sprintf(leg_2_1, "%d", ((Weld_data *) g_slist_nth(list, serial_number)->data)->weld_leg_2);
-
-    if (t1 > t2 || t1 == t2)
-        cairo_show_text(cr, thick_1_1);
-    else if (t1 < t2)
-        cairo_show_text(cr, thick_2_1);
+    cairo_show_text(cr, thick_max);                // записываем макс. значение в табл.
     cairo_move_to(cr, 440, 160 + shift_value);
-    cairo_show_text(cr, leg_1_1);
+    cairo_show_text(cr, leg_1_1);                  // записываем катет 1 в табл.
     cairo_move_to(cr, 440, 210 + shift_value);
-    cairo_show_text(cr, leg_2_1);
+    cairo_show_text(cr, leg_2_1);                  // записываем катет 2 в табл.
 }
 
 void create_table(cairo_t *cr, gint shift_value)
