@@ -535,7 +535,7 @@
                       </object>
                       <packing>
                         <property name="x">238</property>
-                        <property name="y">33</property>
+                        <property name="y">57</property>
                       </packing>
                     </child>
                     <child>
@@ -556,6 +556,68 @@
                       <packing>
                         <property name="x">506</property>
                         <property name="y">8</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkCheckButton" id="check_part_1">
+                        <property name="label" translatable="yes">№1</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">False</property>
+                        <property name="draw-indicator">True</property>
+                        <style>
+                          <class name="check1"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="x">236</property>
+                        <property name="y">29</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkCheckButton" id="check_part_2">
+                        <property name="label" translatable="yes">№2</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">False</property>
+                        <property name="draw-indicator">True</property>
+                        <style>
+                          <class name="check2"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="x">299</property>
+                        <property name="y">29</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkCheckButton" id="check_part_3">
+                        <property name="label" translatable="yes">№3</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">False</property>
+                        <property name="draw-indicator">True</property>
+                        <style>
+                          <class name="check3"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="x">360</property>
+                        <property name="y">29</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Выберите сочетание для печати</property>
+                        <attributes>
+                          <attribute name="weight" value="bold"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="x">227</property>
+                        <property name="y">5</property>
                       </packing>
                     </child>
                   </object>

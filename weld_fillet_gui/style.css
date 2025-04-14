@@ -26,6 +26,48 @@
     -gtk-icon-shadow: 1px 1px 2.5px alpha(black, 0.6);
 }
 
+.check1 {
+    border-radius: 3px 3px 3px 3px;
+    font-size: 12px;
+    color: #ffffff;
+    background: #1b39e9;
+    border-width: 1px;
+}
+
+.check1:active {
+    padding: 3px 1px 1px 3px;
+    text-shadow: 1px 1px 2.5px alpha(black, 0.6);
+    -gtk-icon-shadow: 1px 1px 2.5px alpha(black, 0.6);
+}
+
+.check2 {
+    border-radius: 3px 3px 3px 3px;
+    font-size: 12px;
+    color: #000000;
+    background: #54f00c;
+    border-width: 1px;
+}
+
+.check2:active {
+    padding: 3px 1px 1px 3px;
+    text-shadow: 1px 1px 2.5px alpha(black, 0.6);
+    -gtk-icon-shadow: 1px 1px 2.5px alpha(black, 0.6);
+}
+
+.check3 {
+    border-radius: 3px 3px 3px 3px;
+    font-size: 12px;
+    color: #000000;
+    background: #ecb706;
+    border-width: 1px;
+}
+
+.check3:active {
+    padding: 3px 1px 1px 3px;
+    text-shadow: 1px 1px 2.5px alpha(black, 0.6);
+    -gtk-icon-shadow: 1px 1px 2.5px alpha(black, 0.6);
+}
+
 .entry:active {
     padding: 11px 9px 9px 11px;
     text-shadow: 1px 1px 2.5px alpha(black, 0.6);

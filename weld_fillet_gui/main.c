@@ -44,6 +44,9 @@ GtkWidget *label_count;
 GtkWidget *button_file;
 GtkWidget *label_create_file;
 GtkWidget *entry_name;
+GtkWidget *check_part_1;
+GtkWidget *check_part_2;
+GtkWidget *check_part_3;
 GtkBuilder *builder;
 
 gint t1 = 0; // толщина первой свариваемой детали
@@ -74,7 +77,6 @@ void work_widgets();
 void size_weld();
 void writing_data_s_list(gint count_result);
 void working_css_file();
-
 // сбор данных для печати
 void data_collection(cairo_t *cr, gint shift_value, gint serial_number);
 // печать таблицы
@@ -92,7 +94,6 @@ int main(int argc, char **argv)
 
     gtk_widget_show(window_main);
     gtk_main();
-
     return 0;
 }
 
@@ -149,12 +150,18 @@ void work_widgets()
     frame_thick = GTK_WIDGET(gtk_builder_get_object(builder, "frame_thick"));
     frame_tabl = GTK_WIDGET(gtk_builder_get_object(builder, "frame_tabl"));
     frame_file = GTK_WIDGET(gtk_builder_get_object(builder, "frame_file"));
+    check_part_1 = GTK_WIDGET(gtk_builder_get_object(builder, "check_part_1"));
+    check_part_2 = GTK_WIDGET(gtk_builder_get_object(builder, "check_part_2"));
+    check_part_3 = GTK_WIDGET(gtk_builder_get_object(builder, "check_part_3"));
     // Управление активностью кнопок
     gtk_widget_set_sensitive(GTK_WIDGET(button_calc), FALSE);
     gtk_widget_set_sensitive(GTK_WIDGET(button_new), FALSE);
     gtk_widget_set_sensitive(GTK_WIDGET(button_file), FALSE);
     gtk_widget_set_sensitive(GTK_WIDGET(entry_name), FALSE);
     gtk_widget_set_sensitive(GTK_WIDGET(button_new_data), FALSE);
+    gtk_widget_set_sensitive(GTK_WIDGET(check_part_1), FALSE);
+    gtk_widget_set_sensitive(GTK_WIDGET(check_part_2), FALSE);
+    gtk_widget_set_sensitive(GTK_WIDGET(check_part_3), FALSE);
 }
 
 void on_button_calc_clicked(GtkButton *b)
@@ -272,6 +279,7 @@ void on_button_new_data_clicked(GtkButton *b)
 
     // Заполнение односвязного списка
     writing_data_s_list(button_click_count);
+    gtk_widget_set_sensitive(GTK_WIDGET(button_new_data), FALSE);
 }
 
 void writing_data_s_list(gint count_result)
@@ -286,6 +294,7 @@ void writing_data_s_list(gint count_result)
         first->weld_leg_1 = strtol(gtk_label_get_text(GTK_LABEL(label_result1)), NULL, 0);
         first->weld_leg_2 = strtol(gtk_label_get_text(GTK_LABEL(label_result2)), NULL, 0);
         list = g_slist_append(list, first);
+        gtk_widget_set_sensitive(GTK_WIDGET(check_part_1), TRUE);
         printf("- - - - - - - - - -\n");
         printf("part_1\n");
         printf("1 number is %d\n", ((Weld_data *) g_slist_nth(list, 0)->data)->position);
@@ -308,6 +317,7 @@ void writing_data_s_list(gint count_result)
         second->weld_leg_1 = strtol(gtk_label_get_text(GTK_LABEL(label_result1)), NULL, 0);
         second->weld_leg_2 = strtol(gtk_label_get_text(GTK_LABEL(label_result2)), NULL, 0);
         list = g_slist_append(list, second);
+        gtk_widget_set_sensitive(GTK_WIDGET(check_part_2), TRUE);
         printf("- - - - - - - - - -\n");
         printf("part_2\n");
         printf("2 number is %d\n", ((Weld_data *) g_slist_nth(list, 1)->data)->position);
@@ -315,6 +325,11 @@ void writing_data_s_list(gint count_result)
         printf("t2 = %d\n", ((Weld_data *) g_slist_nth(list, 1)->data)->thick_t2);
         printf("weld_leg1 = %d\n", ((Weld_data *) g_slist_nth(list, 1)->data)->weld_leg_1);
         printf("weld_leg2 = %d\n", ((Weld_data *) g_slist_nth(list, 1)->data)->weld_leg_2);
+
+        // поле ввода имени и кнопка создания файла активны
+        gtk_widget_set_sensitive(GTK_WIDGET(button_file), TRUE);
+        gtk_widget_set_sensitive(GTK_WIDGET(entry_name), TRUE);
+
     } else if (count_result == 3)                     // заполнение результатами 3-й части
     {
         third = g_new(Weld_data, 1);
@@ -325,6 +340,7 @@ void writing_data_s_list(gint count_result)
         third->weld_leg_1 = strtol(gtk_label_get_text(GTK_LABEL(label_result1)), NULL, 0);
         third->weld_leg_2 = strtol(gtk_label_get_text(GTK_LABEL(label_result2)), NULL, 0);
         list = g_slist_append(list, third);
+        gtk_widget_set_sensitive(GTK_WIDGET(check_part_3), TRUE);
 
         // Окончание ввода данных
         gtk_label_set_text(GTK_LABEL(label_count), "--->");
@@ -413,13 +429,42 @@ void on_button_file_clicked(GtkButton *b)
     cairo_move_to(cr, 200, 25);
     cairo_show_text(cr, "Минимальные катеты сварных угловых швов ");
 
-    if (button_click_count == 1)               // печатаем первый результат
+    if (gtk_toggle_button_get_active((GtkToggleButton *) check_part_1))        // печатаем 1 результат
     {
         // Сбор данных для печати 1-го результата
         data_collection(cr, 0, 0);
         // Рисуем таблицу с 1-ым результатом
         create_table(cr, 0);
-    } else if (button_click_count == 2)        // печатаем первый и второй результаты
+        // Очищаем виджеты от данных и отключаем необходимые
+        gtk_label_set_text(GTK_LABEL(label_count), " ");
+        gtk_editable_delete_text(GTK_EDITABLE(entry_t1), 0, -1);
+        gtk_editable_delete_text(GTK_EDITABLE(entry_t2), 0, -1);
+        gtk_label_set_text(GTK_LABEL(label_result1), " ");
+        gtk_label_set_text(GTK_LABEL(label_result2), " ");
+        gtk_widget_set_sensitive(GTK_WIDGET(button_calc), FALSE);
+        gtk_widget_set_sensitive(GTK_WIDGET(button_new), FALSE);
+        gtk_widget_set_sensitive(GTK_WIDGET(button_new_data), FALSE);
+        gtk_widget_set_sensitive(GTK_WIDGET(entry_name), FALSE);
+        gtk_widget_set_sensitive(GTK_WIDGET(button_file), FALSE);
+    } else if (gtk_toggle_button_get_active((GtkToggleButton *) check_part_2)) // печатаем 2 результат
+    {
+        // Сбор данных для печати 2-го результата
+        data_collection(cr, 0, 1);
+        // Рисуем таблицу со 2-ым результатом
+        create_table(cr, 0);
+        // Очищаем виджеты от данных и отключаем необходимые
+        gtk_label_set_text(GTK_LABEL(label_count), " ");
+        gtk_editable_delete_text(GTK_EDITABLE(entry_t1), 0, -1);
+        gtk_editable_delete_text(GTK_EDITABLE(entry_t2), 0, -1);
+        gtk_label_set_text(GTK_LABEL(label_result1), " ");
+        gtk_label_set_text(GTK_LABEL(label_result2), " ");
+        gtk_widget_set_sensitive(GTK_WIDGET(button_calc), FALSE);
+        gtk_widget_set_sensitive(GTK_WIDGET(button_new), FALSE);
+        gtk_widget_set_sensitive(GTK_WIDGET(button_new_data), FALSE);
+        gtk_widget_set_sensitive(GTK_WIDGET(entry_name), FALSE);
+        gtk_widget_set_sensitive(GTK_WIDGET(button_file), FALSE);
+    } else if (gtk_toggle_button_get_active((GtkToggleButton *) check_part_1) &&
+               gtk_toggle_button_get_active((GtkToggleButton *) check_part_2)) // печатаем 1 и 2 результаты
     {
         // Сбор данных для печати 1-го результата
         data_collection(cr, 0, 0);
@@ -429,6 +474,17 @@ void on_button_file_clicked(GtkButton *b)
         data_collection(cr, 215, 1);
         // Рисуем таблицу со 2-ым результатом
         create_table(cr, 215);
+        // Очищаем виджеты от данных и отключаем необходимые
+        gtk_label_set_text(GTK_LABEL(label_count), " ");
+        gtk_editable_delete_text(GTK_EDITABLE(entry_t1), 0, -1);
+        gtk_editable_delete_text(GTK_EDITABLE(entry_t2), 0, -1);
+        gtk_label_set_text(GTK_LABEL(label_result1), " ");
+        gtk_label_set_text(GTK_LABEL(label_result2), " ");
+        gtk_widget_set_sensitive(GTK_WIDGET(button_calc), FALSE);
+        gtk_widget_set_sensitive(GTK_WIDGET(button_new), FALSE);
+        gtk_widget_set_sensitive(GTK_WIDGET(button_new_data), FALSE);
+        gtk_widget_set_sensitive(GTK_WIDGET(entry_name), FALSE);
+        gtk_widget_set_sensitive(GTK_WIDGET(button_file), FALSE);
     } else if (button_click_count == 3)        // печатаем первый, второй и третий результаты
     {
         // Сбор данных для печати 1-го результата
