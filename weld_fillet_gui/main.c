@@ -94,6 +94,11 @@ int main(int argc, char **argv)
 
     gtk_widget_show(window_main);
     gtk_main();
+
+    g_slist_free(list);
+    g_free(first);
+    g_free(second);
+    g_free(third);
     return 0;
 }
 
@@ -429,76 +434,73 @@ void on_button_file_clicked(GtkButton *b)
     cairo_move_to(cr, 200, 25);
     cairo_show_text(cr, "Минимальные катеты сварных угловых швов ");
 
-    if (gtk_toggle_button_get_active((GtkToggleButton *) check_part_1))        // печатаем 1 результат
+    if (gtk_toggle_button_get_active((GtkToggleButton *) check_part_1))
     {
-        // Сбор данных для печати 1-го результата
+        if (gtk_toggle_button_get_active((GtkToggleButton *) check_part_2))
+        {
+            if (gtk_toggle_button_get_active((GtkToggleButton *) check_part_3)) // печатаем 1,2,3 результаты
+            {
+                // Сбор данных для печати 1-го результата
+                data_collection(cr, 0, 0);
+                // Рисуем таблицу с 1-ым результатом
+                create_table(cr, 0);
+                // Сбор данных для печати 2-го результата
+                data_collection(cr, 215, 1);
+                // Рисуем таблицу со 2-ым результатом
+                create_table(cr, 215);
+                // Сбор данных для печати 3-го результата
+                data_collection(cr, 430, 2);
+                // Рисуем таблицу с 3-им результатом
+                create_table(cr, 430);
+            }
+            // Сбор данных для печати 1-го результата                                       // печатаем 1,2 результаты
+            data_collection(cr, 0, 0);
+            // Рисуем таблицу с 1-ым результатом
+            create_table(cr, 0);
+            // Сбор данных для печати 2-го результата
+            data_collection(cr, 215, 1);
+            // Рисуем таблицу со 2-ым результатом
+            create_table(cr, 215);
+        }
+
+        if (gtk_toggle_button_get_active((GtkToggleButton *) check_part_3))   // печатаем 1,3 результаты
+        {
+            // Сбор данных для печати 1-го результата
+            data_collection(cr, 0, 0);
+            // Рисуем таблицу с 1-ым результатом
+            create_table(cr, 0);
+            // Сбор данных для печати 3-го результата
+            data_collection(cr, 215, 2);
+            // Рисуем таблицу с 3-bм результатом
+            create_table(cr, 215);
+        }
+        // Сбор данных для печати 1-го результата                                          // печатаем 1 результат
         data_collection(cr, 0, 0);
         // Рисуем таблицу с 1-ым результатом
         create_table(cr, 0);
-        // Очищаем виджеты от данных и отключаем необходимые
-        gtk_label_set_text(GTK_LABEL(label_count), " ");
-        gtk_editable_delete_text(GTK_EDITABLE(entry_t1), 0, -1);
-        gtk_editable_delete_text(GTK_EDITABLE(entry_t2), 0, -1);
-        gtk_label_set_text(GTK_LABEL(label_result1), " ");
-        gtk_label_set_text(GTK_LABEL(label_result2), " ");
-        gtk_widget_set_sensitive(GTK_WIDGET(button_calc), FALSE);
-        gtk_widget_set_sensitive(GTK_WIDGET(button_new), FALSE);
-        gtk_widget_set_sensitive(GTK_WIDGET(button_new_data), FALSE);
-        gtk_widget_set_sensitive(GTK_WIDGET(entry_name), FALSE);
-        gtk_widget_set_sensitive(GTK_WIDGET(button_file), FALSE);
-    } else if (gtk_toggle_button_get_active((GtkToggleButton *) check_part_2)) // печатаем 2 результат
+    } else if (gtk_toggle_button_get_active((GtkToggleButton *) check_part_2)) // печатаем 2,3 результаты
     {
-        // Сбор данных для печати 2-го результата
+        if (gtk_toggle_button_get_active((GtkToggleButton *) check_part_3))
+        {
+            // Сбор данных для печати 2-го результата
+            data_collection(cr, 0, 1);
+            // Рисуем таблицу с 1-ым результатом
+            create_table(cr, 0);
+            // Сбор данных для печати 3-го результата
+            data_collection(cr, 215, 2);
+            // Рисуем таблицу со 2-ым результатом
+            create_table(cr, 215);
+        }
+        // Сбор данных для печати 2-го результата                                          // печатаем 2 результат
         data_collection(cr, 0, 1);
         // Рисуем таблицу со 2-ым результатом
         create_table(cr, 0);
-        // Очищаем виджеты от данных и отключаем необходимые
-        gtk_label_set_text(GTK_LABEL(label_count), " ");
-        gtk_editable_delete_text(GTK_EDITABLE(entry_t1), 0, -1);
-        gtk_editable_delete_text(GTK_EDITABLE(entry_t2), 0, -1);
-        gtk_label_set_text(GTK_LABEL(label_result1), " ");
-        gtk_label_set_text(GTK_LABEL(label_result2), " ");
-        gtk_widget_set_sensitive(GTK_WIDGET(button_calc), FALSE);
-        gtk_widget_set_sensitive(GTK_WIDGET(button_new), FALSE);
-        gtk_widget_set_sensitive(GTK_WIDGET(button_new_data), FALSE);
-        gtk_widget_set_sensitive(GTK_WIDGET(entry_name), FALSE);
-        gtk_widget_set_sensitive(GTK_WIDGET(button_file), FALSE);
-    } else if (gtk_toggle_button_get_active((GtkToggleButton *) check_part_1) &&
-               gtk_toggle_button_get_active((GtkToggleButton *) check_part_2)) // печатаем 1 и 2 результаты
+    } else if (gtk_toggle_button_get_active((GtkToggleButton *) check_part_3)) // печатаем 3 результат
     {
-        // Сбор данных для печати 1-го результата
-        data_collection(cr, 0, 0);
-        // Рисуем таблицу с 1-ым результатом
-        create_table(cr, 0);
-        // Сбор данных для печати 2-го результата
-        data_collection(cr, 215, 1);
-        // Рисуем таблицу со 2-ым результатом
-        create_table(cr, 215);
-        // Очищаем виджеты от данных и отключаем необходимые
-        gtk_label_set_text(GTK_LABEL(label_count), " ");
-        gtk_editable_delete_text(GTK_EDITABLE(entry_t1), 0, -1);
-        gtk_editable_delete_text(GTK_EDITABLE(entry_t2), 0, -1);
-        gtk_label_set_text(GTK_LABEL(label_result1), " ");
-        gtk_label_set_text(GTK_LABEL(label_result2), " ");
-        gtk_widget_set_sensitive(GTK_WIDGET(button_calc), FALSE);
-        gtk_widget_set_sensitive(GTK_WIDGET(button_new), FALSE);
-        gtk_widget_set_sensitive(GTK_WIDGET(button_new_data), FALSE);
-        gtk_widget_set_sensitive(GTK_WIDGET(entry_name), FALSE);
-        gtk_widget_set_sensitive(GTK_WIDGET(button_file), FALSE);
-    } else if (button_click_count == 3)        // печатаем первый, второй и третий результаты
-    {
-        // Сбор данных для печати 1-го результата
-        data_collection(cr, 0, 0);
-        // Рисуем таблицу с 1-ым результатом
-        create_table(cr, 0);
-        // Сбор данных для печати 2-го результата
-        data_collection(cr, 215, 1);
-        // Рисуем таблицу со 2-ым результатом
-        create_table(cr, 215);
         // Сбор данных для печати 3-го результата
-        data_collection(cr, 430, 2);
+        data_collection(cr, 0, 2);
         // Рисуем таблицу со 2-ым результатом
-        create_table(cr, 430);
+        create_table(cr, 0);
     }
 
     cairo_stroke(cr);
@@ -506,11 +508,9 @@ void on_button_file_clicked(GtkButton *b)
 
     cairo_destroy(cr);
     cairo_surface_destroy(surface);
-
-    g_slist_free(list);
-    g_free(first);
-    g_free(second);
-    g_free(third);
+    gtk_toggle_button_set_active((GtkToggleButton *) check_part_1, FALSE);
+    gtk_toggle_button_set_active((GtkToggleButton *) check_part_2, FALSE);
+    gtk_toggle_button_set_active((GtkToggleButton *) check_part_3, FALSE);
 }
 
 void data_collection(cairo_t *cr, gint shift_value, gint serial_number)
