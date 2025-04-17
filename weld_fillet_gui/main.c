@@ -44,9 +44,13 @@ GtkWidget *label_count;
 GtkWidget *button_file;
 GtkWidget *label_create_file;
 GtkWidget *entry_name;
-GtkWidget *check_part_1;
-GtkWidget *check_part_2;
-GtkWidget *check_part_3;
+GtkWidget *radiobutton_1;
+GtkWidget *radiobutton_2;
+GtkWidget *radiobutton_3;
+GtkWidget *radiobutton_1_2;
+GtkWidget *radiobutton_1_3;
+GtkWidget *radiobutton_2_3;
+GtkWidget *radiobutton_1_2_3;
 GtkBuilder *builder;
 
 gint t1 = 0; // толщина первой свариваемой детали
@@ -155,18 +159,26 @@ void work_widgets()
     frame_thick = GTK_WIDGET(gtk_builder_get_object(builder, "frame_thick"));
     frame_tabl = GTK_WIDGET(gtk_builder_get_object(builder, "frame_tabl"));
     frame_file = GTK_WIDGET(gtk_builder_get_object(builder, "frame_file"));
-    check_part_1 = GTK_WIDGET(gtk_builder_get_object(builder, "check_part_1"));
-    check_part_2 = GTK_WIDGET(gtk_builder_get_object(builder, "check_part_2"));
-    check_part_3 = GTK_WIDGET(gtk_builder_get_object(builder, "check_part_3"));
+    radiobutton_1 = GTK_WIDGET(gtk_builder_get_object(builder, "radiobutton_1"));
+    radiobutton_2 = GTK_WIDGET(gtk_builder_get_object(builder, "radiobutton_2"));
+    radiobutton_3 = GTK_WIDGET(gtk_builder_get_object(builder, "radiobutton_3"));
+    radiobutton_1_2 = GTK_WIDGET(gtk_builder_get_object(builder, "radiobutton_1_2"));
+    radiobutton_1_3 = GTK_WIDGET(gtk_builder_get_object(builder, "radiobutton_1_3"));
+    radiobutton_2_3 = GTK_WIDGET(gtk_builder_get_object(builder, "radiobutton_2_3"));
+    radiobutton_1_2_3 = GTK_WIDGET(gtk_builder_get_object(builder, "radiobutton_1_2_3"));
     // Управление активностью кнопок
     gtk_widget_set_sensitive(GTK_WIDGET(button_calc), FALSE);
     gtk_widget_set_sensitive(GTK_WIDGET(button_new), FALSE);
     gtk_widget_set_sensitive(GTK_WIDGET(button_file), FALSE);
     gtk_widget_set_sensitive(GTK_WIDGET(entry_name), FALSE);
     gtk_widget_set_sensitive(GTK_WIDGET(button_new_data), FALSE);
-    gtk_widget_set_sensitive(GTK_WIDGET(check_part_1), FALSE);
-    gtk_widget_set_sensitive(GTK_WIDGET(check_part_2), FALSE);
-    gtk_widget_set_sensitive(GTK_WIDGET(check_part_3), FALSE);
+    gtk_widget_set_sensitive(GTK_WIDGET(radiobutton_1), FALSE);
+    gtk_widget_set_sensitive(GTK_WIDGET(radiobutton_2), FALSE);
+    gtk_widget_set_sensitive(GTK_WIDGET(radiobutton_3), FALSE);
+    gtk_widget_set_sensitive(GTK_WIDGET(radiobutton_1_2), FALSE);
+    gtk_widget_set_sensitive(GTK_WIDGET(radiobutton_1_3), FALSE);
+    gtk_widget_set_sensitive(GTK_WIDGET(radiobutton_2_3), FALSE);
+    gtk_widget_set_sensitive(GTK_WIDGET(radiobutton_1_2_3), FALSE);
 }
 
 void on_button_calc_clicked(GtkButton *b)
@@ -299,7 +311,7 @@ void writing_data_s_list(gint count_result)
         first->weld_leg_1 = strtol(gtk_label_get_text(GTK_LABEL(label_result1)), NULL, 0);
         first->weld_leg_2 = strtol(gtk_label_get_text(GTK_LABEL(label_result2)), NULL, 0);
         list = g_slist_append(list, first);
-        gtk_widget_set_sensitive(GTK_WIDGET(check_part_1), TRUE);
+        gtk_widget_set_sensitive(GTK_WIDGET(radiobutton_1), TRUE);
         printf("- - - - - - - - - -\n");
         printf("part_1\n");
         printf("1 number is %d\n", ((Weld_data *) g_slist_nth(list, 0)->data)->position);
@@ -322,7 +334,8 @@ void writing_data_s_list(gint count_result)
         second->weld_leg_1 = strtol(gtk_label_get_text(GTK_LABEL(label_result1)), NULL, 0);
         second->weld_leg_2 = strtol(gtk_label_get_text(GTK_LABEL(label_result2)), NULL, 0);
         list = g_slist_append(list, second);
-        gtk_widget_set_sensitive(GTK_WIDGET(check_part_2), TRUE);
+        gtk_widget_set_sensitive(GTK_WIDGET(radiobutton_2), TRUE);
+        gtk_widget_set_sensitive(GTK_WIDGET(radiobutton_1_2), TRUE);
         printf("- - - - - - - - - -\n");
         printf("part_2\n");
         printf("2 number is %d\n", ((Weld_data *) g_slist_nth(list, 1)->data)->position);
@@ -345,10 +358,13 @@ void writing_data_s_list(gint count_result)
         third->weld_leg_1 = strtol(gtk_label_get_text(GTK_LABEL(label_result1)), NULL, 0);
         third->weld_leg_2 = strtol(gtk_label_get_text(GTK_LABEL(label_result2)), NULL, 0);
         list = g_slist_append(list, third);
-        gtk_widget_set_sensitive(GTK_WIDGET(check_part_3), TRUE);
+        gtk_widget_set_sensitive(GTK_WIDGET(radiobutton_3), TRUE);
+        gtk_widget_set_sensitive(GTK_WIDGET(radiobutton_1_3), TRUE);
+        gtk_widget_set_sensitive(GTK_WIDGET(radiobutton_2_3), TRUE);
+        gtk_widget_set_sensitive(GTK_WIDGET(radiobutton_1_2_3), TRUE);
 
         // Окончание ввода данных
-        gtk_label_set_text(GTK_LABEL(label_count), "--->");
+        gtk_label_set_text(GTK_LABEL(label_count), ">>>>>");
         gtk_widget_set_sensitive(GTK_WIDGET(button_calc), FALSE);
         gtk_widget_set_sensitive(GTK_WIDGET(button_new), FALSE);
         gtk_widget_set_sensitive(GTK_WIDGET(entry_t1), FALSE);
@@ -384,17 +400,13 @@ void on_button_new_clicked(GtkButton *b)
 void on_entry_t1_insert_text(GtkEntry *e)
 {
     if (gtk_entry_get_text_length(GTK_ENTRY(entry_t2)))
-    {
         gtk_widget_set_sensitive(GTK_WIDGET(button_calc), TRUE);
-    }
 }
 
 void on_entry_t2_insert_text(GtkEntry *e)
 {
     if (gtk_entry_get_text_length(GTK_ENTRY(entry_t1)))
-    {
         gtk_widget_set_sensitive(GTK_WIDGET(button_calc), TRUE);
-    }
 }
 
 void on_button_file_clicked(GtkButton *b)
@@ -434,73 +446,80 @@ void on_button_file_clicked(GtkButton *b)
     cairo_move_to(cr, 200, 25);
     cairo_show_text(cr, "Минимальные катеты сварных угловых швов ");
 
-    if (gtk_toggle_button_get_active((GtkToggleButton *) check_part_1))
+    if (gtk_toggle_button_get_active((GtkToggleButton *) radiobutton_1)) // печатаем 1 результат
     {
-        if (gtk_toggle_button_get_active((GtkToggleButton *) check_part_2))
-        {
-            if (gtk_toggle_button_get_active((GtkToggleButton *) check_part_3)) // печатаем 1,2,3 результаты
-            {
-                // Сбор данных для печати 1-го результата
-                data_collection(cr, 0, 0);
-                // Рисуем таблицу с 1-ым результатом
-                create_table(cr, 0);
-                // Сбор данных для печати 2-го результата
-                data_collection(cr, 215, 1);
-                // Рисуем таблицу со 2-ым результатом
-                create_table(cr, 215);
-                // Сбор данных для печати 3-го результата
-                data_collection(cr, 430, 2);
-                // Рисуем таблицу с 3-им результатом
-                create_table(cr, 430);
-            }
-            // Сбор данных для печати 1-го результата                                       // печатаем 1,2 результаты
-            data_collection(cr, 0, 0);
-            // Рисуем таблицу с 1-ым результатом
-            create_table(cr, 0);
-            // Сбор данных для печати 2-го результата
-            data_collection(cr, 215, 1);
-            // Рисуем таблицу со 2-ым результатом
-            create_table(cr, 215);
-        }
-
-        if (gtk_toggle_button_get_active((GtkToggleButton *) check_part_3))   // печатаем 1,3 результаты
-        {
-            // Сбор данных для печати 1-го результата
-            data_collection(cr, 0, 0);
-            // Рисуем таблицу с 1-ым результатом
-            create_table(cr, 0);
-            // Сбор данных для печати 3-го результата
-            data_collection(cr, 215, 2);
-            // Рисуем таблицу с 3-bм результатом
-            create_table(cr, 215);
-        }
-        // Сбор данных для печати 1-го результата                                          // печатаем 1 результат
+        // Сбор данных для печати 1-го результата
         data_collection(cr, 0, 0);
         // Рисуем таблицу с 1-ым результатом
         create_table(cr, 0);
-    } else if (gtk_toggle_button_get_active((GtkToggleButton *) check_part_2)) // печатаем 2,3 результаты
+    }
+
+    if (gtk_toggle_button_get_active((GtkToggleButton *) radiobutton_2)) // печатаем 2 результат
     {
-        if (gtk_toggle_button_get_active((GtkToggleButton *) check_part_3))
-        {
-            // Сбор данных для печати 2-го результата
-            data_collection(cr, 0, 1);
-            // Рисуем таблицу с 1-ым результатом
-            create_table(cr, 0);
-            // Сбор данных для печати 3-го результата
-            data_collection(cr, 215, 2);
-            // Рисуем таблицу со 2-ым результатом
-            create_table(cr, 215);
-        }
-        // Сбор данных для печати 2-го результата                                          // печатаем 2 результат
+        // Сбор данных для печати 2-го результата
         data_collection(cr, 0, 1);
         // Рисуем таблицу со 2-ым результатом
         create_table(cr, 0);
-    } else if (gtk_toggle_button_get_active((GtkToggleButton *) check_part_3)) // печатаем 3 результат
+    }
+
+    if (gtk_toggle_button_get_active((GtkToggleButton *) radiobutton_3)) // печатаем 3 результат
     {
         // Сбор данных для печати 3-го результата
         data_collection(cr, 0, 2);
+        // Рисуем таблицу с 3-им результатом
+        create_table(cr, 0);
+    }
+
+    if (gtk_toggle_button_get_active((GtkToggleButton *) radiobutton_1_2)) // печатаем 1, 2 результаты
+    {
+        // Сбор данных для печати 1-го результата
+        data_collection(cr, 0, 0);
+        // Рисуем таблицу с 1-ым результатом
+        create_table(cr, 0);
+        // Сбор данных для печати 2-го результата
+        data_collection(cr, 215, 1);
+        // Рисуем таблицу со 2-ым результатом
+        create_table(cr, 215);
+    }
+
+    if (gtk_toggle_button_get_active((GtkToggleButton *) radiobutton_1_3)) // печатаем 1, 3 результаты
+    {
+        // Сбор данных для печати 1-го результата
+        data_collection(cr, 0, 0);
+        // Рисуем таблицу с 1-ым результатом
+        create_table(cr, 0);
+        // Сбор данных для печати 3-го результата
+        data_collection(cr, 215, 2);
+        // Рисуем таблицу с 3-им результатом
+        create_table(cr, 215);
+    }
+
+    if (gtk_toggle_button_get_active((GtkToggleButton *) radiobutton_2_3)) // печатаем 2, 3 результаты
+    {
+        // Сбор данных для печати 2-го результата
+        data_collection(cr, 0, 1);
         // Рисуем таблицу со 2-ым результатом
         create_table(cr, 0);
+        // Сбор данных для печати 3-го результата
+        data_collection(cr, 215, 2);
+        // Рисуем таблицу с 3-им результатом
+        create_table(cr, 215);
+    }
+
+    if (gtk_toggle_button_get_active((GtkToggleButton *) radiobutton_1_2_3)) // печатаем 1, 2, 3 результаты
+    {
+        // Сбор данных для печати 1-го результата
+        data_collection(cr, 0, 0);
+        // Рисуем таблицу с 1-ым результатом
+        create_table(cr, 0);
+        // Сбор данных для печати 2-го результата
+        data_collection(cr, 215, 1);
+        // Рисуем таблицу со 2-ым результатом
+        create_table(cr, 215);
+        // Сбор данных для печати 3-го результата
+        data_collection(cr, 430, 2);
+        // Рисуем таблицу с 3-им результатом
+        create_table(cr, 430);
     }
 
     cairo_stroke(cr);
@@ -508,9 +527,6 @@ void on_button_file_clicked(GtkButton *b)
 
     cairo_destroy(cr);
     cairo_surface_destroy(surface);
-    gtk_toggle_button_set_active((GtkToggleButton *) check_part_1, FALSE);
-    gtk_toggle_button_set_active((GtkToggleButton *) check_part_2, FALSE);
-    gtk_toggle_button_set_active((GtkToggleButton *) check_part_3, FALSE);
 }
 
 void data_collection(cairo_t *cr, gint shift_value, gint serial_number)
@@ -524,9 +540,27 @@ void data_collection(cairo_t *cr, gint shift_value, gint serial_number)
     gchar thick_max[5];   // максимальная толщина элемента
     sprintf(thick_max, "%d", ((Weld_data *) g_slist_nth(list, serial_number)->data)->thick_max);
     gchar leg_1_1[5];     // катет 1
-    sprintf(leg_1_1, "%d", ((Weld_data *) g_slist_nth(list, serial_number)->data)->weld_leg_1);
     gchar leg_2_1[5];     // катет 2
-    sprintf(leg_2_1, "%d", ((Weld_data *) g_slist_nth(list, serial_number)->data)->weld_leg_2);
+
+    if (((Weld_data *) g_slist_nth(list, serial_number)->data)->weld_leg_1 == 0)  // если условие не выполнено
+    {
+        cairo_move_to(cr, 410, 153 + shift_value);
+        cairo_show_text(cr, "по расчету,");            // место первого катета
+        cairo_move_to(cr, 390, 170 + shift_value);
+        cairo_show_text(cr, "но не более 1,2t");
+        cairo_move_to(cr, 410, 202 + shift_value);
+        cairo_show_text(cr, "по расчету,");            // место второго катета
+        cairo_move_to(cr, 390, 219 + shift_value);
+        cairo_show_text(cr, "но не более 1,2t");
+    } else
+    {
+        sprintf(leg_1_1, "%d", ((Weld_data *) g_slist_nth(list, serial_number)->data)->weld_leg_1);
+        sprintf(leg_2_1, "%d", ((Weld_data *) g_slist_nth(list, serial_number)->data)->weld_leg_2);
+        cairo_move_to(cr, 440, 160 + shift_value);
+        cairo_show_text(cr, leg_1_1);                  // записываем катет 1 в табл.
+        cairo_move_to(cr, 440, 210 + shift_value);
+        cairo_show_text(cr, leg_2_1);                  // записываем катет 2 в табл.
+    }
 
     cairo_set_font_size(cr, 10.0);   // размер шрифта pdf документа
     cairo_move_to(cr, 48, 45 + shift_value);
@@ -579,10 +613,7 @@ void data_collection(cairo_t *cr, gint shift_value, gint serial_number)
     cairo_move_to(cr, 440, 120 + shift_value);
 
     cairo_show_text(cr, thick_max);                // записываем макс. значение в табл.
-    cairo_move_to(cr, 440, 160 + shift_value);
-    cairo_show_text(cr, leg_1_1);                  // записываем катет 1 в табл.
-    cairo_move_to(cr, 440, 210 + shift_value);
-    cairo_show_text(cr, leg_2_1);                  // записываем катет 2 в табл.
+
 }
 
 void create_table(cairo_t *cr, gint shift_value)
@@ -611,4 +642,5 @@ void create_table(cairo_t *cr, gint shift_value)
 void on_entry_name_focus_in_event(GtkEntry *e)
 {
     gtk_entry_set_text(GTK_ENTRY(entry_name), " ");
+    gtk_label_set_text(GTK_LABEL(label_create_file), " ");
 }
