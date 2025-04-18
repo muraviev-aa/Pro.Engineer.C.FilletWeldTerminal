@@ -573,24 +573,6 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkRadioButton" id="radiobutton_1">
-                        <property name="label" translatable="yes">1</property>
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="receives-default">False</property>
-                        <property name="active">True</property>
-                        <property name="draw-indicator">True</property>
-                        <property name="group">radiobutton_1_2_3</property>
-                        <style>
-                          <class name="check1"/>
-                        </style>
-                      </object>
-                      <packing>
-                        <property name="x">181</property>
-                        <property name="y">28</property>
-                      </packing>
-                    </child>
-                    <child>
                       <object class="GtkRadioButton" id="radiobutton_2">
                         <property name="label" translatable="yes">2</property>
                         <property name="visible">True</property>
@@ -598,7 +580,7 @@
                         <property name="receives-default">False</property>
                         <property name="active">True</property>
                         <property name="draw-indicator">True</property>
-                        <property name="group">radiobutton_1_2_3</property>
+                        <property name="group">radiobutton_1</property>
                         <style>
                           <class name="check1"/>
                         </style>
@@ -616,7 +598,7 @@
                         <property name="receives-default">False</property>
                         <property name="active">True</property>
                         <property name="draw-indicator">True</property>
-                        <property name="group">radiobutton_1_2_3</property>
+                        <property name="group">radiobutton_1</property>
                         <style>
                           <class name="check1"/>
                         </style>
@@ -634,7 +616,7 @@
                         <property name="receives-default">False</property>
                         <property name="active">True</property>
                         <property name="draw-indicator">True</property>
-                        <property name="group">radiobutton_1_2_3</property>
+                        <property name="group">radiobutton_1</property>
                         <style>
                           <class name="check1"/>
                         </style>
@@ -652,7 +634,7 @@
                         <property name="receives-default">False</property>
                         <property name="active">True</property>
                         <property name="draw-indicator">True</property>
-                        <property name="group">radiobutton_1_2_3</property>
+                        <property name="group">radiobutton_1</property>
                         <style>
                           <class name="check1"/>
                         </style>
@@ -670,7 +652,7 @@
                         <property name="receives-default">False</property>
                         <property name="active">True</property>
                         <property name="draw-indicator">True</property>
-                        <property name="group">radiobutton_1_2_3</property>
+                        <property name="group">radiobutton_1</property>
                         <style>
                           <class name="check1"/>
                         </style>
@@ -688,12 +670,30 @@
                         <property name="receives-default">False</property>
                         <property name="active">True</property>
                         <property name="draw-indicator">True</property>
+                        <property name="group">radiobutton_1</property>
                         <style>
                           <class name="check1"/>
                         </style>
                       </object>
                       <packing>
                         <property name="x">434</property>
+                        <property name="y">28</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkRadioButton" id="radiobutton_1">
+                        <property name="label" translatable="yes">1</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">False</property>
+                        <property name="active">True</property>
+                        <property name="draw-indicator">True</property>
+                        <style>
+                          <class name="check1"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="x">185</property>
                         <property name="y">28</property>
                       </packing>
                     </child>

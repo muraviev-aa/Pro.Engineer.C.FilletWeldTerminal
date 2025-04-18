@@ -301,60 +301,47 @@ void on_button_new_data_clicked(GtkButton *b)
 
 void writing_data_s_list(gint count_result)
 {
-    if (count_result == 1)                            // заполнение результатами 1-й части
+    if (count_result == 1)                            // заполнение результатами 1-го узла
     {
         first = (Weld_data *) malloc(sizeof(Weld_data));
         first->position = button_click_count;
         first->thick_t1 = strtol(gtk_entry_get_text(GTK_ENTRY(entry_t1)), NULL, 0);
         first->thick_t2 = strtol(gtk_entry_get_text(GTK_ENTRY(entry_t2)), NULL, 0);
         first->thick_max = MAX(first->thick_t1, first->thick_t2);
+        first->max_leg = 1.2 * MIN(first->thick_t1, first->thick_t2);
         first->weld_leg_1 = strtol(gtk_label_get_text(GTK_LABEL(label_result1)), NULL, 0);
         first->weld_leg_2 = strtol(gtk_label_get_text(GTK_LABEL(label_result2)), NULL, 0);
         list = g_slist_append(list, first);
         gtk_widget_set_sensitive(GTK_WIDGET(radiobutton_1), TRUE);
-        printf("- - - - - - - - - -\n");
-        printf("part_1\n");
-        printf("1 number is %d\n", ((Weld_data *) g_slist_nth(list, 0)->data)->position);
-        printf("t1 = %d\n", ((Weld_data *) g_slist_nth(list, 0)->data)->thick_t1);
-        printf("t2 = %d\n", ((Weld_data *) g_slist_nth(list, 0)->data)->thick_t2);
-        printf("weld_leg1 = %d\n", ((Weld_data *) g_slist_nth(list, 0)->data)->weld_leg_1);
-        printf("weld_leg2 = %d\n", ((Weld_data *) g_slist_nth(list, 0)->data)->weld_leg_2);
-
-        // поле ввода имени и кнопка создания файла активны
+        // поле ввода имени файла и кнопка его создания активны
         gtk_widget_set_sensitive(GTK_WIDGET(button_file), TRUE);
         gtk_widget_set_sensitive(GTK_WIDGET(entry_name), TRUE);
 
-    } else if (count_result == 2)                     // заполнение результатами 2-й части
+    } else if (count_result == 2)                     // заполнение результатами 2-го узла
     {
         second = g_new(Weld_data, 1);
         second->position = button_click_count;
         second->thick_t1 = strtol(gtk_entry_get_text(GTK_ENTRY(entry_t1)), NULL, 0);
         second->thick_t2 = strtol(gtk_entry_get_text(GTK_ENTRY(entry_t2)), NULL, 0);
         second->thick_max = MAX(second->thick_t1, second->thick_t2);
+        second->max_leg = 1.2 * MIN(first->thick_t1, first->thick_t2);
         second->weld_leg_1 = strtol(gtk_label_get_text(GTK_LABEL(label_result1)), NULL, 0);
         second->weld_leg_2 = strtol(gtk_label_get_text(GTK_LABEL(label_result2)), NULL, 0);
         list = g_slist_append(list, second);
         gtk_widget_set_sensitive(GTK_WIDGET(radiobutton_2), TRUE);
         gtk_widget_set_sensitive(GTK_WIDGET(radiobutton_1_2), TRUE);
-        printf("- - - - - - - - - -\n");
-        printf("part_2\n");
-        printf("2 number is %d\n", ((Weld_data *) g_slist_nth(list, 1)->data)->position);
-        printf("t1 = %d\n", ((Weld_data *) g_slist_nth(list, 1)->data)->thick_t1);
-        printf("t2 = %d\n", ((Weld_data *) g_slist_nth(list, 1)->data)->thick_t2);
-        printf("weld_leg1 = %d\n", ((Weld_data *) g_slist_nth(list, 1)->data)->weld_leg_1);
-        printf("weld_leg2 = %d\n", ((Weld_data *) g_slist_nth(list, 1)->data)->weld_leg_2);
-
         // поле ввода имени и кнопка создания файла активны
         gtk_widget_set_sensitive(GTK_WIDGET(button_file), TRUE);
         gtk_widget_set_sensitive(GTK_WIDGET(entry_name), TRUE);
 
-    } else if (count_result == 3)                     // заполнение результатами 3-й части
+    } else if (count_result == 3)                     // заполнение результатами 3-го узла
     {
         third = g_new(Weld_data, 1);
         third->position = button_click_count;
         third->thick_t1 = strtol(gtk_entry_get_text(GTK_ENTRY(entry_t1)), NULL, 0);
         third->thick_t2 = strtol(gtk_entry_get_text(GTK_ENTRY(entry_t2)), NULL, 0);
         third->thick_max = MAX(third->thick_t1, third->thick_t2);
+        third->max_leg = 1.2 * MIN(first->thick_t1, first->thick_t2);
         third->weld_leg_1 = strtol(gtk_label_get_text(GTK_LABEL(label_result1)), NULL, 0);
         third->weld_leg_2 = strtol(gtk_label_get_text(GTK_LABEL(label_result2)), NULL, 0);
         list = g_slist_append(list, third);
@@ -362,21 +349,12 @@ void writing_data_s_list(gint count_result)
         gtk_widget_set_sensitive(GTK_WIDGET(radiobutton_1_3), TRUE);
         gtk_widget_set_sensitive(GTK_WIDGET(radiobutton_2_3), TRUE);
         gtk_widget_set_sensitive(GTK_WIDGET(radiobutton_1_2_3), TRUE);
-
         // Окончание ввода данных
         gtk_label_set_text(GTK_LABEL(label_count), ">>>>>");
         gtk_widget_set_sensitive(GTK_WIDGET(button_calc), FALSE);
         gtk_widget_set_sensitive(GTK_WIDGET(button_new), FALSE);
         gtk_widget_set_sensitive(GTK_WIDGET(entry_t1), FALSE);
         gtk_widget_set_sensitive(GTK_WIDGET(entry_t2), FALSE);
-
-        printf("- - - - - - - - - -\n");
-        printf("part_3\n");
-        printf("3 number is %d\n", ((Weld_data *) g_slist_nth(list, 2)->data)->position);
-        printf("t1 = %d\n", ((Weld_data *) g_slist_nth(list, 2)->data)->thick_t1);
-        printf("t2 = %d\n", ((Weld_data *) g_slist_nth(list, 2)->data)->thick_t2);
-        printf("weld_leg1 = %d\n", ((Weld_data *) g_slist_nth(list, 2)->data)->weld_leg_1);
-        printf("weld_leg2 = %d\n", ((Weld_data *) g_slist_nth(list, 2)->data)->weld_leg_2);
     }
 }
 
@@ -544,14 +522,17 @@ void data_collection(cairo_t *cr, gint shift_value, gint serial_number)
 
     if (((Weld_data *) g_slist_nth(list, serial_number)->data)->weld_leg_1 == 0)  // если условие не выполнено
     {
-        cairo_move_to(cr, 410, 153 + shift_value);
-        cairo_show_text(cr, "по расчету,");            // место первого катета
-        cairo_move_to(cr, 390, 170 + shift_value);
-        cairo_show_text(cr, "но не более 1,2t");
-        cairo_move_to(cr, 410, 202 + shift_value);
-        cairo_show_text(cr, "по расчету,");            // место второго катета
-        cairo_move_to(cr, 390, 219 + shift_value);
-        cairo_show_text(cr, "но не более 1,2t");
+        gdouble max_leg_thin = ((Weld_data *) g_slist_nth(list, serial_number)->data)->max_leg;
+        char str[10];                                                   // максимальный катет по наименьшей толщине
+        sprintf(str, "%.1f", max_leg_thin);
+        cairo_move_to(cr, 380, 153 + shift_value);
+        cairo_show_text(cr, "по расчету, но не более");
+        cairo_move_to(cr, 417, 170 + shift_value);
+        cairo_show_text(cr, g_strjoin(" ", str, "мм", NULL));
+        cairo_move_to(cr, 380, 202 + shift_value);
+        cairo_show_text(cr, "по расчету, но не более");
+        cairo_move_to(cr, 417, 219 + shift_value);
+        cairo_show_text(cr, g_strjoin(" ", str, "мм", NULL));
     } else
     {
         sprintf(leg_1_1, "%d", ((Weld_data *) g_slist_nth(list, serial_number)->data)->weld_leg_1);
