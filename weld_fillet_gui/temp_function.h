@@ -16,4 +16,15 @@ typedef struct
     gint weld_leg_2;   // катет вар.2
 } Weld_data;
 
+// Работаем с *.css файлом
+void working_css_file();
+// Определение минимального катета сварного шва
+void size_weld();
+// Сбор данных для печати
+void data_collection(cairo_t *cr, GSList *list, gint shift_value, gint serial_number);
+// Печать таблицы
+void create_table(cairo_t *cr, gint shift_value);
+// Обработчик события кнопки button_calc
+G_MODULE_EXPORT void on_button_calc_clicked(GtkButton *b);
+
 #endif //WELD_FILLET_GUI_TEMP_FUNCTION_H
