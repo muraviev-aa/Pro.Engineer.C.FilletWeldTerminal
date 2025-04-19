@@ -177,13 +177,11 @@ void size_weld()
         gtk_label_set_text(GTK_LABEL(label_t1), " Толщина более толстого из свариваемых");
         gtk_label_set_text(GTK_LABEL(label_t2), "элементов меньше 4 мм не предусмотрена");
         flag_result = 1;
-        printf("flag is %d\n", flag_result);
     } else if (t1 < t2 && t2 > 40 || t1 > t2 && t1 > 40) // наиболее толстый элемент толщиной более 40 мм
     {
         gtk_label_set_text(GTK_LABEL(katet_tabl1), str_calc4);
         gtk_label_set_text(GTK_LABEL(katet_tabl2), str_calc4);
         flag_result = 2;
-        printf("flag is %d\n", flag_result);
     } else
     {
         if (t1 < t2 && t1 < 0.6 * t2 || 0.6 * t1 > t2 && t1 > t2) // условие t >= 0.6T не выполняется
@@ -198,7 +196,6 @@ void size_weld()
             gtk_label_set_text(GTK_LABEL(katet_tabl1), str_calc3);
             gtk_label_set_text(GTK_LABEL(katet_tabl2), str_calc3);
             flag_result = 3;
-            printf("flag is %d\n", flag_result);
         } else
         {
             gtk_widget_hide(katet_tabl1);
@@ -235,7 +232,6 @@ void size_weld()
                 gtk_label_set_text(GTK_LABEL(label_result2), "22");
             }
             flag_result = 4;
-            printf("flag is %d\n", flag_result);
         }
     }
 }
@@ -296,7 +292,7 @@ void writing_data_s_list(gint count_result)
         second->thick_t1 = strtol(gtk_entry_get_text(GTK_ENTRY(entry_t1)), NULL, 0);
         second->thick_t2 = strtol(gtk_entry_get_text(GTK_ENTRY(entry_t2)), NULL, 0);
         second->thick_max = MAX(second->thick_t1, second->thick_t2);
-        second->max_leg = 1.2 * MIN(first->thick_t1, first->thick_t2);
+        second->max_leg = 1.2 * MIN(second->thick_t1, second->thick_t2);
         second->weld_leg_1 = strtol(gtk_label_get_text(GTK_LABEL(label_result1)), NULL, 0);
         second->weld_leg_2 = strtol(gtk_label_get_text(GTK_LABEL(label_result2)), NULL, 0);
         list = g_slist_append(list, second);
@@ -313,7 +309,7 @@ void writing_data_s_list(gint count_result)
         third->thick_t1 = strtol(gtk_entry_get_text(GTK_ENTRY(entry_t1)), NULL, 0);
         third->thick_t2 = strtol(gtk_entry_get_text(GTK_ENTRY(entry_t2)), NULL, 0);
         third->thick_max = MAX(third->thick_t1, third->thick_t2);
-        third->max_leg = 1.2 * MIN(first->thick_t1, first->thick_t2);
+        third->max_leg = 1.2 * MIN(third->thick_t1, third->thick_t2);
         third->weld_leg_1 = strtol(gtk_label_get_text(GTK_LABEL(label_result1)), NULL, 0);
         third->weld_leg_2 = strtol(gtk_label_get_text(GTK_LABEL(label_result2)), NULL, 0);
         list = g_slist_append(list, third);
@@ -372,7 +368,7 @@ void on_button_file_clicked(GtkButton *b)
     else
         file_name = g_strjoin(".", file_name_assigned, "pdf", NULL);
 
-    surface = cairo_pdf_surface_create(file_name, 597.6, 842.4);
+    surface = cairo_pdf_surface_create(file_name, 595, 842); // А4 in points
     cr = cairo_create(surface);
 
     // Проверяем создан ли файл

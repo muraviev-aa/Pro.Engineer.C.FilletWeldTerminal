@@ -33,6 +33,7 @@ void data_collection(cairo_t *cr, GSList *list, gint shift_value, gint serial_nu
     sprintf(thick_max, "%d", ((Weld_data *) g_slist_nth(list, serial_number)->data)->thick_max);
     gchar leg_1_1[5];     // катет 1
     gchar leg_2_1[5];     // катет 2
+    cairo_set_font_size(cr, 10.0);   // размер шрифта pdf документа
 
     if (((Weld_data *) g_slist_nth(list, serial_number)->data)->weld_leg_1 == 0)  // если условие не выполнено
     {
@@ -41,11 +42,11 @@ void data_collection(cairo_t *cr, GSList *list, gint shift_value, gint serial_nu
         sprintf(str, "%.1f", max_leg_thin);
         cairo_move_to(cr, 380, 153 + shift_value);
         cairo_show_text(cr, "по расчету, но не более");
-        cairo_move_to(cr, 417, 170 + shift_value);
+        cairo_move_to(cr, 420, 170 + shift_value);
         cairo_show_text(cr, g_strjoin(" ", str, "мм", NULL));
         cairo_move_to(cr, 380, 202 + shift_value);
         cairo_show_text(cr, "по расчету, но не более");
-        cairo_move_to(cr, 417, 219 + shift_value);
+        cairo_move_to(cr, 420, 219 + shift_value);
         cairo_show_text(cr, g_strjoin(" ", str, "мм", NULL));
     } else
     {
@@ -57,7 +58,6 @@ void data_collection(cairo_t *cr, GSList *list, gint shift_value, gint serial_nu
         cairo_show_text(cr, leg_2_1);                  // записываем катет 2 в табл.
     }
 
-    cairo_set_font_size(cr, 10.0);   // размер шрифта pdf документа
     cairo_move_to(cr, 48, 45 + shift_value);
     cairo_show_text(cr, g_strjoin(position_1, "№", ".", NULL));
     cairo_move_to(cr, 70, 45 + shift_value);
@@ -124,10 +124,10 @@ void create_table(cairo_t *cr, gint shift_value)
     cairo_move_to(cr, 60.0, 130.0 + shift_value);
     cairo_line_to(cr, 570.0, 130.0 + shift_value);
     // Вторая горизонтальная линия
-    // 1-я
+    // 1-я линия
     cairo_move_to(cr, 60.0, 185.0 + shift_value);
     cairo_line_to(cr, 200.0, 185.0 + shift_value);
-    // 2-я
+    // 2-я линия
     cairo_move_to(cr, 320, 185.0 + shift_value);
     cairo_line_to(cr, 570.0, 185.0 + shift_value);
 }
