@@ -78,10 +78,11 @@ G_MODULE_EXPORT void on_button_file_clicked(GtkButton *b);
 void work_widgets();
 void writing_data_s_list(gint count_result);
 
+
 int main(int argc, char **argv)
 {
     gtk_init(&argc, &argv);
-    builder = gtk_builder_new_from_file("weld.glade");
+    builder = gtk_builder_new_from_file("resources/weld.glade");
     work_widgets();
 
     // работа с *.css файлом
@@ -370,6 +371,12 @@ void on_button_file_clicked(GtkButton *b)
 
     surface = cairo_pdf_surface_create(file_name, 595, 842); // А4 in points
     cr = cairo_create(surface);
+
+    // Вставка png
+    if (gtk_toggle_button_get_active((GtkToggleButton *) radiobutton_1)) // печатаем картинку 1-го результата
+    {
+        insert_png(cr, list, 0, 0);
+    }
 
     // Проверяем создан ли файл
     if (surface == NULL)

@@ -8,7 +8,7 @@ void working_css_file()
     GdkScreen *screen;
     screen = gdk_screen_get_default();
     gchar *path;
-    path = g_build_filename("style.css", NULL);
+    path = g_build_filename("resources/style.css", NULL);
     file = g_file_new_for_path(path);
 
     g_free(path);
@@ -35,7 +35,7 @@ void data_collection(cairo_t *cr, GSList *list, gint shift_value, gint serial_nu
     gchar leg_2_1[5];     // катет 2
     cairo_set_font_size(cr, 10.0);   // размер шрифта pdf документа
 
-    if (((Weld_data *) g_slist_nth(list, serial_number)->data)->weld_leg_1 == 0)  // если условие не выполнено
+    if (((Weld_data *) g_slist_nth(list, serial_number)->data)->weld_leg_1 == 0)  // условие не выполнено
     {
         gdouble max_leg_thin = ((Weld_data *) g_slist_nth(list, serial_number)->data)->max_leg;
         char str[10];                                                   // максимальный катет по наименьшей толщине
@@ -48,7 +48,8 @@ void data_collection(cairo_t *cr, GSList *list, gint shift_value, gint serial_nu
         cairo_show_text(cr, "по расчету, но не более");
         cairo_move_to(cr, 420, 219 + shift_value);
         cairo_show_text(cr, g_strjoin(" ", str, "мм", NULL));
-    } else
+
+    } else                                                                           // условие выполнено
     {
         sprintf(leg_1_1, "%d", ((Weld_data *) g_slist_nth(list, serial_number)->data)->weld_leg_1);
         sprintf(leg_2_1, "%d", ((Weld_data *) g_slist_nth(list, serial_number)->data)->weld_leg_2);
@@ -130,4 +131,25 @@ void create_table(cairo_t *cr, gint shift_value)
     // 2-я линия
     cairo_move_to(cr, 320, 185.0 + shift_value);
     cairo_line_to(cr, 570.0, 185.0 + shift_value);
+}
+
+void insert_png(cairo_t *cr, GSList *list, gint shift_value, gint serial_number)
+{
+    if (((Weld_data *) g_slist_nth(list, serial_number)->data)->weld_leg_1 == 0)
+    {
+        cairo_surface_t *image = cairo_image_surface_create_from_png("resources/condition_not_met.png");
+        if (cairo_surface_status(image) != CAIRO_STATUS_SUCCESS) {
+            fprintf(stderr, "Failed to load image.png\n");
+        }
+        cairo_set_source_surface(cr, image, 380, 38 + shift_value);
+        cairo_paint(cr);
+    } else
+    {
+        cairo_surface_t *image = cairo_image_surface_create_from_png("resources/condition_met.png");
+        if (cairo_surface_status(image) != CAIRO_STATUS_SUCCESS) {
+            fprintf(stderr, "Failed to load image.png\n");
+        }
+        cairo_set_source_surface(cr, image, 380, 38 + shift_value);
+        cairo_paint(cr);
+    }
 }

@@ -24,6 +24,8 @@ void size_weld();
 void data_collection(cairo_t *cr, GSList *list, gint shift_value, gint serial_number);
 // Печать таблицы
 void create_table(cairo_t *cr, gint shift_value);
+// Вставка *.png выполнения условия
+void insert_png(cairo_t *cr, GSList *list, gint shift_value, gint serial_number);
 // Обработчик события кнопки button_calc
 G_MODULE_EXPORT void on_button_calc_clicked(GtkButton *b);
 

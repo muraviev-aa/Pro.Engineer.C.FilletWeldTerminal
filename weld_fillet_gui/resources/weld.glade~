@@ -1,0 +1,727 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.40.0 -->
+<interface>
+  <requires lib="gtk+" version="3.24"/>
+  <object class="GtkWindow" id="window_main">
+    <property name="width-request">700</property>
+    <property name="height-request">500</property>
+    <property name="can-focus">False</property>
+    <child>
+      <object class="GtkFixed" id="fixed_all">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <child>
+          <object class="GtkFrame" id="frame_thick">
+            <property name="width-request">690</property>
+            <property name="height-request">104</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="label-xalign">0</property>
+            <child>
+              <object class="GtkAlignment">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="left-padding">12</property>
+                <child>
+                  <object class="GtkFixed" id="fixed_thick">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <child>
+                      <object class="GtkEntry" id="entry_t1">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="max-length">4</property>
+                        <signal name="changed" handler="on_entry_t1_changed" swapped="no"/>
+                        <signal name="insert-text" handler="on_entry_t1_insert_text" swapped="no"/>
+                        <style>
+                          <class name="entry"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="x">255</property>
+                        <property name="y">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkEntry" id="entry_t2">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="max-length">4</property>
+                        <signal name="changed" handler="on_entry_t2_changed" swapped="no"/>
+                        <signal name="insert-text" handler="on_entry_t2_insert_text" swapped="no"/>
+                        <style>
+                          <class name="entry"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="x">255</property>
+                        <property name="y">41</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label_t1">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Введите толщину первого элемента, мм</property>
+                      </object>
+                      <packing>
+                        <property name="x">9</property>
+                        <property name="y">11</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label_t2">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Введите толщину второго элемента, мм </property>
+                      </object>
+                      <packing>
+                        <property name="x">9</property>
+                        <property name="y">49</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="button_calc">
+                        <property name="label" translatable="yes">Вычислить</property>
+                        <property name="width-request">150</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">True</property>
+                        <signal name="clicked" handler="on_button_calc_clicked" swapped="no"/>
+                        <style>
+                          <class name="button"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="x">480</property>
+                        <property name="y">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="button_new">
+                        <property name="label" translatable="yes">Новые данные</property>
+                        <property name="width-request">150</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">True</property>
+                        <signal name="clicked" handler="on_button_new_clicked" swapped="no"/>
+                        <style>
+                          <class name="button"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="x">480</property>
+                        <property name="y">41</property>
+                      </packing>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child type="label">
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">Толщины свариваемых элементов </property>
+                <attributes>
+                  <attribute name="font-desc" value="Calibri Bold 10"/>
+                  <attribute name="foreground" value="#ffffffffffff"/>
+                </attributes>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="x">5</property>
+            <property name="y">4</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkFrame" id="frame_tabl">
+            <property name="width-request">690</property>
+            <property name="height-request">255</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="margin-top">2</property>
+            <property name="label-xalign">0</property>
+            <property name="label-yalign">0</property>
+            <property name="shadow-type">none</property>
+            <child>
+              <object class="GtkAlignment">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="left-padding">12</property>
+                <child>
+                  <object class="GtkFixed" id="fixed_tabl">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <child>
+                      <object class="GtkSeparator">
+                        <property name="width-request">661</property>
+                        <property name="height-request">2</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <style>
+                          <class name="lineTabl"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="x">2</property>
+                        <property name="y">6</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkSeparator">
+                        <property name="width-request">2</property>
+                        <property name="height-request">226</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="orientation">vertical</property>
+                        <style>
+                          <class name="lineTabl"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="y">6</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkSeparator">
+                        <property name="width-request">663</property>
+                        <property name="height-request">2</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <style>
+                          <class name="lineTabl"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="x">2</property>
+                        <property name="y">230</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkSeparator">
+                        <property name="width-request">2</property>
+                        <property name="height-request">224</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="orientation">vertical</property>
+                        <style>
+                          <class name="lineTabl"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="x">663</property>
+                        <property name="y">6</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkSeparator">
+                        <property name="width-request">661</property>
+                        <property name="height-request">2</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <style>
+                          <class name="lineTabl"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="x">2</property>
+                        <property name="y">37</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Тип соединения</property>
+                      </object>
+                      <packing>
+                        <property name="x">68</property>
+                        <property name="y">14</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Вид сварки</property>
+                      </object>
+                      <packing>
+                        <property name="x">329</property>
+                        <property name="y">14</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Тавровое с
+двусторонноми угловыми
+швами; нахлесточное и
+угловое</property>
+                      </object>
+                      <packing>
+                        <property name="x">45</property>
+                        <property name="y">53</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Угловое и тавровое с
+односторонними
+угловыми швами</property>
+                      </object>
+                      <packing>
+                        <property name="x">45</property>
+                        <property name="y">156</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkSeparator">
+                        <property name="width-request">2</property>
+                        <property name="height-request">191</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="orientation">vertical</property>
+                        <style>
+                          <class name="lineTabl"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="x">238</property>
+                        <property name="y">39</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkSeparator">
+                        <property name="width-request">2</property>
+                        <property name="height-request">191</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="orientation">vertical</property>
+                        <style>
+                          <class name="lineTabl"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="x">485</property>
+                        <property name="y">39</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Минимальный катет шва, мм</property>
+                      </object>
+                      <packing>
+                        <property name="x">494</property>
+                        <property name="y">14</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkSeparator">
+                        <property name="width-request">2</property>
+                        <property name="height-request">30</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="orientation">vertical</property>
+                        <style>
+                          <class name="lineTabl"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="x">238</property>
+                        <property name="y">7</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkSeparator">
+                        <property name="width-request">236</property>
+                        <property name="height-request">2</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <style>
+                          <class name="lineTabl"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="x">2</property>
+                        <property name="y">134</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Ручная дуговая,
+автоматическая и
+механизированная</property>
+                      </object>
+                      <packing>
+                        <property name="x">314</property>
+                        <property name="y">107</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="katet_tabl1">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="halign">center</property>
+                        <property name="valign">center</property>
+                        <property name="label" translatable="yes">Введите исходные
+          данные</property>
+                      </object>
+                      <packing>
+                        <property name="x">529</property>
+                        <property name="y">69</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkSeparator">
+                        <property name="width-request">176</property>
+                        <property name="height-request">2</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <style>
+                          <class name="lineTabl"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="x">487</property>
+                        <property name="y">133</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkSeparator">
+                        <property name="width-request">2</property>
+                        <property name="height-request">29</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="orientation">vertical</property>
+                        <style>
+                          <class name="lineTabl"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="x">485</property>
+                        <property name="y">8</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="katet_tabl2">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Введите исходные
+          данные</property>
+                      </object>
+                      <packing>
+                        <property name="x">529</property>
+                        <property name="y">166</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label_result1">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                      </object>
+                      <packing>
+                        <property name="x">574</property>
+                        <property name="y">79</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label_result2">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                      </object>
+                      <packing>
+                        <property name="x">574</property>
+                        <property name="y">174</property>
+                      </packing>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child type="label">
+              <object class="GtkLabel">
+                <property name="width-request">0</property>
+                <property name="height-request">0</property>
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">           Таблица 38 СП 16.13330.2017 изм. №2, 3. Конструкции из стали с пределом текучести до 590 Н/мм2</property>
+                <property name="justify">fill</property>
+                <property name="single-line-mode">True</property>
+                <attributes>
+                  <attribute name="font-desc" value="Calibri Bold 10"/>
+                </attributes>
+              </object>
+            </child>
+            <style>
+              <class name="frame"/>
+            </style>
+          </object>
+          <packing>
+            <property name="x">5</property>
+            <property name="y">116</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkFrame" id="frame_file">
+            <property name="width-request">690</property>
+            <property name="height-request">121</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="label-xalign">0</property>
+            <property name="shadow-type">in</property>
+            <child>
+              <object class="GtkAlignment">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="left-padding">12</property>
+                <child>
+                  <object class="GtkFixed" id="fixed_file">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <child>
+                      <object class="GtkButton" id="button_new_data">
+                        <property name="label" translatable="yes">Запомнить</property>
+                        <property name="width-request">150</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">True</property>
+                        <property name="relief">half</property>
+                        <signal name="clicked" handler="on_button_new_data_clicked" swapped="no"/>
+                        <style>
+                          <class name="button"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="x">8</property>
+                        <property name="y">33</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="button_file">
+                        <property name="label" translatable="yes">Создать файл </property>
+                        <property name="width-request">150</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">True</property>
+                        <signal name="clicked" handler="on_button_file_clicked" swapped="no"/>
+                        <style>
+                          <class name="button"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="x">503</property>
+                        <property name="y">33</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkEntry" id="entry_name">
+                        <property name="width-request">150</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="text" translatable="yes">        Введите имя файла</property>
+                        <signal name="focus-in-event" handler="on_entry_name_focus_in_event" swapped="no"/>
+                        <style>
+                          <class name="entry"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="x">249</property>
+                        <property name="y">57</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label_count">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                      </object>
+                      <packing>
+                        <property name="x">81</property>
+                        <property name="y">8</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label_create_file">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                      </object>
+                      <packing>
+                        <property name="x">543</property>
+                        <property name="y">8</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">Выберите сочетание для печати</property>
+                        <attributes>
+                          <attribute name="weight" value="bold"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="x">239</property>
+                        <property name="y">5</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkRadioButton" id="radiobutton_2">
+                        <property name="label" translatable="yes">2</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">False</property>
+                        <property name="active">True</property>
+                        <property name="draw-indicator">True</property>
+                        <property name="group">radiobutton_1</property>
+                        <style>
+                          <class name="check1"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="x">218</property>
+                        <property name="y">28</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkRadioButton" id="radiobutton_3">
+                        <property name="label" translatable="yes">3</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">False</property>
+                        <property name="active">True</property>
+                        <property name="draw-indicator">True</property>
+                        <property name="group">radiobutton_1</property>
+                        <style>
+                          <class name="check1"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="x">255</property>
+                        <property name="y">28</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkRadioButton" id="radiobutton_1_2">
+                        <property name="label" translatable="yes">1, 2</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">False</property>
+                        <property name="active">True</property>
+                        <property name="draw-indicator">True</property>
+                        <property name="group">radiobutton_1</property>
+                        <style>
+                          <class name="check1"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="x">293</property>
+                        <property name="y">28</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkRadioButton" id="radiobutton_1_3">
+                        <property name="label" translatable="yes">1, 3</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">False</property>
+                        <property name="active">True</property>
+                        <property name="draw-indicator">True</property>
+                        <property name="group">radiobutton_1</property>
+                        <style>
+                          <class name="check1"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="x">340</property>
+                        <property name="y">28</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkRadioButton" id="radiobutton_2_3">
+                        <property name="label" translatable="yes">2, 3</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">False</property>
+                        <property name="active">True</property>
+                        <property name="draw-indicator">True</property>
+                        <property name="group">radiobutton_1</property>
+                        <style>
+                          <class name="check1"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="x">386</property>
+                        <property name="y">28</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkRadioButton" id="radiobutton_1_2_3">
+                        <property name="label" translatable="yes">1, 2, 3</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">False</property>
+                        <property name="active">True</property>
+                        <property name="draw-indicator">True</property>
+                        <property name="group">radiobutton_1</property>
+                        <style>
+                          <class name="check1"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="x">434</property>
+                        <property name="y">28</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkRadioButton" id="radiobutton_1">
+                        <property name="label" translatable="yes">1</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">False</property>
+                        <property name="active">True</property>
+                        <property name="draw-indicator">True</property>
+                        <style>
+                          <class name="check1"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="x">185</property>
+                        <property name="y">28</property>
+                      </packing>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child type="label">
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">Работа с файлом </property>
+                <attributes>
+                  <attribute name="font-desc" value="Calibri Bold 10"/>
+                </attributes>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="x">5</property>
+            <property name="y">374</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+    <style>
+      <class name="window"/>
+      <class name="view"/>
+    </style>
+  </object>
+</interface>
