@@ -30,6 +30,7 @@
                       <object class="GtkEntry" id="entry_t1">
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
+                        <property name="tooltip-text" translatable="yes">Толщина первого свариваемого элемента</property>
                         <property name="max-length">4</property>
                         <signal name="changed" handler="on_entry_t1_changed" swapped="no"/>
                         <signal name="insert-text" handler="on_entry_t1_insert_text" swapped="no"/>
@@ -46,6 +47,7 @@
                       <object class="GtkEntry" id="entry_t2">
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
+                        <property name="tooltip-text" translatable="yes">Толщина второго свариваемого элемента</property>
                         <property name="max-length">4</property>
                         <signal name="changed" handler="on_entry_t2_changed" swapped="no"/>
                         <signal name="insert-text" handler="on_entry_t2_insert_text" swapped="no"/>
@@ -87,6 +89,7 @@
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                         <property name="receives-default">True</property>
+                        <property name="tooltip-text" translatable="yes">Вычислить минимальный катет</property>
                         <signal name="clicked" handler="on_button_calc_clicked" swapped="no"/>
                         <style>
                           <class name="button"/>
@@ -104,6 +107,7 @@
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                         <property name="receives-default">True</property>
+                        <property name="tooltip-text" translatable="yes">Ввести новые исходные данные</property>
                         <signal name="clicked" handler="on_button_new_clicked" swapped="no"/>
                         <style>
                           <class name="button"/>
@@ -494,6 +498,9 @@
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                         <property name="receives-default">True</property>
+                        <property name="tooltip-text" translatable="yes">Запомнить результат 
+        вычисления 
+    (максимум 3 шт.)</property>
                         <property name="relief">half</property>
                         <signal name="clicked" handler="on_button_new_data_clicked" swapped="no"/>
                         <style>
@@ -512,6 +519,9 @@
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                         <property name="receives-default">True</property>
+                        <property name="tooltip-text" translatable="yes">Создать pdf файл 
+  из выбранного
+       сочетания</property>
                         <signal name="clicked" handler="on_button_file_clicked" swapped="no"/>
                         <style>
                           <class name="button"/>
@@ -527,6 +537,7 @@
                         <property name="width-request">150</property>
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
+                        <property name="tooltip-text" translatable="yes">Имя создаваемого файла</property>
                         <property name="text" translatable="yes">        Введите имя файла</property>
                         <signal name="focus-in-event" handler="on_entry_name_focus_in_event" swapped="no"/>
                         <style>
@@ -578,6 +589,9 @@
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                         <property name="receives-default">False</property>
+                        <property name="tooltip-text" translatable="yes">Печать второго 
+ вычисленного 
+     результата</property>
                         <property name="active">True</property>
                         <property name="draw-indicator">True</property>
                         <property name="group">radiobutton_1</property>
@@ -596,6 +610,9 @@
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                         <property name="receives-default">False</property>
+                        <property name="tooltip-text" translatable="yes">Печать третьего
+ вычисленного 
+     результата</property>
                         <property name="active">True</property>
                         <property name="draw-indicator">True</property>
                         <property name="group">radiobutton_1</property>
@@ -614,6 +631,9 @@
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                         <property name="receives-default">False</property>
+                        <property name="tooltip-text" translatable="yes">        Печать первого 
+и второго вычисленных
+           результатов</property>
                         <property name="active">True</property>
                         <property name="draw-indicator">True</property>
                         <property name="group">radiobutton_1</property>
@@ -632,6 +652,9 @@
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                         <property name="receives-default">False</property>
+                        <property name="tooltip-text" translatable="yes">        Печать первого 
+и третьего вычисленных
+            результатов</property>
                         <property name="active">True</property>
                         <property name="draw-indicator">True</property>
                         <property name="group">radiobutton_1</property>
@@ -650,6 +673,9 @@
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                         <property name="receives-default">False</property>
+                        <property name="tooltip-text" translatable="yes">        Печать второго 
+и третьего вычисленных
+           результатов</property>
                         <property name="active">True</property>
                         <property name="draw-indicator">True</property>
                         <property name="group">radiobutton_1</property>
@@ -668,6 +694,9 @@
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                         <property name="receives-default">False</property>
+                        <property name="tooltip-text" translatable="yes">Печать первого, второго 
+и третьего вычисленных
+            результатов</property>
                         <property name="active">True</property>
                         <property name="draw-indicator">True</property>
                         <property name="group">radiobutton_1</property>
@@ -686,6 +715,9 @@
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                         <property name="receives-default">False</property>
+                        <property name="tooltip-text" translatable="yes">Печать первого 
+ вычисленного 
+     результата</property>
                         <property name="active">True</property>
                         <property name="draw-indicator">True</property>
                         <style>
