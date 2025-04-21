@@ -373,9 +373,31 @@ void on_button_file_clicked(GtkButton *b)
     cr = cairo_create(surface);
 
     // Вставка png
-    if (gtk_toggle_button_get_active((GtkToggleButton *) radiobutton_1)) // печатаем картинку 1-го результата
+    if (gtk_toggle_button_get_active((GtkToggleButton *) radiobutton_1)) // печатаем картинку 1 результата
     {
         insert_png(cr, list, 0, 0);
+    }
+
+    if (gtk_toggle_button_get_active((GtkToggleButton *) radiobutton_2)) // печатаем картинку 2 результата
+    {
+        insert_png(cr, list, 0, 1);
+    }
+
+    if (gtk_toggle_button_get_active((GtkToggleButton *) radiobutton_3)) // печатаем картинку 3 результата
+    {
+        insert_png(cr, list, 0, 2);
+    }
+
+    if (gtk_toggle_button_get_active((GtkToggleButton *) radiobutton_1_2)) // печатаем картинку 1, 2 результа
+    {
+        insert_png(cr, list, 0, 0);
+        insert_png(cr, list, 215, 1);
+    }
+
+    if (gtk_toggle_button_get_active((GtkToggleButton *) radiobutton_1_3)) // печатаем картинку 1, 3 результата
+    {
+        insert_png(cr, list, 0, 0);
+        insert_png(cr, list, 215, 2);
     }
 
     // Проверяем создан ли файл
