@@ -24,7 +24,7 @@
  Приложение разработано  с использованием **Glade ,GTK+ 3, GLib, Cairo, CSS**. Виджеты диалогового окна снабжены всплывающими подсказками.
 
  <p align="center">
-<img src="images/____.png" alt="drawing" width="700"/>
+<img src="images/weld_gui.png" alt="drawing" width="700"/>
 </p>
 
 
