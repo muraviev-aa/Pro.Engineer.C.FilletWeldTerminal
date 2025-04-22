@@ -373,31 +373,45 @@ void on_button_file_clicked(GtkButton *b)
     cr = cairo_create(surface);
 
     // Вставка png
-    if (gtk_toggle_button_get_active((GtkToggleButton *) radiobutton_1)) // печатаем картинку 1 результата
+    // печатаем картинку 1 результата
+    if (gtk_toggle_button_get_active((GtkToggleButton *) radiobutton_1))
     {
         insert_png(cr, list, 0, 0);
     }
-
-    if (gtk_toggle_button_get_active((GtkToggleButton *) radiobutton_2)) // печатаем картинку 2 результата
+    // печатаем картинку 2 результата
+    if (gtk_toggle_button_get_active((GtkToggleButton *) radiobutton_2))
     {
         insert_png(cr, list, 0, 1);
     }
-
-    if (gtk_toggle_button_get_active((GtkToggleButton *) radiobutton_3)) // печатаем картинку 3 результата
+    // печатаем картинку 3 результата
+    if (gtk_toggle_button_get_active((GtkToggleButton *) radiobutton_3))
     {
         insert_png(cr, list, 0, 2);
     }
-
-    if (gtk_toggle_button_get_active((GtkToggleButton *) radiobutton_1_2)) // печатаем картинку 1, 2 результа
+    // печатаем картинку 1, 2 результата
+    if (gtk_toggle_button_get_active((GtkToggleButton *) radiobutton_1_2))
     {
         insert_png(cr, list, 0, 0);
         insert_png(cr, list, 215, 1);
     }
-
-    if (gtk_toggle_button_get_active((GtkToggleButton *) radiobutton_1_3)) // печатаем картинку 1, 3 результата
+    // печатаем картинку 1, 3 результата
+    if (gtk_toggle_button_get_active((GtkToggleButton *) radiobutton_1_3))
     {
         insert_png(cr, list, 0, 0);
         insert_png(cr, list, 215, 2);
+    }
+    // печатаем картинку 2, 3 результата
+    if (gtk_toggle_button_get_active((GtkToggleButton *) radiobutton_2_3))
+    {
+        insert_png(cr, list, 0, 1);
+        insert_png(cr, list, 215, 2);
+    }
+    // печатаем картинку 1, 2, 3 результата
+    if (gtk_toggle_button_get_active((GtkToggleButton *) radiobutton_1_2_3))
+    {
+        insert_png(cr, list, 0, 0);
+        insert_png(cr, list, 215, 1);
+        insert_png(cr, list, 430, 2);
     }
 
     // Проверяем создан ли файл
@@ -420,32 +434,32 @@ void on_button_file_clicked(GtkButton *b)
     cairo_set_font_size(cr, 12.0);    // размер шрифта заголовка
     cairo_move_to(cr, 200, 25);
     cairo_show_text(cr, "Минимальные катеты сварных угловых швов ");
-
-    if (gtk_toggle_button_get_active((GtkToggleButton *) radiobutton_1)) // печатаем 1 результат
+    // печатаем 1 результат
+    if (gtk_toggle_button_get_active((GtkToggleButton *) radiobutton_1))
     {
         // Сбор данных для печати 1-го результата
         data_collection(cr, list, 0, 0);
         // Рисуем таблицу с 1-ым результатом
         create_table(cr, 0);
     }
-
-    if (gtk_toggle_button_get_active((GtkToggleButton *) radiobutton_2)) // печатаем 2 результат
+    // печатаем 2 результат
+    if (gtk_toggle_button_get_active((GtkToggleButton *) radiobutton_2))
     {
         // Сбор данных для печати 2-го результата
         data_collection(cr, list, 0, 1);
         // Рисуем таблицу со 2-ым результатом
         create_table(cr, 0);
     }
-
-    if (gtk_toggle_button_get_active((GtkToggleButton *) radiobutton_3)) // печатаем 3 результат
+    // печатаем 3 результат
+    if (gtk_toggle_button_get_active((GtkToggleButton *) radiobutton_3))
     {
         // Сбор данных для печати 3-го результата
         data_collection(cr, list, 0, 2);
         // Рисуем таблицу с 3-им результатом
         create_table(cr, 0);
     }
-
-    if (gtk_toggle_button_get_active((GtkToggleButton *) radiobutton_1_2)) // печатаем 1, 2 результаты
+    // печатаем 1, 2 результаты
+    if (gtk_toggle_button_get_active((GtkToggleButton *) radiobutton_1_2))
     {
         // Сбор данных для печати 1-го результата
         data_collection(cr, list, 0, 0);
@@ -456,8 +470,8 @@ void on_button_file_clicked(GtkButton *b)
         // Рисуем таблицу со 2-ым результатом
         create_table(cr, 215);
     }
-
-    if (gtk_toggle_button_get_active((GtkToggleButton *) radiobutton_1_3)) // печатаем 1, 3 результаты
+    // печатаем 1, 3 результаты
+    if (gtk_toggle_button_get_active((GtkToggleButton *) radiobutton_1_3))
     {
         // Сбор данных для печати 1-го результата
         data_collection(cr, list, 0, 0);
@@ -468,8 +482,8 @@ void on_button_file_clicked(GtkButton *b)
         // Рисуем таблицу с 3-им результатом
         create_table(cr, 215);
     }
-
-    if (gtk_toggle_button_get_active((GtkToggleButton *) radiobutton_2_3)) // печатаем 2, 3 результаты
+    // печатаем 2, 3 результаты
+    if (gtk_toggle_button_get_active((GtkToggleButton *) radiobutton_2_3))
     {
         // Сбор данных для печати 2-го результата
         data_collection(cr, list, 0, 1);
@@ -480,8 +494,8 @@ void on_button_file_clicked(GtkButton *b)
         // Рисуем таблицу с 3-им результатом
         create_table(cr, 215);
     }
-
-    if (gtk_toggle_button_get_active((GtkToggleButton *) radiobutton_1_2_3)) // печатаем 1, 2, 3 результаты
+    // печатаем 1, 2, 3 результаты
+    if (gtk_toggle_button_get_active((GtkToggleButton *) radiobutton_1_2_3))
     {
         // Сбор данных для печати 1-го результата
         data_collection(cr, list, 0, 0);
