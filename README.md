@@ -31,7 +31,7 @@
  Предусмотрено создание **pdf** файла с результатами подбора катета. Отчет может содержать от одного до трех рассмотренных вариантов.
 
 <p align="center">
-<img src="images/report.png" alt="drawing" width="690"/>
+<img src="images/___.png" alt="drawing" width="690"/>
 </p>
 
 <p align="right">(<a href="#readme-top">вверх</a>)</p>
