@@ -20,6 +20,8 @@ typedef struct
 void working_css_file();
 // Определение минимального катета сварного шва
 void size_weld();
+// Работа с датой
+void work_dates(cairo_t *cr);
 // Сбор данных для печати
 void data_collection(cairo_t *cr, GSList *list, gint shift_value, gint serial_number);
 // Печать таблицы

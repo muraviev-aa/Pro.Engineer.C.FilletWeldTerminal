@@ -33,7 +33,6 @@ void data_collection(cairo_t *cr, GSList *list, gint shift_value, gint serial_nu
     sprintf(thick_max, "%d", ((Weld_data *) g_slist_nth(list, serial_number)->data)->thick_max);
     gchar leg_1_1[5];     // катет 1
     gchar leg_2_1[5];     // катет 2
-    cairo_set_font_size(cr, 10.0);   // размер шрифта pdf документа
 
     if (((Weld_data *) g_slist_nth(list, serial_number)->data)->weld_leg_1 == 0)  // условие не выполнено
     {
@@ -152,4 +151,29 @@ void insert_png(cairo_t *cr, GSList *list, gint shift_value, gint serial_number)
         cairo_set_source_surface(cr, image, 380, 38 + shift_value);
         cairo_paint(cr);
     }
+}
+
+void work_dates(cairo_t *cr)
+{
+    time_t now = time(NULL);              // получаем текущее время
+    struct tm *local = localtime(&now);
+    // Извлекаем день, месяц и год
+    gint day = local->tm_mday;
+    gint month = local->tm_mon + 1;            // месяцы начинаются с 0
+    gint year = local->tm_year + 1900;         // годы начинаются с 1900
+    gchar current_day[2];
+    gchar current_month[2];
+    gchar current_year[5];
+    sprintf(current_day, "%d", day);
+    sprintf(current_month, "%d", month);
+    sprintf(current_year, "%d", year);
+    cairo_move_to(cr, 450, 25);
+    cairo_show_text(cr, g_strjoin("", current_day, ".", NULL));
+    cairo_move_to(cr, 465, 25);
+    if (month < 10)
+        cairo_show_text(cr, g_strjoin("", "0", current_month, NULL));
+    else
+        cairo_show_text(cr, current_month);
+    cairo_move_to(cr, 476, 25);
+    cairo_show_text(cr, g_strjoin("", ".", current_year, NULL));
 }

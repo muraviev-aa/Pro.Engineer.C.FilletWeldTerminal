@@ -78,7 +78,6 @@ G_MODULE_EXPORT void on_button_file_clicked(GtkButton *b);
 void work_widgets();
 void writing_data_s_list(gint count_result);
 
-
 int main(int argc, char **argv)
 {
     gtk_init(&argc, &argv);
@@ -372,6 +371,20 @@ void on_button_file_clicked(GtkButton *b)
     surface = cairo_pdf_surface_create(file_name, 595, 842); // А4 in points
     cr = cairo_create(surface);
 
+    // Проверяем создан ли файл
+    if (surface == NULL)
+    {
+        printf("cairo_pdf_surface_create %s file is BREAK\n", file_name);
+        gtk_label_set_text(GTK_LABEL(label_create_file), "Ошибка создания файла");
+        puts("Press any key to exit...");
+        getch(); // считывает символ из входного потока, но не выводит на экран
+        exit(1);
+    } else
+    {
+        gtk_label_set_text(GTK_LABEL(label_create_file), "Файл создан");
+        printf("cairo_pdf_surface_create %s file is DONE\n", file_name);
+    }
+
     // Вставка png
     // печатаем картинку 1 результата
     if (gtk_toggle_button_get_active((GtkToggleButton *) radiobutton_1))
@@ -414,26 +427,17 @@ void on_button_file_clicked(GtkButton *b)
         insert_png(cr, list, 430, 2);
     }
 
-    // Проверяем создан ли файл
-    if (surface == NULL)
-    {
-        printf("cairo_pdf_surface_create %s file is BREAK\n", file_name);
-        gtk_label_set_text(GTK_LABEL(label_create_file), "Ошибка создания файла");
-        puts("Press any key to exit...");
-        getch(); // считывает символ из входного потока, но не выводит на экран
-        exit(1);
-    } else
-    {
-        gtk_label_set_text(GTK_LABEL(label_create_file), "Файл создан");
-        printf("cairo_pdf_surface_create %s file is DONE\n", file_name);
-    }
-
     cairo_set_source_rgb(cr, 0, 0, 0);
     cairo_select_font_face(cr, "Arial", CAIRO_FONT_SLANT_NORMAL,
                            CAIRO_FONT_WEIGHT_NORMAL);
     cairo_set_font_size(cr, 12.0);    // размер шрифта заголовка
-    cairo_move_to(cr, 200, 25);
+    cairo_move_to(cr, 170, 25);
     cairo_show_text(cr, "Минимальные катеты сварных угловых швов ");
+    cairo_set_font_size(cr, 10.0);   // размер шрифта pdf документа
+
+    // Работаем с датой
+    work_dates(cr);
+
     // печатаем 1 результат
     if (gtk_toggle_button_get_active((GtkToggleButton *) radiobutton_1))
     {

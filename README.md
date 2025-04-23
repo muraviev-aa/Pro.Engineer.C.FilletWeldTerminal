@@ -28,11 +28,17 @@
 </p>
 
 
- Предусмотрено создание **pdf** файла с результатами подбора катета. Отчет может содержать от одного до трех рассмотренных вариантов.
+ Предусмотрено создание **pdf** файла с результатами подбора катета. Отчет может содержать от одного до трех рассмотренных вариантов в любом сочетании.
 
 <p align="center">
 <img src="images/report.png" alt="drawing" width="690"/>
 </p>
+
+~~~
+
+gcc -Wno-format -o weld_fillet_gui main.c temp_function.c temp_function.h -Wno-deprecated-declarations -Wno-format-security -lm `pkg-config --cflags --libs gtk+-3.0` -mwindows
+
+~~~
 
 <p align="right">(<a href="#readme-top">вверх</a>)</p>
 
