@@ -167,13 +167,34 @@ void work_dates(cairo_t *cr)
     sprintf(current_day, "%d", day);
     sprintf(current_month, "%d", month);
     sprintf(current_year, "%d", year);
+
     cairo_move_to(cr, 450, 25);
-    cairo_show_text(cr, g_strjoin("", current_day, ".", NULL));
-    cairo_move_to(cr, 465, 25);
+    if (day < 10)
+        cairo_show_text(cr, g_strjoin("", "0", current_day, NULL));
+    else
+        cairo_show_text(cr, current_day);
+    cairo_move_to(cr, 461, 25);
+    cairo_show_text(cr, ".");
+    cairo_move_to(cr, 464, 25);
     if (month < 10)
         cairo_show_text(cr, g_strjoin("", "0", current_month, NULL));
     else
         cairo_show_text(cr, current_month);
-    cairo_move_to(cr, 476, 25);
+    cairo_move_to(cr, 475, 25);
     cairo_show_text(cr, g_strjoin("", ".", current_year, NULL));
+}
+
+void set_widget_alignment(GtkEntry *entry) {
+    gtk_entry_set_alignment(entry, 1);
+}
+
+GtkWidget *get_widget(GtkBuilder *builder, const char *name)
+{
+    return GTK_WIDGET(gtk_builder_get_object(builder, name));
+}
+
+void set_widgets_sensitive(GtkWidget **widgets, int count, gboolean sensitive)
+{
+    for (int i = 0; i < count; i++)
+        gtk_widget_set_sensitive(widgets[i], sensitive);
 }
