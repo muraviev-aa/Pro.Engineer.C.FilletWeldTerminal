@@ -43,6 +43,9 @@ GtkWidget *button_new_data;
 GtkWidget *label_count;
 GtkWidget *button_file;
 GtkWidget *label_create_file;
+GtkWidget *label_without_frame;
+GtkWidget *label_frame;
+GtkWidget *label_forma;
 GtkWidget *entry_name;
 GtkWidget *radiobutton_1;
 GtkWidget *radiobutton_2;
@@ -51,6 +54,9 @@ GtkWidget *radiobutton_1_2;
 GtkWidget *radiobutton_1_3;
 GtkWidget *radiobutton_2_3;
 GtkWidget *radiobutton_1_2_3;
+GtkWidget *radio_without_frame;
+GtkWidget *radio_frame;
+GtkWidget *radio_forma;
 GtkBuilder *builder;
 
 gint t1 = 0; // толщина первой свариваемой детали
@@ -97,60 +103,97 @@ int main(int argc, char **argv)
     return 0;
 }
 
-// Работаем с виджетами
-void work_widgets()
-{
-    window_main = GTK_WIDGET(gtk_builder_get_object(builder, "window_main"));
+void set_widget_alignment(GtkEntry *entry) {
+    gtk_entry_set_alignment(entry, 1); // ввод текста слева
+}
+
+GtkWidget* get_widget(const char* name) {
+    return GTK_WIDGET(gtk_builder_get_object(builder, name));
+}
+
+void set_widgets_sensitive(GtkWidget **widgets, int count, gboolean sensitive) {
+    for (int i = 0; i < count; i++) {
+        gtk_widget_set_sensitive(widgets[i], sensitive);
+    }
+}
+
+void work_widgets() {
+    window_main = get_widget("window_main");
     gtk_window_set_title(GTK_WINDOW(window_main), "Минимальный катет шва 1.0");
     gtk_window_set_icon_from_file(GTK_WINDOW(window_main), "resources/ant.gif", NULL);
     gtk_window_set_resizable(GTK_WINDOW(window_main), FALSE);
     g_signal_connect(window_main, "destroy", G_CALLBACK(gtk_main_quit), NULL);
     gtk_builder_connect_signals(builder, NULL);
-    fixed_all = GTK_WIDGET(gtk_builder_get_object(builder, "fixed_all"));
-    fixed_thick = GTK_WIDGET(gtk_builder_get_object(builder, "fixed_thick"));
-    entry_t1 = GTK_WIDGET(gtk_builder_get_object(builder, "entry_t1"));
-    gtk_entry_set_alignment((GtkEntry *) entry_t1, 1); // ввод текста слева
-    entry_t2 = GTK_WIDGET(gtk_builder_get_object(builder, "entry_t2"));
-    gtk_entry_set_alignment((GtkEntry *) entry_t2, 1); // ввод текста слева
-    label_t1 = GTK_WIDGET(gtk_builder_get_object(builder, "label_t1"));
-    label_t2 = GTK_WIDGET(gtk_builder_get_object(builder, "label_t2"));
-    button_calc = GTK_WIDGET(gtk_builder_get_object(builder, "button_calc"));
-    fixed_tabl = GTK_WIDGET(gtk_builder_get_object(builder, "fixed_tabl"));
-    katet_tabl1 = GTK_WIDGET(gtk_builder_get_object(builder, "katet_tabl1"));
-    label_result1 = GTK_WIDGET(gtk_builder_get_object(builder, "label_result1"));
-    katet_tabl2 = GTK_WIDGET(gtk_builder_get_object(builder, "katet_tabl2"));
-    label_result2 = GTK_WIDGET(gtk_builder_get_object(builder, "label_result2"));
-    fixed_file = GTK_WIDGET(gtk_builder_get_object(builder, "fixed_file"));
-    button_new = GTK_WIDGET(gtk_builder_get_object(builder, "button_new"));
-    button_new_data = GTK_WIDGET(gtk_builder_get_object(builder, "button_new_data"));
-    label_count = GTK_WIDGET(gtk_builder_get_object(builder, "label_count"));
-    button_file = GTK_WIDGET(gtk_builder_get_object(builder, "button_file"));
-    label_create_file = GTK_WIDGET(gtk_builder_get_object(builder, "label_create_file"));
-    entry_name = GTK_WIDGET(gtk_builder_get_object(builder, "entry_name"));
-    gtk_entry_set_alignment((GtkEntry *) entry_name, 1);  // ввод текста слева
-    frame_thick = GTK_WIDGET(gtk_builder_get_object(builder, "frame_thick"));
-    frame_tabl = GTK_WIDGET(gtk_builder_get_object(builder, "frame_tabl"));
-    frame_file = GTK_WIDGET(gtk_builder_get_object(builder, "frame_file"));
-    radiobutton_1 = GTK_WIDGET(gtk_builder_get_object(builder, "radiobutton_1"));
-    radiobutton_2 = GTK_WIDGET(gtk_builder_get_object(builder, "radiobutton_2"));
-    radiobutton_3 = GTK_WIDGET(gtk_builder_get_object(builder, "radiobutton_3"));
-    radiobutton_1_2 = GTK_WIDGET(gtk_builder_get_object(builder, "radiobutton_1_2"));
-    radiobutton_1_3 = GTK_WIDGET(gtk_builder_get_object(builder, "radiobutton_1_3"));
-    radiobutton_2_3 = GTK_WIDGET(gtk_builder_get_object(builder, "radiobutton_2_3"));
-    radiobutton_1_2_3 = GTK_WIDGET(gtk_builder_get_object(builder, "radiobutton_1_2_3"));
+
+    // Получаем виджеты
+    fixed_all = get_widget("fixed_all");
+    fixed_thick = get_widget("fixed_thick");
+
+    entry_t1 = get_widget("entry_t1");
+    set_widget_alignment((GtkEntry *)entry_t1);
+
+    entry_t2 = get_widget("entry_t2");
+    set_widget_alignment((GtkEntry *)entry_t2);
+
+    label_t1 = get_widget("label_t1");
+    label_t2 = get_widget("label_t2");
+    button_calc = get_widget("button_calc");
+    fixed_tabl = get_widget("fixed_tabl");
+    katet_tabl1 = get_widget("katet_tabl1");
+    label_result1 = get_widget("label_result1");
+    katet_tabl2 = get_widget("katet_tabl2");
+    label_result2 = get_widget("label_result2");
+    fixed_file = get_widget("fixed_file");
+    button_new = get_widget("button_new");
+    button_new_data = get_widget("button_new_data");
+    label_count = get_widget("label_count");
+    button_file = get_widget("button_file");
+    label_create_file = get_widget("label_create_file");
+    label_without_frame = get_widget("label_without_frame");
+    label_frame = get_widget("label_frame");
+    label_forma = get_widget("label_forma");
+
+    entry_name = get_widget("entry_name");
+    set_widget_alignment((GtkEntry *)entry_name);
+
+    frame_thick = get_widget("frame_thick");
+    frame_tabl = get_widget("frame_tabl");
+    frame_file = get_widget("frame_file");
+    radiobutton_1 = get_widget("radiobutton_1");
+    radiobutton_2 = get_widget("radiobutton_2");
+    radiobutton_3 = get_widget("radiobutton_3");
+    radiobutton_1_2 = get_widget("radiobutton_1_2");
+    radiobutton_1_3 = get_widget("radiobutton_1_3");
+    radiobutton_2_3 = get_widget("radiobutton_2_3");
+    radiobutton_1_2_3 = get_widget("radiobutton_1_2_3");
+    radio_without_frame= 	get_widget ("radio_without_frame");
+    radio_frame= 	get_widget ("radio_frame");
+    radio_forma= 	get_widget ("radio_forma");
+
     // Управление активностью кнопок
-    gtk_widget_set_sensitive(GTK_WIDGET(button_calc), FALSE);
-    gtk_widget_set_sensitive(GTK_WIDGET(button_new), FALSE);
-    gtk_widget_set_sensitive(GTK_WIDGET(button_file), FALSE);
-    gtk_widget_set_sensitive(GTK_WIDGET(entry_name), FALSE);
-    gtk_widget_set_sensitive(GTK_WIDGET(button_new_data), FALSE);
-    gtk_widget_set_sensitive(GTK_WIDGET(radiobutton_1), FALSE);
-    gtk_widget_set_sensitive(GTK_WIDGET(radiobutton_2), FALSE);
-    gtk_widget_set_sensitive(GTK_WIDGET(radiobutton_3), FALSE);
-    gtk_widget_set_sensitive(GTK_WIDGET(radiobutton_1_2), FALSE);
-    gtk_widget_set_sensitive(GTK_WIDGET(radiobutton_1_3), FALSE);
-    gtk_widget_set_sensitive(GTK_WIDGET(radiobutton_2_3), FALSE);
-    gtk_widget_set_sensitive(GTK_WIDGET(radiobutton_1_2_3), FALSE);
+    GtkWidget *sensitive_widgets[] =
+            {
+                    button_calc,
+                    button_new,
+                    button_file,
+                    entry_name,
+                    button_new_data,
+                    radiobutton_1,
+                    radiobutton_2,
+                    radiobutton_3,
+                    radiobutton_1_2,
+                    radiobutton_1_3,
+                    radiobutton_2_3,
+                    radiobutton_1_2_3,
+                    radio_without_frame,
+                    radio_frame,
+                    radio_forma,
+                    label_without_frame,
+                    label_frame,
+                    label_forma
+            };
+
+    set_widgets_sensitive(sensitive_widgets, sizeof(sensitive_widgets) / sizeof(sensitive_widgets[0]), FALSE);
 }
 
 void on_button_calc_clicked(GtkButton *b)
@@ -284,6 +327,12 @@ void writing_data_s_list(gint count_result)
         // Поле ввода имени файла и кнопка его создания активны
         gtk_widget_set_sensitive(GTK_WIDGET(button_file), TRUE);
         gtk_widget_set_sensitive(GTK_WIDGET(entry_name), TRUE);
+        gtk_widget_set_sensitive(GTK_WIDGET(radio_without_frame), TRUE);
+        gtk_widget_set_sensitive(GTK_WIDGET(radio_frame), TRUE);
+        gtk_widget_set_sensitive(GTK_WIDGET(radio_forma), TRUE);
+        gtk_widget_set_sensitive(GTK_WIDGET(label_without_frame), TRUE);
+        gtk_widget_set_sensitive(GTK_WIDGET(label_frame), TRUE);
+        gtk_widget_set_sensitive(GTK_WIDGET(label_forma), TRUE);
 
     } else if (count_result == 2)                     // заполнение результатами 2-го узла
     {
@@ -298,9 +347,6 @@ void writing_data_s_list(gint count_result)
         list = g_slist_append(list, second);
         gtk_widget_set_sensitive(GTK_WIDGET(radiobutton_2), TRUE);
         gtk_widget_set_sensitive(GTK_WIDGET(radiobutton_1_2), TRUE);
-        // поле ввода имени и кнопка создания файла активны
-        gtk_widget_set_sensitive(GTK_WIDGET(button_file), TRUE);
-        gtk_widget_set_sensitive(GTK_WIDGET(entry_name), TRUE);
 
     } else if (count_result == 3)                     // заполнение результатами 3-го узла
     {

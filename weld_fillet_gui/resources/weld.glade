@@ -529,7 +529,7 @@
                       </object>
                       <packing>
                         <property name="x">503</property>
-                        <property name="y">33</property>
+                        <property name="y">57</property>
                       </packing>
                     </child>
                     <child>
@@ -566,7 +566,7 @@
                       </object>
                       <packing>
                         <property name="x">543</property>
-                        <property name="y">8</property>
+                        <property name="y">39</property>
                       </packing>
                     </child>
                     <child>
@@ -600,7 +600,7 @@
                         </style>
                       </object>
                       <packing>
-                        <property name="x">218</property>
+                        <property name="x">212</property>
                         <property name="y">28</property>
                       </packing>
                     </child>
@@ -621,7 +621,7 @@
                         </style>
                       </object>
                       <packing>
-                        <property name="x">255</property>
+                        <property name="x">249</property>
                         <property name="y">28</property>
                       </packing>
                     </child>
@@ -642,7 +642,7 @@
                         </style>
                       </object>
                       <packing>
-                        <property name="x">293</property>
+                        <property name="x">287</property>
                         <property name="y">28</property>
                       </packing>
                     </child>
@@ -663,7 +663,7 @@
                         </style>
                       </object>
                       <packing>
-                        <property name="x">340</property>
+                        <property name="x">334</property>
                         <property name="y">28</property>
                       </packing>
                     </child>
@@ -684,7 +684,7 @@
                         </style>
                       </object>
                       <packing>
-                        <property name="x">386</property>
+                        <property name="x">380</property>
                         <property name="y">28</property>
                       </packing>
                     </child>
@@ -705,7 +705,7 @@
                         </style>
                       </object>
                       <packing>
-                        <property name="x">434</property>
+                        <property name="x">428</property>
                         <property name="y">28</property>
                       </packing>
                     </child>
@@ -725,8 +725,99 @@
                         </style>
                       </object>
                       <packing>
-                        <property name="x">185</property>
+                        <property name="x">179</property>
                         <property name="y">28</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label_without_frame">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">рамка</property>
+                        <attributes>
+                          <attribute name="strikethrough" value="True"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="x">504</property>
+                        <property name="y">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label_frame">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">рамка</property>
+                      </object>
+                      <packing>
+                        <property name="x">558</property>
+                        <property name="y">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label_forma">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="label" translatable="yes">форма 2</property>
+                      </object>
+                      <packing>
+                        <property name="x">607</property>
+                        <property name="y">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkRadioButton" id="radio_frame">
+                        <property name="label"> </property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">False</property>
+                        <property name="active">True</property>
+                        <property name="draw-indicator">True</property>
+                        <property name="group">radio_without_frame</property>
+                        <style>
+                          <class name="check1"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="x">565</property>
+                        <property name="y">21</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkRadioButton" id="radio_forma">
+                        <property name="label"> </property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">False</property>
+                        <property name="active">True</property>
+                        <property name="draw-indicator">True</property>
+                        <property name="group">radio_without_frame</property>
+                        <style>
+                          <class name="check1"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="x">617</property>
+                        <property name="y">21</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkRadioButton" id="radio_without_frame">
+                        <property name="label" translatable="yes"> </property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">False</property>
+                        <property name="tooltip-text" translatable="yes">Формат А4
+ без рамки</property>
+                        <property name="active">True</property>
+                        <property name="draw-indicator">True</property>
+                        <style>
+                          <class name="check1"/>
+                        </style>
+                      </object>
+                      <packing>
+                        <property name="x">510</property>
+                        <property name="y">21</property>
                       </packing>
                     </child>
                   </object>
