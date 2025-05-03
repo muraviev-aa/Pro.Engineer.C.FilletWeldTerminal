@@ -261,7 +261,7 @@
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <property name="label" translatable="yes">Тавровое с
-двусторонноми угловыми
+двусторонними угловыми
 швами; нахлесточное и
 угловое</property>
                       </object>
@@ -457,6 +457,9 @@
                 <property name="height-request">0</property>
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
+                <property name="tooltip-text" translatable="yes">Таблица с вычисленными
+ минимальными катетами
+           сварных швов</property>
                 <property name="label" translatable="yes">           Таблица 38 СП 16.13330.2017 изм. №2, 3. Конструкции из стали с пределом текучести до 590 Н/мм2</property>
                 <property name="justify">fill</property>
                 <property name="single-line-mode">True</property>
@@ -771,6 +774,8 @@
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                         <property name="receives-default">False</property>
+                        <property name="tooltip-text" translatable="yes">Формат А4
+ с рамкой</property>
                         <property name="active">True</property>
                         <property name="draw-indicator">True</property>
                         <property name="group">radio_without_frame</property>
@@ -789,6 +794,9 @@
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                         <property name="receives-default">False</property>
+                        <property name="tooltip-text" translatable="yes">Формат А4
+ c рамкой
+и штампом</property>
                         <property name="active">True</property>
                         <property name="draw-indicator">True</property>
                         <property name="group">radio_without_frame</property>
@@ -828,6 +836,8 @@
               <object class="GtkLabel">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
+                <property name="tooltip-text" translatable="yes">Раздел работы с pdf
+            файлом</property>
                 <property name="label" translatable="yes">Работа с файлом </property>
                 <attributes>
                   <attribute name="font-desc" value="Calibri Bold 10"/>
