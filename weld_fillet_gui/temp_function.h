@@ -17,7 +17,7 @@ typedef struct
 } Weld_data;
 
 // Работаем с *.css файлом
-void working_css_file();
+void apply_css(void);
 
 // Определение минимального катета сварного шва
 void size_weld();
@@ -40,8 +40,11 @@ void set_widget_alignment(GtkEntry *entry);
 // Получение виджетов из builder
 GtkWidget *get_widget(GtkBuilder *builder, const char *name);
 
-// Управление состоянием нескольких виджетов
+// Управление состоянием активности нескольких виджетов
 void set_widgets_sensitive(GtkWidget **widgets, int count, gboolean sensitive);
+
+// Универсальное получение виджетов
+void get_and_check_widget(GtkBuilder *erector, const char *widget_name, GtkWidget **widget);
 
 // Обработчик события кнопки button_calc
 G_MODULE_EXPORT void on_button_calc_clicked(GtkButton *b);

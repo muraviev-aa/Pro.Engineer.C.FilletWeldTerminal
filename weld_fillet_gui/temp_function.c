@@ -1,23 +1,19 @@
 
 #include "temp_function.h"
 
-void working_css_file()
-{
-    GtkCssProvider *provider;
-    GFile *file;
-    GdkScreen *screen;
-    screen = gdk_screen_get_default();
-    gchar *path;
-    path = g_build_filename("resources/style.css", NULL);
-    file = g_file_new_for_path(path);
+void apply_css(void) {
+    GtkCssProvider *provider = gtk_css_provider_new();
+    GError *error = NULL;
 
-    g_free(path);
-    provider = gtk_css_provider_new();
-    gtk_css_provider_load_from_file(provider, file, NULL);
-    gtk_style_context_add_provider_for_screen(screen,
+    if (!gtk_css_provider_load_from_path(provider, "resources/style.css", &error)) {
+        g_warning("Failed to load CSS: %s", error->message);
+        g_clear_error(&error);
+    }
+
+    gtk_style_context_add_provider_for_screen(gdk_screen_get_default(),
                                               GTK_STYLE_PROVIDER(provider),
                                               GTK_STYLE_PROVIDER_PRIORITY_USER);
-    gtk_style_context_reset_widgets(screen);
+
     g_object_unref(provider);
 }
 
@@ -195,6 +191,14 @@ GtkWidget *get_widget(GtkBuilder *builder, const char *name)
 
 void set_widgets_sensitive(GtkWidget **widgets, int count, gboolean sensitive)
 {
-    for (int i = 0; i < count; i++)
-        gtk_widget_set_sensitive(widgets[i], sensitive);
+    for (int i = 0; i < count; i++) {
+        if (widgets[i] != NULL && GTK_IS_WIDGET(widgets[i])) {
+            gtk_widget_set_sensitive(widgets[i], sensitive);
+        } else {
+            g_warning("Widget at index %d is NULL or not a valid GTK widget.", i);
+        }
+    }
 }
+
+
+
