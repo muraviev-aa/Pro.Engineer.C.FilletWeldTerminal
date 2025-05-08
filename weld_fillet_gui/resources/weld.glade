@@ -4,6 +4,7 @@
   <requires lib="gtk+" version="3.24"/>
   <object class="GtkWindow" id="window_forma2">
     <property name="can-focus">False</property>
+    <signal name="delete-event" handler="on_window_forma2_delete_event" swapped="no"/>
     <child>
       <object class="GtkFixed" id="fixed_forma2">
         <property name="visible">True</property>
@@ -206,6 +207,9 @@
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
+            <style>
+              <class name="button"/>
+            </style>
           </object>
           <packing>
             <property name="x">850</property>
@@ -223,6 +227,7 @@
     <property name="width-request">700</property>
     <property name="height-request">500</property>
     <property name="can-focus">False</property>
+    <signal name="destroy" handler="on_window_main_destroy" swapped="no"/>
     <child>
       <object class="GtkFixed" id="fixed_all">
         <property name="visible">True</property>
@@ -1019,6 +1024,9 @@
                         <property name="visible">True</property>
                         <property name="can-focus">True</property>
                         <property name="receives-default">True</property>
+                        <property name="tooltip-text" translatable="yes">Заполнение 
+   формы 2</property>
+                        <signal name="clicked" handler="on_button_form_clicked" swapped="no"/>
                         <style>
                           <class name="button"/>
                         </style>

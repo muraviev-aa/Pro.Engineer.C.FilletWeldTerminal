@@ -103,7 +103,6 @@ typedef struct
 } WidgetContainer;
 WidgetContainer widgets; // для хранения всех виджетов
 
-
 gint t1 = 0; // толщина первой свариваемой детали
 gint t2 = 0; // толщина второй свариваемой детали
 gint button_click_count = 0;
@@ -126,14 +125,12 @@ G_MODULE_EXPORT void on_entry_name_focus_in_event(GtkEntry *e);
 G_MODULE_EXPORT void on_button_new_data_clicked(GtkButton *b);
 G_MODULE_EXPORT void on_button_new_clicked(GtkButton *b);
 G_MODULE_EXPORT void on_button_file_clicked(GtkButton *b);
-//G_MODULE_EXPORT void on_button_form_clicked(GtkButton *b);
+G_MODULE_EXPORT void on_button_form_clicked(GtkButton *b);
+G_MODULE_EXPORT void on_window_main_destroy(GtkWidget *main_win);
+G_MODULE_EXPORT gboolean on_window_forma2_delete_event(GtkWidget *child_win);
 
 void work_widgets();
 void writing_data_s_list(gint count_result);
-static void on_window_main_destroy(GtkWidget *main_win);
-static void on_button_clicked(GtkButton *button);
-static gboolean on_window_forma2_delete_event(GtkWidget *child_win, GdkEvent event, gpointer data);
-
 
 int main(int argc, char **argv)
 {
@@ -159,11 +156,6 @@ int main(int argc, char **argv)
         g_error("Failed to get window_forma2 from builder.");
         return 1;
     }
-
-    g_signal_connect(gtk_builder_get_object(builder, "button_form"), "clicked",
-                     G_CALLBACK(on_button_clicked), NULL);
-    g_signal_connect(window_main, "destroy", G_CALLBACK(on_window_main_destroy), NULL);
-    g_signal_connect(window_forma2, "delete_event", G_CALLBACK(on_window_forma2_delete_event), NULL);
     gtk_builder_connect_signals(builder, NULL);
     work_widgets();
 
@@ -181,18 +173,18 @@ int main(int argc, char **argv)
     return 0;
 }
 
-static gboolean on_window_forma2_delete_event(GtkWidget *child_win, GdkEvent event, gpointer data)
+gboolean on_window_forma2_delete_event(GtkWidget *child_win)
 {
-    gtk_widget_hide(window_forma2);
+    gtk_widget_hide(window_forma2); // скрываем window_forma2
     return TRUE;
 }
 
-static void on_window_main_destroy(GtkWidget *main_win)
+void on_window_main_destroy(GtkWidget *main_win)
 {
     gtk_main_quit(); // завершаем главный цикл GTK
 }
 
-static void on_button_clicked(GtkButton *button)
+void on_button_form_clicked(GtkButton *b)
 {
     if (window_forma2 == NULL)
     {
@@ -723,8 +715,6 @@ void on_button_file_clicked(GtkButton *b)
     cairo_move_to(cr, (190.0 / 25.4) * 72, (270.5 / 25.4) * 72);
     cairo_show_text(cr, "Листов");*/
 
-
-
     cairo_set_font_size(cr, 10.0); // размер шрифта расчетной части
     // печатаем 1 результат
     if (gtk_toggle_button_get_active((GtkToggleButton *) widgets.radiobutton_1))
@@ -816,9 +806,4 @@ void on_entry_name_focus_in_event(GtkEntry *e)
     gtk_label_set_text(GTK_LABEL(widgets.label_create_file), " ");
 }
 
-// Открываем окно заполнения формы
-void on_button_form_clicked(GtkButton *b)
-{
-    gtk_widget_show(window_forma2);
-}
 
