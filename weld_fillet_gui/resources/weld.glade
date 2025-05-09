@@ -22,7 +22,7 @@
           </object>
           <packing>
             <property name="x">1</property>
-            <property name="y">173</property>
+            <property name="y">276</property>
           </packing>
         </child>
         <child>
@@ -31,12 +31,13 @@
             <property name="height-request">80</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
+            <property name="margin-bottom">29</property>
             <child internal-child="selection">
               <object class="GtkTreeSelection"/>
             </child>
           </object>
           <packing>
-            <property name="x">10</property>
+            <property name="x">46</property>
             <property name="y">62</property>
           </packing>
         </child>
@@ -52,7 +53,7 @@
           </object>
           <packing>
             <property name="x">574</property>
-            <property name="y">203</property>
+            <property name="y">304</property>
           </packing>
         </child>
         <child>
@@ -64,8 +65,8 @@
             <property name="placeholder-text" translatable="yes">Фамилия</property>
           </object>
           <packing>
-            <property name="x">99</property>
-            <property name="y">255</property>
+            <property name="x">96</property>
+            <property name="y">358</property>
           </packing>
         </child>
         <child>
@@ -77,8 +78,8 @@
             <property name="placeholder-text" translatable="yes">Фамилия</property>
           </object>
           <packing>
-            <property name="x">99</property>
-            <property name="y">281</property>
+            <property name="x">96</property>
+            <property name="y">383</property>
           </packing>
         </child>
         <child>
@@ -90,8 +91,8 @@
             <property name="placeholder-text" translatable="yes">Фамилия</property>
           </object>
           <packing>
-            <property name="x">99</property>
-            <property name="y">332</property>
+            <property name="x">96</property>
+            <property name="y">435</property>
           </packing>
         </child>
         <child>
@@ -103,10 +104,11 @@
 б) заполнить ячейки формы вручную.</property>
             <attributes>
               <attribute name="font-desc" value="Sans 10"/>
+              <attribute name="weight" value="bold"/>
             </attributes>
           </object>
           <packing>
-            <property name="x">201</property>
+            <property name="x">198</property>
             <property name="y">3</property>
           </packing>
         </child>
@@ -119,8 +121,8 @@
             <property name="placeholder-text" translatable="yes">Фамилия</property>
           </object>
           <packing>
-            <property name="x">99</property>
-            <property name="y">358</property>
+            <property name="x">96</property>
+            <property name="y">460</property>
           </packing>
         </child>
         <child>
@@ -133,7 +135,7 @@
           </object>
           <packing>
             <property name="x">345</property>
-            <property name="y">270</property>
+            <property name="y">376</property>
           </packing>
         </child>
         <child>
@@ -146,7 +148,7 @@
           </object>
           <packing>
             <property name="x">345</property>
-            <property name="y">306</property>
+            <property name="y">408</property>
           </packing>
         </child>
         <child>
@@ -159,7 +161,7 @@
           </object>
           <packing>
             <property name="x">345</property>
-            <property name="y">346</property>
+            <property name="y">444</property>
           </packing>
         </child>
         <child>
@@ -172,7 +174,7 @@
           </object>
           <packing>
             <property name="x">803</property>
-            <property name="y">281</property>
+            <property name="y">383</property>
           </packing>
         </child>
         <child>
@@ -185,7 +187,7 @@
           </object>
           <packing>
             <property name="x">895</property>
-            <property name="y">281</property>
+            <property name="y">383</property>
           </packing>
         </child>
         <child>
@@ -198,7 +200,7 @@
           </object>
           <packing>
             <property name="x">722</property>
-            <property name="y">334</property>
+            <property name="y">436</property>
           </packing>
         </child>
         <child>
@@ -213,15 +215,11 @@
           </object>
           <packing>
             <property name="x">850</property>
-            <property name="y">129</property>
+            <property name="y">232</property>
           </packing>
         </child>
       </object>
     </child>
-    <style>
-      <class name="window"/>
-      <class name="view"/>
-    </style>
   </object>
   <object class="GtkWindow" id="window_main">
     <property name="width-request">700</property>

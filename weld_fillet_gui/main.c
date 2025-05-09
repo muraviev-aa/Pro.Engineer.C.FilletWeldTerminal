@@ -56,6 +56,9 @@ G_MODULE_EXPORT gboolean on_window_forma2_delete_event(GtkWidget *child_win);
 
 void work_widgets();
 void writing_data_s_list(gint count_result);
+void fill_tree_view(GtkTreeView *treeview);
+static void on_tree_view_selection_changed(GtkTreeSelection *selection, gpointer user_data);
+static void set_entry_text(GtkEntry *entry, const gchar *text);
 
 int main(int argc, char **argv)
 {
@@ -85,7 +88,7 @@ int main(int argc, char **argv)
     }
 
     window_forma2 = GTK_WIDGET(gtk_builder_get_object(builder, "window_forma2"));
-    gtk_window_set_title(GTK_WINDOW(window_forma2), "Форма 2. Заполнение");
+    gtk_window_set_title(GTK_WINDOW(window_forma2), "Форма 2. Заполнение основной надписи");
     gtk_window_set_icon_from_file(GTK_WINDOW(window_forma2), "resources/ant.gif", NULL);
     gtk_window_set_resizable(GTK_WINDOW(window_forma2), FALSE);
     if (!window_forma2)
@@ -93,9 +96,14 @@ int main(int argc, char **argv)
         g_error("Failed to get window_forma2 from builder\n");
         return 1;
     }
+
     gtk_builder_connect_signals(builder, NULL);
     work_widgets();
+    fill_tree_view((GtkTreeView *)widgets.tree_forma2);
 
+    // Подключаем сигнал выбора строки
+    GtkTreeSelection *selection = gtk_tree_view_get_selection((GtkTreeView *)widgets.tree_forma2);
+    g_signal_connect(selection, "changed", G_CALLBACK(on_tree_view_selection_changed), NULL);
     // работа с *.css файлом
     apply_css();
 
@@ -109,6 +117,176 @@ int main(int argc, char **argv)
     g_object_unref(builder);
     sqlite3_close(db);
     return 0;
+}
+
+static void set_entry_text(GtkEntry *entry, const gchar *text)
+{
+    gtk_entry_set_text(entry, text ? text : "");
+}
+
+static void on_tree_view_selection_changed(GtkTreeSelection *selection, gpointer user_data)
+{
+    GtkTreeModel *model;
+    GtkTreeIter iter;
+
+    // Получаем модель и итератор выбранной строки
+    if (gtk_tree_selection_get_selected(selection, &model, &iter))
+    {
+        gchar *value_project_name1 = NULL;
+        gchar *value_project_name2 = NULL;
+        gchar *value_project_name3 = NULL;
+        gchar *value_project_code = NULL;
+        gchar *value_project_sheet = NULL;
+        gchar *value_project_sheets = NULL;
+        gchar *value_project_developer = NULL;
+        gchar *value_project_inspector = NULL;
+        gchar *value_project_norm_contr = NULL;
+        gchar *value_project_approver = NULL;
+
+        // Извлекаем значение из столбцов
+        gtk_tree_model_get(model, &iter,
+                           COL_PROJECT_NAME1, &value_project_name1,
+                           COL_PROJECT_NAME2, &value_project_name2,
+                           COL_PROJECT_NAME3, &value_project_name3,
+                           COL_PROJECT_CODE, &value_project_code,
+                           COL_PROJECT_SHEET, &value_project_sheet,
+                           COL_PROJECT_SHEETS, &value_project_sheets,
+                           COL_DEVELOPER, &value_project_developer,
+                           COL_INSPECTOR, &value_project_inspector,
+                           COL_NORM_CONTR, &value_project_norm_contr,
+                           COL_APPROVER, &value_project_approver,
+                           -1);
+
+        // Устанавливаем текст в entry основной надписи
+        set_entry_text(GTK_ENTRY(widgets.entry_name1), value_project_name1);
+        set_entry_text(GTK_ENTRY(widgets.entry_name2), value_project_name2);
+        set_entry_text(GTK_ENTRY(widgets.entry_name3), value_project_name3);
+        set_entry_text(GTK_ENTRY(widgets.entry_code), value_project_code);
+        set_entry_text(GTK_ENTRY(widgets.entry_sheet), value_project_sheet);
+        set_entry_text(GTK_ENTRY(widgets.entry_sheets), value_project_sheets);
+        set_entry_text(GTK_ENTRY(widgets.entry_developer), value_project_developer);
+        set_entry_text(GTK_ENTRY(widgets.entry_inspector), value_project_inspector);
+        set_entry_text(GTK_ENTRY(widgets.entry_norm_contr), value_project_norm_contr);
+        set_entry_text(GTK_ENTRY(widgets.entry_approver), value_project_approver);
+
+        // Освобождаем память
+        g_free(value_project_name1);
+        g_free(value_project_name2);
+        g_free(value_project_name3);
+        g_free(value_project_code);
+        g_free(value_project_sheet);
+        g_free(value_project_sheets);
+        g_free(value_project_developer);
+        g_free(value_project_inspector);
+        g_free(value_project_norm_contr);
+        g_free(value_project_approver);
+    }
+    else
+    {
+        // Если ничего не выбрано, очищаем entry
+        set_entry_text(GTK_ENTRY(widgets.entry_name1), NULL);
+        set_entry_text(GTK_ENTRY(widgets.entry_name2), NULL);
+        set_entry_text(GTK_ENTRY(widgets.entry_name3), NULL);
+        set_entry_text(GTK_ENTRY(widgets.entry_code), NULL);
+        set_entry_text(GTK_ENTRY(widgets.entry_sheet), NULL);
+        set_entry_text(GTK_ENTRY(widgets.entry_sheets), NULL);
+        set_entry_text(GTK_ENTRY(widgets.entry_developer), NULL);
+        set_entry_text(GTK_ENTRY(widgets.entry_inspector), NULL);
+        set_entry_text(GTK_ENTRY(widgets.entry_norm_contr), NULL);
+        set_entry_text(GTK_ENTRY(widgets.entry_approver), NULL);
+    }
+}
+
+void fill_tree_view(GtkTreeView *treeview)
+{
+    GtkListStore *store;
+    GtkCellRenderer *renderer;
+    GtkTreeViewColumn *column;
+    const char *column_titles[] = {
+            "№\nп/п",
+            "Наименование\nдокумента 1",
+            "Наименование\nдокумента 2",
+            "Наименование\nдокумента 3",
+            "Обозначение\nдокумента",
+            "Лист",
+            "Листов",
+            "Разраб.",
+            "Пров.",
+            "Н. контр.",
+            "Утв."
+    };
+
+    // Создаем модель с 11-ю колонками
+    store = gtk_list_store_new(NUM_COLS, G_TYPE_INT, G_TYPE_STRING, G_TYPE_STRING,
+                               G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING,
+                               G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
+
+    // Выполняем запрос к базе и заполняем модель
+    const char *sql = "SELECT f.id AS forma_id, p.name_1, p.name_2, p.name_3, "
+                      "p.code, p.sheet, p.sheets, d.name AS developer_name, "
+                      "i.name AS inspector_name, n.name AS norm_contr_name, "
+                      "a.name AS approver_name "
+                      "FROM forma f "
+                      "LEFT JOIN project p ON f.project_id = p.id "
+                      "LEFT JOIN developer d ON f.developer_id = d.id "
+                      "LEFT JOIN inspector i ON f.inspector_id = i.id "
+                      "LEFT JOIN norm_contr n ON f.norm_contr_id = n.id "
+                      "LEFT JOIN approver a ON f.approver_id = a.id;";
+
+    sqlite3_stmt *stmt;
+
+    if (sqlite3_prepare_v2(db, sql, -1, &stmt, NULL) != SQLITE_OK)
+    {
+        g_printerr("Failed to prepare statement: %s\n", sqlite3_errmsg(db));
+        return;
+    }
+
+    while (sqlite3_step(stmt) == SQLITE_ROW)
+    {
+        int id = sqlite3_column_int(stmt, 0);
+        const unsigned char *name_1 = sqlite3_column_text(stmt, 1);
+        const unsigned char *name_2 = sqlite3_column_text(stmt, 2);
+        const unsigned char *name_3 = sqlite3_column_text(stmt, 3);
+        const unsigned char *code = sqlite3_column_text(stmt, 4);
+        const unsigned char *sheet = sqlite3_column_text(stmt, 5);
+        const unsigned char *sheets = sqlite3_column_text(stmt, 6);
+        const unsigned char *developer = sqlite3_column_text(stmt, 7);
+        const unsigned char *inspector = sqlite3_column_text(stmt, 8);
+        const unsigned char *norm_contr = sqlite3_column_text(stmt, 9);
+        const unsigned char *approver = sqlite3_column_text(stmt, 10);
+
+        GtkTreeIter iter;
+        gtk_list_store_append(store, &iter);
+        gtk_list_store_set(store, &iter,
+                           COL_ID, id,
+                           COL_PROJECT_NAME1, (const char *) name_1,
+                           COL_PROJECT_NAME2, (const char *) name_2,
+                           COL_PROJECT_NAME3, (const char *) name_3,
+                           COL_PROJECT_CODE, (const char *) code,
+                           COL_PROJECT_SHEET, (const char *) sheet,
+                           COL_PROJECT_SHEETS, (const char *) sheets,
+                           COL_DEVELOPER, (const char *) developer,
+                           COL_INSPECTOR, (const char *) inspector,
+                           COL_NORM_CONTR, (const char *) norm_contr,
+                           COL_APPROVER, (const char *) approver,
+                           -1);
+    }
+    sqlite3_finalize(stmt);
+
+    // Устанавливаем модель в TreeView
+    gtk_tree_view_set_model(treeview, GTK_TREE_MODEL(store));
+
+    for (int i = 0; i < NUM_COLS; i++)
+    {
+        renderer = gtk_cell_renderer_text_new();
+        column = gtk_tree_view_column_new_with_attributes(column_titles[i], renderer,
+                                                          "text", i, NULL);
+        gtk_tree_view_append_column(treeview, column);
+        g_object_set(renderer,
+                     "foreground", "black",   // цвет текста
+                     "background", "white",                   // цвет фона
+                     NULL);
+    }
 }
 
 gboolean on_window_forma2_delete_event(GtkWidget *child_win)
@@ -225,11 +403,17 @@ void work_widgets()
     get_and_check_widget(builder, "entry_norm_contr", &widgets.entry_norm_contr);
     get_and_check_widget(builder, "entry_approver", &widgets.entry_approver);
     get_and_check_widget(builder, "entry_name1", &widgets.entry_name1);
+    gtk_entry_set_alignment(GTK_ENTRY(widgets.entry_name1), (gfloat)0.5); // заполнение текстом по центру
     get_and_check_widget(builder, "entry_name2", &widgets.entry_name2);
+    gtk_entry_set_alignment(GTK_ENTRY(widgets.entry_name2), (gfloat)0.5); // заполнение текстом по центру
     get_and_check_widget(builder, "entry_name3", &widgets.entry_name3);
+    gtk_entry_set_alignment(GTK_ENTRY(widgets.entry_name3), (gfloat)0.5); // заполнение текстом по центру
     get_and_check_widget(builder, "entry_sheet", &widgets.entry_sheet);
+    gtk_entry_set_alignment(GTK_ENTRY(widgets.entry_sheet), (gfloat)0.5); // заполнение текстом по центру
     get_and_check_widget(builder, "entry_sheets", &widgets.entry_sheets);
+    gtk_entry_set_alignment(GTK_ENTRY(widgets.entry_sheets), (gfloat)0.5); // заполнение текстом по центру
     get_and_check_widget(builder, "entry_organization", &widgets.entry_organization);
+    gtk_entry_set_alignment(GTK_ENTRY(widgets.entry_organization), (gfloat)0.5); // заполнение текстом по центру
     get_and_check_widget(builder, "record_button", &widgets.record_button);
 
     GtkWidget *sensitive_widgets_false[] =
