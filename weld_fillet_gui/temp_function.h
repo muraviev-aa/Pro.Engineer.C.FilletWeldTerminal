@@ -16,6 +16,102 @@ typedef struct
     gint weld_leg_2;   // катет вар.2
 } Weld_data;
 
+// Виджеты окон
+typedef struct
+{
+    GtkWidget *fixed_all;
+    GtkWidget *alig_1;
+    GtkWidget *fixed_thick;
+    GtkWidget *label_1;
+    GtkWidget *entry_t1;
+    GtkWidget *entry_t2;
+    GtkWidget *label_t1;
+    GtkWidget *label_t2;
+    GtkWidget *button_calc;
+    GtkWidget *alig_2;
+    GtkWidget *fixed_tabl;
+    GtkWidget *label_2_1;
+    GtkWidget *label_2_2;
+    GtkWidget *label_2_3;
+    GtkWidget *label_2_4;
+    GtkWidget *label_2_5;
+    GtkWidget *label_2_6;
+    GtkWidget *label_2_7;
+    GtkWidget *separator_1;
+    GtkWidget *separator_2;
+    GtkWidget *separator_3;
+    GtkWidget *separator_4;
+    GtkWidget *separator_5;
+    GtkWidget *separator_6;
+    GtkWidget *separator_7;
+    GtkWidget *separator_8;
+    GtkWidget *separator_9;
+    GtkWidget *separator_10;
+    GtkWidget *separator_11;
+    GtkWidget *alig_3;
+    GtkWidget *label_name;
+    GtkWidget *label_text;
+    GtkWidget *katet_tabl1;
+    GtkWidget *label_result1;
+    GtkWidget *katet_tabl2;
+    GtkWidget *label_result2;
+    GtkWidget *fixed_file;
+    GtkWidget *button_new;
+    GtkWidget *button_new_data;
+    GtkWidget *label_count;
+    GtkWidget *button_file;
+    GtkWidget *label_create_file;
+    GtkWidget *label_without_frame;
+    GtkWidget *label_frame;
+    GtkWidget *button_form;
+    GtkWidget *entry_name;
+    GtkWidget *frame_thick;
+    GtkWidget *frame_tabl;
+    GtkWidget *frame_file;
+    GtkWidget *radiobutton_1;
+    GtkWidget *radiobutton_2;
+    GtkWidget *radiobutton_3;
+    GtkWidget *radiobutton_1_2;
+    GtkWidget *radiobutton_1_3;
+    GtkWidget *radiobutton_2_3;
+    GtkWidget *radiobutton_1_2_3;
+    GtkWidget *radio_without_frame;
+    GtkWidget *radio_frame;
+    GtkWidget *label_forma;
+    GtkWidget *fixed_forma2;
+    GtkWidget *image_forma2;
+    GtkWidget *tree_forma2;
+    GtkWidget *entry_code;
+    GtkWidget *entry_developer;
+    GtkWidget *entry_inspector;
+    GtkWidget *entry_norm_contr;
+    GtkWidget *entry_approver;
+    GtkWidget *entry_name1;
+    GtkWidget *entry_name2;
+    GtkWidget *entry_name3;
+    GtkWidget *entry_sheet;
+    GtkWidget *entry_sheets;
+    GtkWidget *entry_organization;
+    GtkWidget *record_button;
+} WidgetContainer;
+
+// Столбцы таблицы БД
+enum
+{
+    COL_ID,
+    COL_PROJECT_NAME1,
+    COL_PROJECT_NAME2,
+    COL_PROJECT_NAME3,
+    COL_PROJECT_CODE,
+    COL_PROJECT_SHEET,
+    COL_PROJECT_SHEETS,
+    COL_DEVELOPER,
+    COL_INSPECTOR,
+    COL_NORM_CONTR,
+    COL_APPROVER,
+    NUM_COLS
+};
+
 // Работаем с *.css файлом
 void apply_css(void);
 

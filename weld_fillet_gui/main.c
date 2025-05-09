@@ -17,92 +17,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <gtk/gtk.h>
+#include <sqlite3.h>
 #include <conio.h>
 #include <cairo-pdf.h>
 #include "temp_function.h"
 
+sqlite3 *db;
 GtkBuilder *builder;
 GtkWidget *window_main = NULL;
 GtkWidget *window_forma2 = NULL;
-typedef struct
-{
-    GtkWidget *fixed_all;
-    GtkWidget *alig_1;
-    GtkWidget *fixed_thick;
-    GtkWidget *label_1;
-    GtkWidget *entry_t1;
-    GtkWidget *entry_t2;
-    GtkWidget *label_t1;
-    GtkWidget *label_t2;
-    GtkWidget *button_calc;
-    GtkWidget *alig_2;
-    GtkWidget *fixed_tabl;
-    GtkWidget *label_2_1;
-    GtkWidget *label_2_2;
-    GtkWidget *label_2_3;
-    GtkWidget *label_2_4;
-    GtkWidget *label_2_5;
-    GtkWidget *label_2_6;
-    GtkWidget *label_2_7;
-    GtkWidget *separator_1;
-    GtkWidget *separator_2;
-    GtkWidget *separator_3;
-    GtkWidget *separator_4;
-    GtkWidget *separator_5;
-    GtkWidget *separator_6;
-    GtkWidget *separator_7;
-    GtkWidget *separator_8;
-    GtkWidget *separator_9;
-    GtkWidget *separator_10;
-    GtkWidget *separator_11;
-    GtkWidget *alig_3;
-    GtkWidget *label_name;
-    GtkWidget *label_text;
-    GtkWidget *katet_tabl1;
-    GtkWidget *label_result1;
-    GtkWidget *katet_tabl2;
-    GtkWidget *label_result2;
-    GtkWidget *fixed_file;
-    GtkWidget *button_new;
-    GtkWidget *button_new_data;
-    GtkWidget *label_count;
-    GtkWidget *button_file;
-    GtkWidget *label_create_file;
-    GtkWidget *label_without_frame;
-    GtkWidget *label_frame;
-    GtkWidget *button_form;
-    GtkWidget *entry_name;
-    GtkWidget *frame_thick;
-    GtkWidget *frame_tabl;
-    GtkWidget *frame_file;
-    GtkWidget *radiobutton_1;
-    GtkWidget *radiobutton_2;
-    GtkWidget *radiobutton_3;
-    GtkWidget *radiobutton_1_2;
-    GtkWidget *radiobutton_1_3;
-    GtkWidget *radiobutton_2_3;
-    GtkWidget *radiobutton_1_2_3;
-    GtkWidget *radio_without_frame;
-    GtkWidget *radio_frame;
-    GtkWidget *label_forma;
-    GtkWidget *fixed_forma2;
-    GtkWidget *image_forma2;
-    GtkWidget *tree_forma2;
-    GtkWidget *entry_code;
-    GtkWidget *entry_developer;
-    GtkWidget *entry_inspector;
-    GtkWidget *entry_norm_contr;
-    GtkWidget *entry_approver;
-    GtkWidget *entry_name1;
-    GtkWidget *entry_name2;
-    GtkWidget *entry_name3;
-    GtkWidget *entry_sheet;
-    GtkWidget *entry_sheets;
-    GtkWidget *entry_organization;
-    GtkWidget *record_button;
-} WidgetContainer;
-WidgetContainer widgets; // для хранения всех виджетов
 
+WidgetContainer widgets; // для хранения всех виджетов
 gint t1 = 0; // толщина первой свариваемой детали
 gint t2 = 0; // толщина второй свариваемой детали
 gint button_click_count = 0;
@@ -134,8 +59,20 @@ void writing_data_s_list(gint count_result);
 
 int main(int argc, char **argv)
 {
+    if (sqlite3_open("resources/forma_2.db", &db))
+    {
+        g_printerr("Can't open database: %s\n", sqlite3_errmsg(db));
+        return 1;
+    } else
+        printf("sqlite3_open\n");
+
     gtk_init(&argc, &argv);
-    builder = gtk_builder_new_from_file("resources/weld.glade");
+    builder = gtk_builder_new();
+    if (!gtk_builder_add_from_file(builder, "resources/weld.glade", NULL))
+    {
+        g_printerr("Error loading weld.glade file\n");
+        return 1;
+    }
 
     window_main = GTK_WIDGET(gtk_builder_get_object(builder, "window_main"));
     gtk_window_set_title(GTK_WINDOW(window_main), "Минимальный катет шва 1.0");
@@ -143,7 +80,7 @@ int main(int argc, char **argv)
     gtk_window_set_resizable(GTK_WINDOW(window_main), FALSE);
     if (!window_main)
     {
-        g_error("Failed to get window_main from builder.");
+        g_error("Failed to get window_main from builder\n");
         return 1;
     }
 
@@ -153,7 +90,7 @@ int main(int argc, char **argv)
     gtk_window_set_resizable(GTK_WINDOW(window_forma2), FALSE);
     if (!window_forma2)
     {
-        g_error("Failed to get window_forma2 from builder.");
+        g_error("Failed to get window_forma2 from builder\n");
         return 1;
     }
     gtk_builder_connect_signals(builder, NULL);
@@ -170,12 +107,14 @@ int main(int argc, char **argv)
     g_free(second);
     g_free(third);
     g_object_unref(builder);
+    sqlite3_close(db);
     return 0;
 }
 
 gboolean on_window_forma2_delete_event(GtkWidget *child_win)
 {
     gtk_widget_hide(window_forma2); // скрываем window_forma2
+    gtk_widget_show(window_main);
     return TRUE;
 }
 
@@ -200,6 +139,7 @@ void on_button_form_clicked(GtkButton *b)
     // Показываем окно
     gtk_widget_show_all(window_forma2);
     printf("Window forma2 shown\n");
+    gtk_widget_hide(window_main);
 }
 
 void get_and_check_widget(GtkBuilder *erector, const char *widget_name, GtkWidget **widget)

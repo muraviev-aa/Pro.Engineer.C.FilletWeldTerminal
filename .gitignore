@@ -57,3 +57,4 @@ weld_fillet_gui/.idea/misc.xml
 /weld_fillet_gui/cmake-build-debug
 /weld_fillet_gui/.idea
 /weld_fillet_gui/resources/weld.glade~
+/weld_fillet_gui/resources/sqlite
