@@ -39,8 +39,9 @@ GSList *list = NULL; // односвязный список
 Weld_data *first = NULL;
 Weld_data *second = NULL;
 Weld_data *third = NULL;
+Project_data *project = NULL;
 gint flag_result = 0;
-gint flag_frame = 0;
+gint main_inscription = 0;
 
 G_MODULE_EXPORT void on_entry_t1_changed(GtkEntry *e);
 G_MODULE_EXPORT void on_entry_t2_changed(GtkEntry *e);
@@ -53,12 +54,14 @@ G_MODULE_EXPORT void on_button_file_clicked(GtkButton *b);
 G_MODULE_EXPORT void on_button_form_clicked(GtkButton *b);
 G_MODULE_EXPORT void on_window_main_destroy(GtkWidget *main_win);
 G_MODULE_EXPORT gboolean on_window_forma2_delete_event(GtkWidget *child_win);
+G_MODULE_EXPORT void on_record_button_clicked(GtkButton *b);
 
 void work_widgets();
 void writing_data_s_list(gint count_result);
 void fill_tree_view(GtkTreeView *treeview);
 static void on_tree_view_selection_changed(GtkTreeSelection *selection, gpointer user_data);
 static void set_entry_text(GtkEntry *entry, const gchar *text);
+void set_string_from_entry(GtkEntry *entry, gchar **target_string);
 
 int main(int argc, char **argv)
 {
@@ -318,7 +321,7 @@ void on_button_form_clicked(GtkButton *b)
     gtk_widget_show_all(window_forma2);
     printf("Window forma2 shown\n");
     gtk_widget_hide(window_main);
-    flag_frame = 1;
+    main_inscription = 1;
 }
 
 void get_and_check_widget(GtkBuilder *erector, const char *widget_name, GtkWidget **widget)
@@ -750,9 +753,12 @@ void on_button_file_clicked(GtkButton *b)
     cairo_show_text(cr, "Минимальные катеты сварных угловых швов ");
     cairo_set_font_size(cr, 10.0);   // размер шрифта pdf документа
 
-    // Работаем с датой
-    cairo_set_font_size(cr, 10.0);
-    work_dates(cr);
+    if (main_inscription == 0)
+    {
+        // Работаем с датой
+        cairo_set_font_size(cr, 10.0);
+        work_dates(cr);
+    }
 
     // Рамка на формате А4, толщина линии
     cairo_set_line_width(cr, 0.8);
@@ -762,7 +768,7 @@ void on_button_file_clicked(GtkButton *b)
         cairo_rectangle(cr, left_margin, top_margin, width, height);
     }
 
-    if (flag_frame == 1)
+    if (main_inscription == 1) // печать отчета с основной формой
     {
         cairo_rectangle(cr, left_margin, top_margin, width, height);
         // Штамп (форма 2)
@@ -813,6 +819,9 @@ void on_button_file_clicked(GtkButton *b)
         cairo_move_to(cr, (165.0 / 25.4) * 72, (272.0 / 25.4) * 72);
         cairo_line_to(cr, (165.0 / 25.4) * 72, (277.0 / 25.4) * 72);    // вторая
         // текст штампа
+        cairo_set_font_size(cr, 12.0);   // размер шрифта кода основной надписи
+        cairo_move_to(cr, (122 / 25.4) * 72, (261 / 25.4) * 72);
+        cairo_show_text(cr, project->project_code);
         cairo_set_font_size(cr, 8.0);   // размер шрифта штампа
         cairo_move_to(cr, (20.5 / 25.4) * 72, (265.5 / 25.4) * 72);
         cairo_show_text(cr, "Изм.");
@@ -824,20 +833,54 @@ void on_button_file_clicked(GtkButton *b)
         cairo_show_text(cr, "Подп.");
         cairo_move_to(cr, (77 / 25.4) * 72, (265.5 / 25.4) * 72);
         cairo_show_text(cr, "Дата");
+        cairo_move_to(cr, (103 / 25.4) * 72, (275 / 25.4) * 72);
+        cairo_show_text(cr, project->project_name1);
+        cairo_move_to(cr, (103 / 25.4) * 72, (280 / 25.4) * 72);
+        cairo_show_text(cr, project->project_name2);
+        cairo_move_to(cr, (103 / 25.4) * 72, (285 / 25.4) * 72);
+        cairo_show_text(cr, project->project_name3);
         cairo_move_to(cr, (21 / 25.4) * 72, (271 / 25.4) * 72);
         cairo_show_text(cr, "Разраб.");
+        cairo_move_to(cr, (38 / 25.4) * 72, (271 / 25.4) * 72);
+        cairo_show_text(cr, project->project_developer);
         cairo_move_to(cr, (21 / 25.4) * 72, (276 / 25.4) * 72);
         cairo_show_text(cr, "Пров.");
+        cairo_move_to(cr, (38 / 25.4) * 72, (276 / 25.4) * 72);
+        cairo_show_text(cr, project->project_inspector);
         cairo_move_to(cr, (21 / 25.4) * 72, (286 / 25.4) * 72);
         cairo_show_text(cr, "Н. контр.");
+        cairo_move_to(cr, (38 / 25.4) * 72, (286 / 25.4) * 72);
+        cairo_show_text(cr, project->project_norm_contr);
         cairo_move_to(cr, (21 / 25.4) * 72, (291 / 25.4) * 72);
         cairo_show_text(cr, "Утв.");
+        cairo_move_to(cr, (38 / 25.4) * 72, (291 / 25.4) * 72);
+        cairo_show_text(cr, project->project_approver);
         cairo_move_to(cr, (160.0 / 25.4) * 72, (270.5 / 25.4) * 72);
         cairo_show_text(cr, "Лит.");
         cairo_move_to(cr, (174.5 / 25.4) * 72, (270.5 / 25.4) * 72);
         cairo_show_text(cr, "Лист");
+        cairo_move_to(cr, (176.5 / 25.4) * 72, (275.5 / 25.4) * 72);
+        cairo_show_text(cr, project->project_sheet);
         cairo_move_to(cr, (190.0 / 25.4) * 72, (270.5 / 25.4) * 72);
         cairo_show_text(cr, "Листов");
+        cairo_move_to(cr, (194.0 / 25.4) * 72, (275.5 / 25.4) * 72);
+        cairo_show_text(cr, project->project_sheets);
+        cairo_move_to(cr, (173 / 25.4) * 72, (285 / 25.4) * 72);
+        cairo_show_text(cr, project->project_organization);
+
+        free(project->project_code);
+        free(project->project_name1);
+        free(project->project_name2);
+        free(project->project_name3);
+        free(project->project_developer);
+        free(project->project_inspector);
+        free(project->project_norm_contr);
+        free(project->project_approver);
+        free(project->project_sheet);
+        free(project->project_sheets);
+        free(project->project_organization);
+        free(project);
+        main_inscription = 0;
     }
 
     cairo_set_font_size(cr, 10.0); // размер шрифта расчетной части
@@ -929,6 +972,46 @@ void on_entry_name_focus_in_event(GtkEntry *e)
 {
     gtk_entry_set_text(GTK_ENTRY(widgets.entry_name), " ");
     gtk_label_set_text(GTK_LABEL(widgets.label_create_file), " ");
+}
+
+// Считываем из entry данные заполнения основной формы
+void on_record_button_clicked(GtkButton *b)
+{
+    project= (Project_data *) malloc(sizeof (Project_data));
+    project->project_name1 = NULL;
+    project->project_name2 = NULL;
+    project->project_name3 = NULL;
+    project->project_developer = NULL;
+    project->project_inspector = NULL;
+    project->project_norm_contr = NULL;
+    project->project_approver = NULL;
+    project->project_sheet = NULL;
+    project->project_sheets = NULL;
+    project->project_organization = NULL;
+    project->project_code = NULL;
+
+    set_string_from_entry(GTK_ENTRY(widgets.entry_name1), &project->project_name1);
+    set_string_from_entry(GTK_ENTRY(widgets.entry_name2), &project->project_name2);
+    set_string_from_entry(GTK_ENTRY(widgets.entry_name3), &project->project_name3);
+    set_string_from_entry(GTK_ENTRY(widgets.entry_developer), &project->project_developer);
+    set_string_from_entry(GTK_ENTRY(widgets.entry_inspector), &project->project_inspector);
+    set_string_from_entry(GTK_ENTRY(widgets.entry_norm_contr), &project->project_norm_contr);
+    set_string_from_entry(GTK_ENTRY(widgets.entry_approver), &project->project_approver);
+    set_string_from_entry(GTK_ENTRY(widgets.entry_sheet), &project->project_sheet);
+    set_string_from_entry(GTK_ENTRY(widgets.entry_sheets), &project->project_sheets);
+    set_string_from_entry(GTK_ENTRY(widgets.entry_organization), &project->project_organization);
+    set_string_from_entry(GTK_ENTRY(widgets.entry_code), &project->project_code);
+}
+
+// Получаем строку из entry
+void set_string_from_entry(GtkEntry *entry, gchar **target_string)
+{
+    const gchar *new_value = gtk_entry_get_text(entry);
+
+    if (*target_string != NULL)
+        free(*target_string);
+
+    *target_string = g_strdup(new_value); // выделениt памяти и копирования строки
 }
 
 

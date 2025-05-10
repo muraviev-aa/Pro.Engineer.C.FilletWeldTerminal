@@ -16,6 +16,22 @@ typedef struct
     gint weld_leg_2;   // катет вар.2
 } Weld_data;
 
+// Структура для заполнения основной надписи
+typedef struct
+{
+    gchar *project_name1;
+    gchar *project_name2;
+    gchar *project_name3;
+    gchar *project_code;
+    gchar *project_sheet;
+    gchar *project_sheets;
+    gchar *project_developer;
+    gchar *project_inspector;
+    gchar *project_norm_contr;
+    gchar *project_approver;
+    gchar *project_organization;
+} Project_data;
+
 // Виджеты окон
 typedef struct
 {

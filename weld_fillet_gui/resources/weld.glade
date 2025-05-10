@@ -46,13 +46,14 @@
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="has-frame">False</property>
+            <property name="width-chars">50</property>
             <property name="placeholder-text" translatable="yes">КОД ПРОЕКТА</property>
             <style>
               <class name="entry"/>
             </style>
           </object>
           <packing>
-            <property name="x">574</property>
+            <property name="x">492</property>
             <property name="y">304</property>
           </packing>
         </child>
@@ -169,11 +170,11 @@
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="has-frame">False</property>
-            <property name="width-chars">5</property>
+            <property name="width-chars">2</property>
             <property name="placeholder-text" translatable="yes">номер</property>
           </object>
           <packing>
-            <property name="x">803</property>
+            <property name="x">810</property>
             <property name="y">383</property>
           </packing>
         </child>
@@ -182,11 +183,11 @@
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="has-frame">False</property>
-            <property name="width-chars">5</property>
+            <property name="width-chars">2</property>
             <property name="placeholder-text" translatable="yes">номер</property>
           </object>
           <packing>
-            <property name="x">895</property>
+            <property name="x">902</property>
             <property name="y">383</property>
           </packing>
         </child>
@@ -209,6 +210,7 @@
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
+            <signal name="clicked" handler="on_record_button_clicked" swapped="no"/>
             <style>
               <class name="button"/>
             </style>
