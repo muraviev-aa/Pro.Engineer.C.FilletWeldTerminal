@@ -99,10 +99,10 @@ int main(int argc, char **argv)
 
     gtk_builder_connect_signals(builder, NULL);
     work_widgets();
-    fill_tree_view((GtkTreeView *)widgets.tree_forma2);
+    fill_tree_view((GtkTreeView *) widgets.tree_forma2);
 
     // Подключаем сигнал выбора строки
-    GtkTreeSelection *selection = gtk_tree_view_get_selection((GtkTreeView *)widgets.tree_forma2);
+    GtkTreeSelection *selection = gtk_tree_view_get_selection((GtkTreeView *) widgets.tree_forma2);
     g_signal_connect(selection, "changed", G_CALLBACK(on_tree_view_selection_changed), NULL);
     // работа с *.css файлом
     apply_css();
@@ -180,8 +180,7 @@ static void on_tree_view_selection_changed(GtkTreeSelection *selection, gpointer
         g_free(value_project_inspector);
         g_free(value_project_norm_contr);
         g_free(value_project_approver);
-    }
-    else
+    } else
     {
         // Если ничего не выбрано, очищаем entry
         set_entry_text(GTK_ENTRY(widgets.entry_name1), NULL);
@@ -202,19 +201,20 @@ void fill_tree_view(GtkTreeView *treeview)
     GtkListStore *store;
     GtkCellRenderer *renderer;
     GtkTreeViewColumn *column;
-    const char *column_titles[] = {
-            "№\nп/п",
-            "Наименование\nдокумента 1",
-            "Наименование\nдокумента 2",
-            "Наименование\nдокумента 3",
-            "Обозначение\nдокумента",
-            "Лист",
-            "Листов",
-            "Разраб.",
-            "Пров.",
-            "Н. контр.",
-            "Утв."
-    };
+    const char *column_titles[] =
+            {
+                    "№\nп/п",
+                    "Наименование\nдокумента 1",
+                    "Наименование\nдокумента 2",
+                    "Наименование\nдокумента 3",
+                    "Обозначение\nдокумента",
+                    "Лист",
+                    "Листов",
+                    "Разраб.",
+                    "Пров.",
+                    "Н. контр.",
+                    "Утв."
+            };
 
     // Создаем модель с 11-ю колонками
     store = gtk_list_store_new(NUM_COLS, G_TYPE_INT, G_TYPE_STRING, G_TYPE_STRING,
@@ -318,6 +318,7 @@ void on_button_form_clicked(GtkButton *b)
     gtk_widget_show_all(window_forma2);
     printf("Window forma2 shown\n");
     gtk_widget_hide(window_main);
+    flag_frame = 1;
 }
 
 void get_and_check_widget(GtkBuilder *erector, const char *widget_name, GtkWidget **widget)
@@ -403,17 +404,17 @@ void work_widgets()
     get_and_check_widget(builder, "entry_norm_contr", &widgets.entry_norm_contr);
     get_and_check_widget(builder, "entry_approver", &widgets.entry_approver);
     get_and_check_widget(builder, "entry_name1", &widgets.entry_name1);
-    gtk_entry_set_alignment(GTK_ENTRY(widgets.entry_name1), (gfloat)0.5); // заполнение текстом по центру
+    gtk_entry_set_alignment(GTK_ENTRY(widgets.entry_name1), (gfloat) 0.5); // заполнение текстом по центру
     get_and_check_widget(builder, "entry_name2", &widgets.entry_name2);
-    gtk_entry_set_alignment(GTK_ENTRY(widgets.entry_name2), (gfloat)0.5); // заполнение текстом по центру
+    gtk_entry_set_alignment(GTK_ENTRY(widgets.entry_name2), (gfloat) 0.5); // заполнение текстом по центру
     get_and_check_widget(builder, "entry_name3", &widgets.entry_name3);
-    gtk_entry_set_alignment(GTK_ENTRY(widgets.entry_name3), (gfloat)0.5); // заполнение текстом по центру
+    gtk_entry_set_alignment(GTK_ENTRY(widgets.entry_name3), (gfloat) 0.5); // заполнение текстом по центру
     get_and_check_widget(builder, "entry_sheet", &widgets.entry_sheet);
-    gtk_entry_set_alignment(GTK_ENTRY(widgets.entry_sheet), (gfloat)0.5); // заполнение текстом по центру
+    gtk_entry_set_alignment(GTK_ENTRY(widgets.entry_sheet), (gfloat) 0.5); // заполнение текстом по центру
     get_and_check_widget(builder, "entry_sheets", &widgets.entry_sheets);
-    gtk_entry_set_alignment(GTK_ENTRY(widgets.entry_sheets), (gfloat)0.5); // заполнение текстом по центру
+    gtk_entry_set_alignment(GTK_ENTRY(widgets.entry_sheets), (gfloat) 0.5); // заполнение текстом по центру
     get_and_check_widget(builder, "entry_organization", &widgets.entry_organization);
-    gtk_entry_set_alignment(GTK_ENTRY(widgets.entry_organization), (gfloat)0.5); // заполнение текстом по центру
+    gtk_entry_set_alignment(GTK_ENTRY(widgets.entry_organization), (gfloat) 0.5); // заполнение текстом по центру
     get_and_check_widget(builder, "record_button", &widgets.record_button);
 
     GtkWidget *sensitive_widgets_false[] =
@@ -756,88 +757,88 @@ void on_button_file_clicked(GtkButton *b)
     // Рамка на формате А4, толщина линии
     cairo_set_line_width(cr, 0.8);
 
-    if (gtk_toggle_button_get_active((GtkToggleButton *) widgets.radio_without_frame))
-        flag_frame = 1;
-    else
+    if (gtk_toggle_button_get_active((GtkToggleButton *) widgets.radio_frame))
     {
-        flag_frame = 2;
         cairo_rectangle(cr, left_margin, top_margin, width, height);
     }
 
-    /*cairo_rectangle(cr, left_margin, top_margin, width, height);
-    // Штамп (форма 2)
-    // горизонтальные основные линии
-    cairo_move_to(cr, (20.0 / 25.4) * 72, (252.0 / 25.4) * 72);
-    cairo_line_to(cr, (205.0 / 25.4) * 72, (252.0 / 25.4) * 72);    // первая
-    cairo_move_to(cr, (20.0 / 25.4) * 72, (262.0 / 25.4) * 72);
-    cairo_line_to(cr, (85.0 / 25.4) * 72, (262.0 / 25.4) * 72);     // вторая
-    cairo_move_to(cr, (20.0 / 25.4) * 72, (267.0 / 25.4) * 72);
-    cairo_line_to(cr, (205.0 / 25.4) * 72, (267.0 / 25.4) * 72);    // третья
-    cairo_move_to(cr, (155.0 / 25.4) * 72, (272.0 / 25.4) * 72);
-    cairo_line_to(cr, (205.0 / 25.4) * 72, (272.0 / 25.4) * 72);    // четвертая
-    cairo_move_to(cr, (155.0 / 25.4) * 72, (277.0 / 25.4) * 72);
-    cairo_line_to(cr, (205.0 / 25.4) * 72, (277.0 / 25.4) * 72);    // пятая
-    // вертикальные основные линии
-    cairo_move_to(cr, (27.0 / 25.4) * 72, (252.0 / 25.4) * 72);
-    cairo_line_to(cr, (27.0 / 25.4) * 72, (267.0 / 25.4) * 72);    // первая
-    cairo_move_to(cr, (37.0 / 25.4) * 72, (252.0 / 25.4) * 72);
-    cairo_line_to(cr, (37.0 / 25.4) * 72, (292.0 / 25.4) * 72);    // вторая
-    cairo_move_to(cr, (60.0 / 25.4) * 72, (252.0 / 25.4) * 72);
-    cairo_line_to(cr, (60.0 / 25.4) * 72, (292.0 / 25.4) * 72);    // третья
-    cairo_move_to(cr, (75.0 / 25.4) * 72, (252.0 / 25.4) * 72);
-    cairo_line_to(cr, (75.0 / 25.4) * 72, (292.0 / 25.4) * 72);    // четвертая
-    cairo_move_to(cr, (85.0 / 25.4) * 72, (252.0 / 25.4) * 72);
-    cairo_line_to(cr, (85.0 / 25.4) * 72, (292.0 / 25.4) * 72);    // пятая
-    cairo_move_to(cr, (155.0 / 25.4) * 72, (267.0 / 25.4) * 72);
-    cairo_line_to(cr, (155.0 / 25.4) * 72, (292.0 / 25.4) * 72);    // шестая
-    cairo_move_to(cr, (170.0 / 25.4) * 72, (267.0 / 25.4) * 72);
-    cairo_line_to(cr, (170.0 / 25.4) * 72, (277.0 / 25.4) * 72);    // седьмая
-    cairo_move_to(cr, (185.0 / 25.4) * 72, (267.0 / 25.4) * 72);
-    cairo_line_to(cr, (185.0 / 25.4) * 72, (277.0 / 25.4) * 72);    // восьмая
-    cairo_stroke(cr);  // рисуем основные линии
-    cairo_set_line_width(cr, 0.3);
-    // горизонтальные тонкие линии
-    cairo_move_to(cr, (20.0 / 25.4) * 72, (257.0 / 25.4) * 72);
-    cairo_line_to(cr, (85.0 / 25.4) * 72, (257.0 / 25.4) * 72);    // первая
-    cairo_move_to(cr, (20.0 / 25.4) * 72, (272.0 / 25.4) * 72);
-    cairo_line_to(cr, (85.0 / 25.4) * 72, (272.0 / 25.4) * 72);    // вторая
-    cairo_move_to(cr, (20.0 / 25.4) * 72, (277.0 / 25.4) * 72);
-    cairo_line_to(cr, (85.0 / 25.4) * 72, (277.0 / 25.4) * 72);    // третья
-    cairo_move_to(cr, (20.0 / 25.4) * 72, (282.0 / 25.4) * 72);
-    cairo_line_to(cr, (85.0 / 25.4) * 72, (282.0 / 25.4) * 72);    // четвертая
-    cairo_move_to(cr, (20.0 / 25.4) * 72, (287.0 / 25.4) * 72);
-    cairo_line_to(cr, (85.0 / 25.4) * 72, (287.0 / 25.4) * 72);    // пятая
-    // вертикальные тонкие линии
-    cairo_move_to(cr, (160.0 / 25.4) * 72, (272.0 / 25.4) * 72);
-    cairo_line_to(cr, (160.0 / 25.4) * 72, (277.0 / 25.4) * 72);    // первая
-    cairo_move_to(cr, (165.0 / 25.4) * 72, (272.0 / 25.4) * 72);
-    cairo_line_to(cr, (165.0 / 25.4) * 72, (277.0 / 25.4) * 72);    // вторая
-    // текст штампа
-    cairo_set_font_size(cr, 8.0);   // размер шрифта штампа
-    cairo_move_to(cr, (20.5 / 25.4) * 72, (265.5 / 25.4) * 72);
-    cairo_show_text(cr, "Изм.");
-    cairo_move_to(cr, (29 / 25.4) * 72, (265.5 / 25.4) * 72);
-    cairo_show_text(cr, "Лист");
-    cairo_move_to(cr, (42 / 25.4) * 72, (265.5 / 25.4) * 72);
-    cairo_show_text(cr, "№ докум.");
-    cairo_move_to(cr, (63.5 / 25.4) * 72, (265.5 / 25.4) * 72);
-    cairo_show_text(cr, "Подп.");
-    cairo_move_to(cr, (77 / 25.4) * 72, (265.5 / 25.4) * 72);
-    cairo_show_text(cr, "Дата");
-    cairo_move_to(cr, (21 / 25.4) * 72, (271 / 25.4) * 72);
-    cairo_show_text(cr, "Разраб.");
-    cairo_move_to(cr, (21 / 25.4) * 72, (276 / 25.4) * 72);
-    cairo_show_text(cr, "Пров.");
-    cairo_move_to(cr, (21 / 25.4) * 72, (286 / 25.4) * 72);
-    cairo_show_text(cr, "Н. контр.");
-    cairo_move_to(cr, (21 / 25.4) * 72, (291 / 25.4) * 72);
-    cairo_show_text(cr, "Утв.");
-    cairo_move_to(cr, (160.0 / 25.4) * 72, (270.5 / 25.4) * 72);
-    cairo_show_text(cr, "Лит.");
-    cairo_move_to(cr, (174.5 / 25.4) * 72, (270.5 / 25.4) * 72);
-    cairo_show_text(cr, "Лист");
-    cairo_move_to(cr, (190.0 / 25.4) * 72, (270.5 / 25.4) * 72);
-    cairo_show_text(cr, "Листов");*/
+    if (flag_frame == 1)
+    {
+        cairo_rectangle(cr, left_margin, top_margin, width, height);
+        // Штамп (форма 2)
+        // горизонтальные основные линии
+        cairo_move_to(cr, (20.0 / 25.4) * 72, (252.0 / 25.4) * 72);
+        cairo_line_to(cr, (205.0 / 25.4) * 72, (252.0 / 25.4) * 72);    // первая
+        cairo_move_to(cr, (20.0 / 25.4) * 72, (262.0 / 25.4) * 72);
+        cairo_line_to(cr, (85.0 / 25.4) * 72, (262.0 / 25.4) * 72);     // вторая
+        cairo_move_to(cr, (20.0 / 25.4) * 72, (267.0 / 25.4) * 72);
+        cairo_line_to(cr, (205.0 / 25.4) * 72, (267.0 / 25.4) * 72);    // третья
+        cairo_move_to(cr, (155.0 / 25.4) * 72, (272.0 / 25.4) * 72);
+        cairo_line_to(cr, (205.0 / 25.4) * 72, (272.0 / 25.4) * 72);    // четвертая
+        cairo_move_to(cr, (155.0 / 25.4) * 72, (277.0 / 25.4) * 72);
+        cairo_line_to(cr, (205.0 / 25.4) * 72, (277.0 / 25.4) * 72);    // пятая
+        // вертикальные основные линии
+        cairo_move_to(cr, (27.0 / 25.4) * 72, (252.0 / 25.4) * 72);
+        cairo_line_to(cr, (27.0 / 25.4) * 72, (267.0 / 25.4) * 72);    // первая
+        cairo_move_to(cr, (37.0 / 25.4) * 72, (252.0 / 25.4) * 72);
+        cairo_line_to(cr, (37.0 / 25.4) * 72, (292.0 / 25.4) * 72);    // вторая
+        cairo_move_to(cr, (60.0 / 25.4) * 72, (252.0 / 25.4) * 72);
+        cairo_line_to(cr, (60.0 / 25.4) * 72, (292.0 / 25.4) * 72);    // третья
+        cairo_move_to(cr, (75.0 / 25.4) * 72, (252.0 / 25.4) * 72);
+        cairo_line_to(cr, (75.0 / 25.4) * 72, (292.0 / 25.4) * 72);    // четвертая
+        cairo_move_to(cr, (85.0 / 25.4) * 72, (252.0 / 25.4) * 72);
+        cairo_line_to(cr, (85.0 / 25.4) * 72, (292.0 / 25.4) * 72);    // пятая
+        cairo_move_to(cr, (155.0 / 25.4) * 72, (267.0 / 25.4) * 72);
+        cairo_line_to(cr, (155.0 / 25.4) * 72, (292.0 / 25.4) * 72);    // шестая
+        cairo_move_to(cr, (170.0 / 25.4) * 72, (267.0 / 25.4) * 72);
+        cairo_line_to(cr, (170.0 / 25.4) * 72, (277.0 / 25.4) * 72);    // седьмая
+        cairo_move_to(cr, (185.0 / 25.4) * 72, (267.0 / 25.4) * 72);
+        cairo_line_to(cr, (185.0 / 25.4) * 72, (277.0 / 25.4) * 72);    // восьмая
+        cairo_stroke(cr);  // рисуем основные линии
+        cairo_set_line_width(cr, 0.3);
+        // горизонтальные тонкие линии
+        cairo_move_to(cr, (20.0 / 25.4) * 72, (257.0 / 25.4) * 72);
+        cairo_line_to(cr, (85.0 / 25.4) * 72, (257.0 / 25.4) * 72);    // первая
+        cairo_move_to(cr, (20.0 / 25.4) * 72, (272.0 / 25.4) * 72);
+        cairo_line_to(cr, (85.0 / 25.4) * 72, (272.0 / 25.4) * 72);    // вторая
+        cairo_move_to(cr, (20.0 / 25.4) * 72, (277.0 / 25.4) * 72);
+        cairo_line_to(cr, (85.0 / 25.4) * 72, (277.0 / 25.4) * 72);    // третья
+        cairo_move_to(cr, (20.0 / 25.4) * 72, (282.0 / 25.4) * 72);
+        cairo_line_to(cr, (85.0 / 25.4) * 72, (282.0 / 25.4) * 72);    // четвертая
+        cairo_move_to(cr, (20.0 / 25.4) * 72, (287.0 / 25.4) * 72);
+        cairo_line_to(cr, (85.0 / 25.4) * 72, (287.0 / 25.4) * 72);    // пятая
+        // вертикальные тонкие линии
+        cairo_move_to(cr, (160.0 / 25.4) * 72, (272.0 / 25.4) * 72);
+        cairo_line_to(cr, (160.0 / 25.4) * 72, (277.0 / 25.4) * 72);    // первая
+        cairo_move_to(cr, (165.0 / 25.4) * 72, (272.0 / 25.4) * 72);
+        cairo_line_to(cr, (165.0 / 25.4) * 72, (277.0 / 25.4) * 72);    // вторая
+        // текст штампа
+        cairo_set_font_size(cr, 8.0);   // размер шрифта штампа
+        cairo_move_to(cr, (20.5 / 25.4) * 72, (265.5 / 25.4) * 72);
+        cairo_show_text(cr, "Изм.");
+        cairo_move_to(cr, (29 / 25.4) * 72, (265.5 / 25.4) * 72);
+        cairo_show_text(cr, "Лист");
+        cairo_move_to(cr, (42 / 25.4) * 72, (265.5 / 25.4) * 72);
+        cairo_show_text(cr, "№ докум.");
+        cairo_move_to(cr, (63.5 / 25.4) * 72, (265.5 / 25.4) * 72);
+        cairo_show_text(cr, "Подп.");
+        cairo_move_to(cr, (77 / 25.4) * 72, (265.5 / 25.4) * 72);
+        cairo_show_text(cr, "Дата");
+        cairo_move_to(cr, (21 / 25.4) * 72, (271 / 25.4) * 72);
+        cairo_show_text(cr, "Разраб.");
+        cairo_move_to(cr, (21 / 25.4) * 72, (276 / 25.4) * 72);
+        cairo_show_text(cr, "Пров.");
+        cairo_move_to(cr, (21 / 25.4) * 72, (286 / 25.4) * 72);
+        cairo_show_text(cr, "Н. контр.");
+        cairo_move_to(cr, (21 / 25.4) * 72, (291 / 25.4) * 72);
+        cairo_show_text(cr, "Утв.");
+        cairo_move_to(cr, (160.0 / 25.4) * 72, (270.5 / 25.4) * 72);
+        cairo_show_text(cr, "Лит.");
+        cairo_move_to(cr, (174.5 / 25.4) * 72, (270.5 / 25.4) * 72);
+        cairo_show_text(cr, "Лист");
+        cairo_move_to(cr, (190.0 / 25.4) * 72, (270.5 / 25.4) * 72);
+        cairo_show_text(cr, "Листов");
+    }
 
     cairo_set_font_size(cr, 10.0); // размер шрифта расчетной части
     // печатаем 1 результат
