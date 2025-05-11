@@ -207,16 +207,41 @@
         <child>
           <object class="GtkButton" id="record_button">
             <property name="label" translatable="yes">Записать</property>
+            <property name="width-request">150</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
+            <property name="tooltip-text" translatable="yes">Запомнить
+введенные 
+ значения</property>
             <signal name="clicked" handler="on_record_button_clicked" swapped="no"/>
             <style>
               <class name="button"/>
             </style>
           </object>
           <packing>
-            <property name="x">850</property>
+            <property name="x">809</property>
+            <property name="y">232</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="reset_button">
+            <property name="label" translatable="yes">Сброс</property>
+            <property name="width-request">150</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">True</property>
+            <property name="tooltip-text" translatable="yes">   Сброс
+ значений
+ основной
+   надписи</property>
+            <signal name="clicked" handler="on_reset_button_clicked" swapped="no"/>
+            <style>
+              <class name="button"/>
+            </style>
+          </object>
+          <packing>
+            <property name="x">648</property>
             <property name="y">232</property>
           </packing>
         </child>
@@ -1027,9 +1052,6 @@
                         <property name="tooltip-text" translatable="yes">Заполнение 
    формы 2</property>
                         <signal name="clicked" handler="on_button_form_clicked" swapped="no"/>
-                        <style>
-                          <class name="button"/>
-                        </style>
                       </object>
                       <packing>
                         <property name="x">599</property>

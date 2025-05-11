@@ -55,6 +55,7 @@ G_MODULE_EXPORT void on_button_form_clicked(GtkButton *b);
 G_MODULE_EXPORT void on_window_main_destroy(GtkWidget *main_win);
 G_MODULE_EXPORT gboolean on_window_forma2_delete_event(GtkWidget *child_win);
 G_MODULE_EXPORT void on_record_button_clicked(GtkButton *b);
+G_MODULE_EXPORT void on_reset_button_clicked(GtkButton *b);
 
 void work_widgets();
 void writing_data_s_list(gint count_result);
@@ -970,8 +971,8 @@ void on_button_file_clicked(GtkButton *b)
 // Очищаем entry от существующего текста
 void on_entry_name_focus_in_event(GtkEntry *e)
 {
-    gtk_entry_set_text(GTK_ENTRY(widgets.entry_name), " ");
-    gtk_label_set_text(GTK_LABEL(widgets.label_create_file), " ");
+    gtk_entry_set_text(GTK_ENTRY(widgets.entry_name), "");
+    gtk_label_set_text(GTK_LABEL(widgets.label_create_file), "");
 }
 
 // Считываем из entry данные заполнения основной формы
@@ -1012,6 +1013,22 @@ void set_string_from_entry(GtkEntry *entry, gchar **target_string)
         free(*target_string);
 
     *target_string = g_strdup(new_value); // выделениt памяти и копирования строки
+}
+
+// Сброс текста в entry основной надписи
+void on_reset_button_clicked(GtkButton *b)
+{
+    gtk_entry_set_text(GTK_ENTRY(widgets.entry_code), "");
+    gtk_entry_set_text(GTK_ENTRY(widgets.entry_name1), "");
+    gtk_entry_set_text(GTK_ENTRY(widgets.entry_name2), "");
+    gtk_entry_set_text(GTK_ENTRY(widgets.entry_name3), "");
+    gtk_entry_set_text(GTK_ENTRY(widgets.entry_developer), "");
+    gtk_entry_set_text(GTK_ENTRY(widgets.entry_inspector), "");
+    gtk_entry_set_text(GTK_ENTRY(widgets.entry_norm_contr), "");
+    gtk_entry_set_text(GTK_ENTRY(widgets.entry_approver), "");
+    gtk_entry_set_text(GTK_ENTRY(widgets.entry_sheet), "");
+    gtk_entry_set_text(GTK_ENTRY(widgets.entry_sheets), "");
+    gtk_entry_set_text(GTK_ENTRY(widgets.entry_organization), "");
 }
 
 

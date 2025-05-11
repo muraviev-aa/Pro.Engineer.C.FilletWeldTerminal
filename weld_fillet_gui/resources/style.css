@@ -21,7 +21,7 @@
 }
 
 .button:active {
-    padding: 6px 4px 4px 6px;
+    padding:2px 4px 4px 2px;
     text-shadow: 1px 1px 2.5px alpha(black, 0.6);
     -gtk-icon-shadow: 1px 1px 2.5px alpha(black, 0.6);
 }
